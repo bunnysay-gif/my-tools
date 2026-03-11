@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>SCHD 배당 시뮬레이터 - 만물상 도구 스토어</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            background-color: #f8f9fa; 
+            color: #333; 
+            font-family: '맑은 고딕', sans-serif; 
+            padding: 30px; 
+            max-width: 1000px;
+            margin: 0 auto; 
+        }
+        
+        /* SCHD 전용 타이틀 강조 */
+        .page-header { text-align: center; margin-bottom: 30px; }
+        .page-header h1 { color: #1e3a8a; margin-bottom: 5px; font-size: 32px; }
+        .page-header p { color: #64748b; font-size: 16px; margin-top: 0; }
+        .badge { background-color: #dbeafe; color: #1e40af; padding: 4px 10px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+
+        .input-card {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #f1f3f5;
+            padding-bottom: 12px;
+        }
+
+        .input-group label { font-weight: bold; width: 35%; color: #495057; }
+        .highlight-label { color: #1d4ed8 !important; } /* SCHD 특화 항목 강조 */
+        
+        .input-wrapper {
+            width: 65%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .input-wrapper input {
+            width: 80px; 
+            padding: 8px;
+            font-size: 15px;
+            text-align: right;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        .input-wrapper .unit { margin-left: 8px; margin-right: 15px; font-weight: bold; color: #495057; text-align: left; }
+
+        .btn-group { display: flex; gap: 5px; }
+        .option-btn { padding: 6px 12px; background-color: #e2e8f0; color: #475569; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; transition: 0.2s; }
+        .option-btn:hover { background-color: #cbd5e1; }
+        .option-btn.active { background-color: #1d4ed8; color: white; }
+
+        .calc-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #1e3a8a; 
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(30, 58, 138, 0.3);
+        }
+        .calc-btn:hover { background-color: #172554; }
+
+        .summary-wrapper { display: flex; gap: 20px; display: none; }
+        .summary-box {
+            flex: 1;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-left: 5px solid #1e3a8a;
+        }
+        .summary-box h3 { margin-top: 0; color: #1e3a8a; font-size: 22px; }
+        .summary-box p { font-size: 18px; margin: 10px 0; }
+        .summary-box span { font-weight: bold; }
+
+        .chart-container { background-color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; display: none; }
+        
+        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; display: none; }
+        .table-header h2 { margin: 0; color: #2c3e50; font-size: 20px; }
+        .excel-btn { background-color: #10b981; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .excel-btn:hover { background-color: #059669; }
+
+        table { width: 100%; border-collapse: collapse; background-color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.05); display: none; font-size: 14px; }
+        th, td { padding: 15px 10px; text-align: right; border-bottom: 1px solid #f1f3f5; }
+        th { background-color: #f8f9fa; text-align: center; color: #495057; }
+        td:first-child { text-align: center; font-weight: bold; color: #6c757d; }
+
+        /* 하단 SCHD 스토리텔링 섹션 */
+        .info-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-top: 40px;
+            margin-bottom: 30px;
+            text-align: left;
+            border-top: 4px solid #1e3a8a; /* SCHD를 상징하는 진한 파란색 */
+        }
+        .info-section h2 { color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-top: 0; }
+        .info-block { margin-bottom: 30px; }
+        .info-block h3 { color: #1e3a8a; margin-bottom: 12px; font-size: 1.3rem; }
+        .info-block p { color: #475569; line-height: 1.7; font-size: 15px; margin: 0; }
+        .highlight { background-color: #dbeafe; padding: 2px 6px; border-radius: 3px; font-weight: bold; color: #1e40af; }
+        
+        .tip-box { background-color: #f8fafc; border-left: 4px solid #10b981; padding: 20px; border-radius: 6px; margin-top: 20px; }
+        .tip-box strong { color: #047857; font-size: 16px; }
+        
+        .back-btn-wrapper { text-align: center; margin-top: 40px; margin-bottom: 50px; }
+        .back-btn { display: inline-block; padding: 12px 25px; background-color: #64748b; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="page-header">
+        <h1>미국 국민 배당주 SCHD 시뮬레이터</h1>
+        <p><span class="badge">SCHD 10년 평균 데이터 적용</span> 복리와 배당 성장의 마법을 직접 확인하세요.</p>
+    </div>
+
+    <div class="input-card">
+        <div class="input-group">
+            <label>초기 투자금</label>
+            <div class="input-wrapper"><input type="number" id="initial" value="1000"><span class="unit">만원</span></div>
+        </div>
+        <div class="input-group">
+            <label>월 매수금액</label>
+            <div class="input-wrapper"><input type="number" id="monthly" value="50"><span class="unit">만원</span></div>
+        </div>
+        <div class="input-group">
+            <label>투자기간</label>
+            <div class="input-wrapper"><input type="number" id="years" value="10"><span class="unit">년</span></div>
+        </div>
+        
+        <div class="input-group">
+            <label class="highlight-label">💡 SCHD 시가 배당률</label>
+            <div class="input-wrapper"><input type="number" id="divYield" value="3.5" step="0.1"><span class="unit">%</span></div>
+        </div>
+        <div class="input-group">
+            <label class="highlight-label">🚀 SCHD 배당 성장률</label>
+            <div class="input-wrapper"><input type="number" id="divGrowth" value="11.0" step="0.1"><span class="unit">%</span></div>
+        </div>
+        
+        <div class="input-group">
+            <label>현재 주당 가격</label>
+            <div class="input-wrapper"><input type="number" id="sharePrice" value="11.0" step="0.1"><span class="unit">만원</span></div>
+        </div>
+        <div class="input-group">
+            <label>예상 주가 상승률</label>
+            <div class="input-wrapper"><input type="number" id="priceGrowth" value="7.0" step="0.1"><span class="unit">%</span></div>
+        </div>
+        
+        <div class="input-group">
+            <label>과세비율</label>
+            <div class="input-wrapper">
+                <input type="number" id="taxRate" value="15.4" step="0.1">
+                <span class="unit">%</span>
+                <div class="btn-group" id="taxBtns">
+                    <button class="option-btn active" onclick="setTax(15.4, this)">15.4%</button>
+                    <button class="option-btn" onclick="setTax(0, this)">0%</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label>배당 주기 (1년)</label>
+            <div class="input-wrapper">
+                <input type="number" id="freq" value="4" min="1" max="12">
+                <span class="unit">회</span>
+                <div class="btn-group" id="freqBtns">
+                    <button class="option-btn" onclick="setFreq(12, this)">월</button>
+                    <button class="option-btn active" onclick="setFreq(4, this)">분기</button>
+                    <button class="option-btn" onclick="setFreq(1, this)">연</button>
+                </div>
+            </div>
+        </div>
+        
+        <button class="calc-btn" onclick="calculate()">SCHD 장기투자 결과 확인하기 📊</button>
+    </div>
+
+    <div class="summary-wrapper" id="summaryWrapper">
+        <div class="summary-box">
+            <h3>🎯 <span id="resYears">0</span>년 뒤 당신의 자산은?</h3>
+            <p>총 투자원금: <span id="resPrincipal" style="color:#1e3a8a;">0</span> 만원</p>
+            <p>총 평가금액: <span id="resTotal" style="color:#1e3a8a;">0</span> 만원</p>
+            <p>예상 월 배당금: <span id="resMonthlyDiv" style="color:#e11d48;">0</span> 만원 (세후)</p>
+            <p>예상 연 배당금: <span id="resYearlyDiv" style="color:#e11d48;">0</span> 만원 (세후)</p>
+        </div>
+    </div>
+
+    <div class="chart-container" id="chartContainer"><canvas id="myChart"></canvas></div>
+
+    <div class="table-header" id="tableHeader">
+        <h2>자산 및 배당 변화</h2>
+        <button class="excel-btn" onclick="downloadExcel()">Excel 다운로드 💾</button>
+    </div>
+    <table id="resultTable">
+        <thead>
+            <tr><th>년차</th><th>연간배당금(배당률%)</th><th>연말총자산</th><th>투자원금</th><th>주당가격</th><th>보유수량</th><th>매수수량</th></tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <div class="info-section">
+        <h2>📈 왜 전 세계 부자들은 SCHD를 모을까요?</h2>
+
+        <div class="info-block">
+            <h3>1. 고배당의 함정을 피하는 '배당 성장'의 마법</h3>
+            <p>당장 배당률이 10%인 주식이 좋아 보일 수 있습니다. 하지만 제 살을 깎아 먹으며 배당을 주는 기업은 결국 주가 폭락으로 이어집니다. SCHD는 무려 10년 이상 꾸준히 배당금을 늘려온(배당 성장) 미국의 초우량 100개 기업에만 투자합니다. <span class="highlight">올해는 3.5%를 받지만, 기업이 성장하면서 10년 뒤에는 내 원금 대비 10% 이상의 배당</span>을 받을 수 있게 되는 원리입니다.</p>
+        </div>
+
+        <div class="info-block">
+            <h3>2. 시장을 이기는 방어력, 마음 편한 투자</h3>
+            <p>경제 위기가 오면 주식 시장은 반토막이 나기도 합니다. 하지만 SCHD에 포함된 코카콜라, 펩시, 홈디포 같은 기업들은 우리가 매일 먹고 쓰는 필수재를 만듭니다. 덕분에 하락장에서도 주가 방어력이 뛰어나며, 위기 속에서도 끊임없이 배당금을 지급해 투자자의 멘탈을 지켜줍니다.</p>
+        </div>
+
+        <div class="info-block">
+            <h3>3. 자동으로 완성되는 황금알을 낳는 거위</h3>
+            <p>받은 배당금을 인출하지 않고 다시 SCHD를 매수하는 데 사용해 보세요. 주식 수가 늘어나면 다음 분기에는 더 많은 배당금이 들어옵니다. 위 시뮬레이터에서 10년, 20년 뒤의 그래프가 기하급수적으로 꺾여 올라가는 것을 확인하셨나요? 시간을 내 편으로 만드는 가장 확실한 방법입니다.</p>
+        </div>
+
+        <div class="tip-box">
+            <strong>경영학 똑똑이와 함께 완벽한 포트폴리오 만들기</strong>
+            <p style="margin-top:8px; font-size: 15px; color: #334155;">단순히 주식을 사는 것을 넘어, 거시 경제의 흐름을 읽는 눈이 필요합니다. 금리 인하 시기에는 어떤 전략을 취해야 할까요? 경영학 똑똑이 채널에서 더 깊이 있는 인사이트를 확인해 보세요!</p>
+        </div>
+    </div>
+
+    <div class="back-btn-wrapper">
+        <a href="index.html" class="back-btn">🏠 대문으로 돌아가기</a>
+    </div>
+
+    <script>
+        function setTax(val, btnElement) {
+            document.getElementById('taxRate').value = val; 
+            let btns = document.getElementById('taxBtns').children;
+            for(let i=0; i<btns.length; i++) { btns[i].classList.remove('active'); }
+            btnElement.classList.add('active');
+        }
+
+        function setFreq(val, btnElement) {
+            document.getElementById('freq').value = val; 
+            let btns = document.getElementById('freqBtns').children;
+            for(let i=0; i<btns.length; i++) { btns[i].classList.remove('active'); }
+            btnElement.classList.add('active');
+        }
+
+        let myChartInstance = null;
+        function formatMoney(num) { return Math.round(num).toLocaleString(); }
+
+        function downloadExcel() {
+            let csv = '\uFEFF'; 
+            let table = document.getElementById("resultTable");
+            for(let i=0; i<table.rows.length; i++) {
+                let rowData = [];
+                for(let j=0; j<table.rows[i].cells.length; j++) {
+                    rowData.push(table.rows[i].cells[j].innerText.replace(/,/g, ''));
+                }
+                csv += rowData.join(",") + "\n";
+            }
+            let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "SCHD_배당투자_결과.csv";
+            link.click();
+        }
+
+        function calculate() {
+            let initial = Number(document.getElementById('initial').value);
+            let monthly = Number(document.getElementById('monthly').value);
+            let years = Number(document.getElementById('years').value);
+            let divYield = Number(document.getElementById('divYield').value) / 100;
+            let divGrowth = Number(document.getElementById('divGrowth').value) / 100;
+            let sharePrice = Number(document.getElementById('sharePrice').value);
+            let priceGrowth = Number(document.getElementById('priceGrowth').value) / 100;
+            let taxRate = Number(document.getElementById('taxRate').value) / 100;
+
+            let totalPrincipal = initial; 
+            let ownedShares = initial / sharePrice; 
+            let dps = sharePrice * divYield; 
+
+            let labels = [];
+            let principalData = [];
+            let reinvestGainData = []; 
+            let divData = []; 
+            let tableHTML = "";
+            let lastYearDiv = 0;
+
+            for (let y = 1; y <= years; y++) {
+                labels.push(y + "년차");
+
+                let yearlyInvest = monthly * 12;
+                totalPrincipal += yearlyInvest;
+                let boughtShares = yearlyInvest / sharePrice; 
+                ownedShares += boughtShares;
+
+                let annualDiv = ownedShares * dps;
+                let afterTaxDiv = annualDiv * (1 - taxRate); 
+                lastYearDiv = afterTaxDiv; 
+
+                let reinvestShares = afterTaxDiv / sharePrice;
+                ownedShares += reinvestShares;
+
+                let totalAsset = ownedShares * sharePrice;
+                let currentYieldPct = (afterTaxDiv / totalAsset) * 100;
+
+                principalData.push(Math.round(totalPrincipal));
+                reinvestGainData.push(Math.round(totalAsset - totalPrincipal)); 
+                divData.push(Math.round(afterTaxDiv));
+
+                sharePrice = sharePrice * (1 + priceGrowth);
+                dps = dps * (1 + divGrowth); 
+
+                tableHTML += `
+                    <tr>
+                        <td>${y}년차</td>
+                        <td>${formatMoney(afterTaxDiv)}만원 (${currentYieldPct.toFixed(2)}%)</td>
+                        <td style="color:#1e3a8a; font-weight:bold;">${formatMoney(totalAsset)}만원</td>
+                        <td>${formatMoney(totalPrincipal)}만원</td>
+                        <td>${sharePrice.toFixed(1)}만원</td>
+                        <td>${formatMoney(ownedShares)}</td>
+                        <td>${formatMoney(boughtShares)}</td>
+                    </tr>
+                `;
+            }
+
+            document.getElementById('resYears').innerText = years;
+            document.getElementById('resPrincipal').innerText = formatMoney(totalPrincipal);
+            document.getElementById('resTotal').innerText = formatMoney(principalData[years-1] + reinvestGainData[years-1]);
+            document.getElementById('resYearlyDiv').innerText = formatMoney(lastYearDiv);
+            document.getElementById('resMonthlyDiv').innerText = formatMoney(lastYearDiv / 12);
+            document.getElementById('tableBody').innerHTML = tableHTML;
+
+            document.getElementById('summaryWrapper').style.display = 'flex';
+            document.getElementById('chartContainer').style.display = 'block';
+            document.getElementById('tableHeader').style.display = 'flex';
+            document.getElementById('resultTable').style.display = 'table';
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            if (myChartInstance != null) { myChartInstance.destroy(); }
+
+            myChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: '투자원금', data: principalData, backgroundColor: '#3b82f6' },
+                        { label: '재투자 및 평가수익', data: reinvestGainData, backgroundColor: '#10b981' },
+                        { label: '당해 배당금', data: divData, backgroundColor: '#fb7185' }
+                    ]
+                },
+                options: { responsive: true, scales: { x: { stacked: true }, y: { stacked: true } } }
+            });
+        }
+    </script>
+</body>
+</html>

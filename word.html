@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>글자수 세기 - 만물상 도구 스토어</title>
+    <style>
+        body { 
+            background-color: #6a5acd; 
+            color: white; 
+            font-family: '맑은 고딕', sans-serif; 
+            text-align: center; 
+            padding: 50px; 
+        }
+        textarea { 
+            width: 80%; 
+            height: 200px; 
+            padding: 10px; 
+            font-size: 16px; 
+            border-radius: 8px; 
+        }
+        /* 돌아가기 버튼 디자인 */
+        .back-btn { 
+            display: inline-block; 
+            margin-top: 30px; 
+            padding: 10px 20px; 
+            background-color: #ffd700; 
+            color: black; 
+            text-decoration: none; 
+            border-radius: 5px; 
+            font-weight: bold; 
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📝 글자수 세기 도구</h1>
+    <p>아래에 글을 적어보세요.</p>
+    <textarea id="myText" placeholder="여기에 내용을 입력하세요..."></textarea>
+    <h2>현재 글자수: <span id="count" style="color: #ffd700;">0</span> 자</h2>
+
+    <a href="index.html" class="back-btn">🏠 대문으로 돌아가기</a>
+
+    <script>
+        const textBox = document.getElementById('myText');
+        const countText = document.getElementById('count');
+
+        textBox.addEventListener('input', function() {
+            countText.innerText = textBox.value.length;
+        });
+    </script>
+
+</body>
+</html>

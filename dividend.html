@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>배당투자 계산기 - 만물상 도구 스토어</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { 
+            background-color: #f8f9fa; 
+            color: #333; 
+            font-family: '맑은 고딕', sans-serif; 
+            padding: 30px; 
+            max-width: 1000px;
+            margin: 0 auto; 
+        }
+        
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; }
+        
+        .input-card {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid #f1f3f5;
+            padding-bottom: 12px;
+        }
+
+        .input-group label { font-weight: bold; width: 30%; color: #495057; }
+        
+        .input-wrapper {
+            width: 70%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .input-wrapper input {
+            width: 80px; 
+            padding: 8px;
+            font-size: 15px;
+            text-align: right;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+
+        .input-wrapper .unit {
+            margin-left: 8px;
+            margin-right: 15px;
+            font-weight: bold;
+            color: #495057;
+            text-align: left;
+        }
+
+        .btn-group { display: flex; gap: 5px; }
+        
+        .option-btn {
+            padding: 6px 12px;
+            background-color: #e2e8f0;
+            color: #475569;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+        
+        .option-btn:hover { background-color: #cbd5e1; }
+        .option-btn.active { background-color: #1d4ed8; color: white; }
+
+        .calc-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #1d4ed8; 
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(29, 78, 216, 0.3);
+        }
+        .calc-btn:hover { background-color: #1e3a8a; }
+
+        .summary-wrapper {
+            display: flex;
+            gap: 20px;
+            display: none; 
+        }
+        .summary-box {
+            flex: 1;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-left: 5px solid #1d4ed8;
+        }
+        .summary-box h3 { margin-top: 0; color: #1d4ed8; font-size: 22px; }
+        .summary-box p { font-size: 18px; margin: 10px 0; }
+        .summary-box span { font-weight: bold; }
+
+        .chart-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: none; 
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .table-header h2 { margin: 0; color: #2c3e50; font-size: 20px; }
+        .excel-btn {
+            background-color: #10b981;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .excel-btn:hover { background-color: #059669; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: none; 
+            font-size: 14px;
+        }
+        th, td {
+            padding: 15px 10px;
+            text-align: right;
+            border-bottom: 1px solid #f1f3f5;
+        }
+        th { background-color: #f8f9fa; text-align: center; color: #495057; }
+        td:first-child { text-align: center; font-weight: bold; color: #6c757d; }
+
+        /* ✨ 하단 유용한 정보 섹션 디자인 ✨ */
+        .info-section {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            margin-top: 40px;
+            margin-bottom: 30px;
+            text-align: left;
+            border-top: 4px solid #f59e0b;
+        }
+        .info-section h2 { 
+            color: #1e293b; 
+            border-bottom: 2px solid #f1f5f9; 
+            padding-bottom: 15px; 
+            margin-top: 0;
+        }
+        .info-block { margin-bottom: 30px; }
+        .info-block h3 { color: #334155; margin-bottom: 12px; font-size: 1.3rem; display: flex; align-items: center; }
+        .info-block p { color: #475569; line-height: 1.7; font-size: 15px; margin: 0; }
+        .highlight { background-color: #fef08a; padding: 2px 6px; border-radius: 3px; font-weight: bold; color: #b45309; }
+        
+        /* 추천 콘텐츠 박스 */
+        .tip-box { 
+            background-color: #f8fafc; 
+            border-left: 4px solid #3b82f6; 
+            padding: 20px; 
+            border-radius: 6px; 
+            margin-top: 20px;
+        }
+        .tip-box strong { color: #1e40af; font-size: 16px; }
+        
+        .back-btn-wrapper { text-align: center; margin-top: 40px; margin-bottom: 50px; }
+        .back-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #64748b;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>💰 배당투자 시뮬레이터</h1>
+
+    <div class="input-card">
+        <div class="input-group">
+            <label>초기 투자금</label>
+            <div class="input-wrapper"><input type="number" id="initial" value="1000"><span class="unit">만원</span></div>
+        </div>
+        <div class="input-group">
+            <label>월 매수금액</label>
+            <div class="input-wrapper"><input type="number" id="monthly" value="50"><span class="unit">만원</span></div>
+        </div>
+        <div class="input-group">
+            <label>투자기간</label>
+            <div class="input-wrapper"><input type="number" id="years" value="10"><span class="unit">년</span></div>
+        </div>
+        <div class="input-group">
+            <label>시가 배당률</label>
+            <div class="input-wrapper"><input type="number" id="divYield" value="3.5" step="0.1"><span class="unit">%</span></div>
+        </div>
+        <div class="input-group">
+            <label>배당 성장률</label>
+            <div class="input-wrapper"><input type="number" id="divGrowth" value="12" step="0.1"><span class="unit">%</span></div>
+        </div>
+        <div class="input-group">
+            <label>주당 가격</label>
+            <div class="input-wrapper"><input type="number" id="sharePrice" value="3.5" step="0.1"><span class="unit">만원</span></div>
+        </div>
+        <div class="input-group">
+            <label>주가 상승률</label>
+            <div class="input-wrapper"><input type="number" id="priceGrowth" value="10" step="0.1"><span class="unit">%</span></div>
+        </div>
+        
+        <div class="input-group">
+            <label>과세비율</label>
+            <div class="input-wrapper">
+                <input type="number" id="taxRate" value="15.4" step="0.1">
+                <span class="unit">%</span>
+                <div class="btn-group" id="taxBtns">
+                    <button class="option-btn active" onclick="setTax(15.4, this)">15.4%</button>
+                    <button class="option-btn" onclick="setTax(0, this)">0%</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label>배당 주기 (1년)</label>
+            <div class="input-wrapper">
+                <input type="number" id="freq" value="4" min="1" max="12">
+                <span class="unit">회</span>
+                <div class="btn-group" id="freqBtns">
+                    <button class="option-btn" onclick="setFreq(12, this)">월</button>
+                    <button class="option-btn active" onclick="setFreq(4, this)">분기</button>
+                    <button class="option-btn" onclick="setFreq(1, this)">연</button>
+                </div>
+            </div>
+        </div>
+        
+        <button class="calc-btn" onclick="calculate()">계산하기 📊</button>
+    </div>
+
+    <div class="summary-wrapper" id="summaryWrapper">
+        <div class="summary-box">
+            <h3>🎯 <span id="resYears">0</span>년 뒤 당신의 자산은?</h3>
+            <p>총 투자원금: <span id="resPrincipal" style="color:#1d4ed8;">0</span> 만원</p>
+            <p>총 평가금액: <span id="resTotal" style="color:#1d4ed8;">0</span> 만원</p>
+            <p>예상 월 배당금: <span id="resMonthlyDiv" style="color:#e11d48;">0</span> 만원 (세후)</p>
+            <p>예상 연 배당금: <span id="resYearlyDiv" style="color:#e11d48;">0</span> 만원 (세후)</p>
+        </div>
+    </div>
+
+    <div class="chart-container" id="chartContainer">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <div class="table-header" id="tableHeader">
+        <h2>자산 및 배당 변화</h2>
+        <button class="excel-btn" onclick="downloadExcel()">Excel 다운로드 💾</button>
+    </div>
+    <table id="resultTable">
+        <thead>
+            <tr>
+                <th>년차</th>
+                <th>연간배당금(배당률%)</th>
+                <th>연말총자산</th>
+                <th>투자원금</th>
+                <th>주당가격</th>
+                <th>보유수량</th>
+                <th>매수수량</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <div class="info-section">
+        <h2>💡 배당 투자, 왜 지금 당장 시작해야 할까요?</h2>
+
+        <div class="info-block">
+            <h3>💤 잠자는 동안에도 돈이 들어오는 시스템</h3>
+            <p>워런 버핏은 "잠자는 동안에도 돈이 들어오는 방법을 찾아내지 못한다면, 당신은 죽을 때까지 일을 해야 할 것이다"라고 말했습니다. 쉽게 말해 배당은 <strong>기업이 번 돈을 주주에게 나눠주는 보너스</strong>입니다. 건물주가 월세를 받듯, 주주는 우량 기업의 주식을 보유한 것만으로도 배당금을 받습니다. 이것이 바로 경제적 자유를 향한 현금흐름(Cashflow)을 창출하는 가장 확실한 첫걸음입니다.</p>
+        </div>
+
+        <div class="info-block">
+            <h3>❄️ 스노우볼 효과: 시간과 복리의 마법</h3>
+            <p>받은 배당금을 소비하지 않고 다시 해당 주식을 매수하는 데 사용해보세요(<span class="highlight">배당 재투자</span>). 주식 수가 늘어나면 다음번엔 더 많은 배당금을 받게 됩니다. 위 계산기에서 확인하셨듯, 시간이 지날수록 자산이 눈덩이처럼 불어나는 '복리의 마법'은 이론이 아닌 현실입니다.</p>
+        </div>
+
+        <div class="info-block">
+            <h3>🛡️ 하락장을 버티게 해주는 강력한 멘탈 안전벨트</h3>
+            <p>"주식 계좌 열어보기가 무서워요." 하락장에는 누구나 이런 생각을 합니다. 하지만 주가가 떨어져도 정기적으로 들어오는 배당금이 있다면 어떨까요? 오히려 '주식을 싸게 더 살 수 있는 바겐세일 기간'으로 생각하게 됩니다. 배당은 투자자의 심리적 안정감을 지켜주어 장기 투자를 성공으로 이끄는 최고의 무기입니다.</p>
+        </div>
+
+        <div class="tip-box">
+            <strong>📺 경영학 똑똑이의 추천 콘텐츠</strong>
+            <p style="margin-top:8px; font-size: 15px; color: #334155;">나중에 이곳에 직접 제작하신 경제 유튜브 영상 링크나 인사이트 칼럼을 배치해보세요! 방문자들이 계산기를 써보고 글을 읽은 뒤 영상을 시청하면, 채널 구독과 팬덤 형성으로 이어지는 완벽한 구조가 만들어집니다.</p>
+        </div>
+    </div>
+
+    <div class="back-btn-wrapper">
+        <a href="index.html" class="back-btn">🏠 대문으로 돌아가기</a>
+    </div>
+
+    <script>
+        function setTax(val, btnElement) {
+            document.getElementById('taxRate').value = val; 
+            let btns = document.getElementById('taxBtns').children;
+            for(let i=0; i<btns.length; i++) { btns[i].classList.remove('active'); }
+            btnElement.classList.add('active');
+        }
+
+        function setFreq(val, btnElement) {
+            document.getElementById('freq').value = val; 
+            let btns = document.getElementById('freqBtns').children;
+            for(let i=0; i<btns.length; i++) { btns[i].classList.remove('active'); }
+            btnElement.classList.add('active');
+        }
+
+        let myChartInstance = null;
+
+        function formatMoney(num) {
+            return Math.round(num).toLocaleString(); 
+        }
+
+        function downloadExcel() {
+            let csv = '\uFEFF'; 
+            let table = document.getElementById("resultTable");
+            
+            for(let i=0; i<table.rows.length; i++) {
+                let rowData = [];
+                for(let j=0; j<table.rows[i].cells.length; j++) {
+                    rowData.push(table.rows[i].cells[j].innerText.replace(/,/g, ''));
+                }
+                csv += rowData.join(",") + "\n";
+            }
+            
+            let blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "배당투자_시뮬레이션_결과.csv";
+            link.click();
+        }
+
+        function calculate() {
+            let initial = Number(document.getElementById('initial').value);
+            let monthly = Number(document.getElementById('monthly').value);
+            let years = Number(document.getElementById('years').value);
+            let divYield = Number(document.getElementById('divYield').value) / 100;
+            let divGrowth = Number(document.getElementById('divGrowth').value) / 100;
+            let sharePrice = Number(document.getElementById('sharePrice').value);
+            let priceGrowth = Number(document.getElementById('priceGrowth').value) / 100;
+            let taxRate = Number(document.getElementById('taxRate').value) / 100;
+
+            let totalPrincipal = initial; 
+            let ownedShares = initial / sharePrice; 
+            let dps = sharePrice * divYield; 
+
+            let labels = [];
+            let principalData = [];
+            let reinvestGainData = []; 
+            let divData = []; 
+            let tableHTML = "";
+
+            let lastYearDiv = 0;
+
+            for (let y = 1; y <= years; y++) {
+                labels.push(y + "년차");
+
+                let yearlyInvest = monthly * 12;
+                totalPrincipal += yearlyInvest;
+                let boughtShares = yearlyInvest / sharePrice; 
+                ownedShares += boughtShares;
+
+                let annualDiv = ownedShares * dps;
+                let afterTaxDiv = annualDiv * (1 - taxRate); 
+                lastYearDiv = afterTaxDiv; 
+
+                let reinvestShares = afterTaxDiv / sharePrice;
+                ownedShares += reinvestShares;
+
+                let totalAsset = ownedShares * sharePrice;
+                let currentYieldPct = (afterTaxDiv / totalAsset) * 100;
+
+                principalData.push(Math.round(totalPrincipal));
+                reinvestGainData.push(Math.round(totalAsset - totalPrincipal)); 
+                divData.push(Math.round(afterTaxDiv));
+
+                sharePrice = sharePrice * (1 + priceGrowth);
+                dps = dps * (1 + divGrowth); 
+
+                tableHTML += `
+                    <tr>
+                        <td>${y}년차</td>
+                        <td>${formatMoney(afterTaxDiv)}만원 (${currentYieldPct.toFixed(2)}%)</td>
+                        <td style="color:#1d4ed8; font-weight:bold;">${formatMoney(totalAsset)}만원</td>
+                        <td>${formatMoney(totalPrincipal)}만원</td>
+                        <td>${sharePrice.toFixed(1)}만원</td>
+                        <td>${formatMoney(ownedShares)}</td>
+                        <td>${formatMoney(boughtShares)}</td>
+                    </tr>
+                `;
+            }
+
+            document.getElementById('resYears').innerText = years;
+            document.getElementById('resPrincipal').innerText = formatMoney(totalPrincipal);
+            document.getElementById('resTotal').innerText = formatMoney(principalData[years-1] + reinvestGainData[years-1]);
+            document.getElementById('resYearlyDiv').innerText = formatMoney(lastYearDiv);
+            document.getElementById('resMonthlyDiv').innerText = formatMoney(lastYearDiv / 12);
+            document.getElementById('tableBody').innerHTML = tableHTML;
+
+            document.getElementById('summaryWrapper').style.display = 'flex';
+            document.getElementById('chartContainer').style.display = 'block';
+            document.getElementById('tableHeader').style.display = 'flex';
+            document.getElementById('resultTable').style.display = 'table';
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            if (myChartInstance != null) { myChartInstance.destroy(); }
+
+            myChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: '투자원금', data: principalData, backgroundColor: '#3b82f6' },
+                        { label: '재투자 및 평가수익', data: reinvestGainData, backgroundColor: '#10b981' },
+                        { label: '당해 배당금', data: divData, backgroundColor: '#fb7185' }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { stacked: true }, 
+                        y: { stacked: true }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
