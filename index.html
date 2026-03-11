@@ -4,70 +4,146 @@
     <meta charset="UTF-8">
     <title>만물상 도구 스토어</title>
     <style>
+        /* 전체 배경: 세련된 보라색 그라데이션 */
         body { 
-            background-color: #6a5acd; 
+            background: linear-gradient(135deg, #6a5acd, #8a2be2);
             color: white; 
             font-family: '맑은 고딕', sans-serif; 
-            text-align: center; 
-            padding: 50px; 
+            padding: 40px 20px; 
+            margin: 0;
+            min-height: 100vh;
         }
         
-        /* 카테고리 제목 디자인 */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .header p { font-size: 1.1rem; opacity: 0.9; }
+
+        .container {
+            max-width: 1000px; /* 화면 가운데로 예쁘게 모이도록 너비 조정 */
+            margin: 0 auto;
+        }
+
         .category-title {
-            text-align: left;
-            border-bottom: 2px solid #ffd700;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
             padding-bottom: 10px;
             margin-top: 50px;
             margin-bottom: 20px;
-            padding-left: 10px;
+            font-size: 1.5rem;
+            text-align: left;
         }
 
+        /* 바둑판 정렬 */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 20px;
+        }
+
+        /* 도구 카드 공통 디자인 */
         .tool-card { 
-            background-color: #836fff; 
-            padding: 20px; 
+            background-color: rgba(255, 255, 255, 0.15); /* 반투명한 흰색 배경 */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 30px 20px; 
             border-radius: 15px; 
-            display: inline-block; 
-            width: 300px; 
-            margin: 10px; /* 카드들 사이에 간격 주기 */
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3); 
+            text-align: center;
             transition: 0.3s; 
+            height: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            color: white; /* ✨ 모든 글씨를 흰색으로 강제 통일 ✨ */
         }
 
         .tool-card:hover {
-            background-color: #9370db; 
+            background-color: rgba(255, 255, 255, 0.25); 
             transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
+
+        .tool-card h2 { 
+            margin-top: 0; 
+            font-size: 1.4rem; 
+            margin-bottom: 10px; 
+            color: #ffffff; /* 제목 완전한 흰색 */
+        }
+        
+        .tool-card p { 
+            margin: 0; 
+            font-size: 1rem; 
+            color: rgba(255, 255, 255, 0.9); /* 설명은 살짝 부드러운 흰색 */
+            line-height: 1.5; 
+            word-break: keep-all; /* 글자가 예쁘게 끊어지도록 설정 */
+        }
+        
+        .tool-card .icon { font-size: 3rem; margin-bottom: 15px; }
+
+        /* 특정 카드 포인트 색상 (글씨는 흰색 유지, 배경만 살짝 변경) */
+        .card-schd { background-color: rgba(30, 58, 138, 0.6); border: 1px solid rgba(30, 58, 138, 0.8); }
+        .card-youtube { background-color: rgba(229, 9, 20, 0.4); border: 1px solid rgba(229, 9, 20, 0.6); }
+
+        a { text-decoration: none; color: inherit; display: block; }
     </style>
 </head>
 <body>
-
-    <h1>✨ 만물상 도구 스토어</h1>
-    <p>필요한 모든 도구를 한 곳에서!</p>
-
-    <h2 class="category-title">🛠️ 일반 도구</h2>
-    
-    <a href="word.html" style="text-decoration: none; color: inherit;">
-        <div class="tool-card">
-            <h2>📝 글자수 세기</h2>
-            <p>클릭해서 글자수 계산기로 이동하기 👆</p>
+    <div class="container">
+        <div class="header">
+            <h1>✨ 만물상 도구 스토어</h1>
+            <p>나에게 필요한 모든 도구를 한 곳에서 만나보세요!</p>
         </div>
-    </a>
 
-    <h2 class="category-title">📈 경제/금융 도구</h2>
-    
-    <a href="dividend.html" style="text-decoration: none; color: inherit;">
-        <div class="tool-card">
-            <h2>💰 배당금 계산기</h2>
-            <p>월 배당금을 계산해 보세요 👆</p>
+        <h2 class="category-title">🛠️ 일반 툴</h2>
+        <div class="grid-container">
+            <a href="youtube.html">
+                <div class="tool-card card-youtube">
+                    <div class="icon">▶️</div>
+                    <h2>유튜브 인기 급상승</h2>
+                    <p>지금 한국에서 가장 핫한<br>유튜브 영상 실시간 순위</p>
+                </div>
+            </a>
+            <a href="word.html">
+                <div class="tool-card">
+                    <div class="icon">📝</div>
+                    <h2>글자수 세기</h2>
+                    <p>자기소개서, 블로그 작성 전용<br>실시간 글자수 계산기</p>
+                </div>
+            </a>
         </div>
-    </a>
 
-    <a href="schd.html" style="text-decoration: none; color: inherit;">
-        <div class="tool-card" style="background-color: #1e3a8a;">
-            <h2>📈 SCHD 투자 시뮬레이터</h2>
-            <p>미국 국민 배당주 SCHD 맞춤 분석 👆</p>
+        <h2 class="category-title">📈 경제 / 투자 툴</h2>
+        <div class="grid-container">
+            <a href="dividend.html">
+                <div class="tool-card">
+                    <div class="icon">💰</div>
+                    <h2>일반 배당금 계산기</h2>
+                    <p>복리의 마법을 직접 확인하세요.<br>자산 성장 완벽 시뮬레이션</p>
+                </div>
+            </a>
+            <a href="schd.html">
+                <div class="tool-card card-schd">
+                    <div class="icon">🇺🇸</div>
+                    <h2>SCHD 시뮬레이터</h2>
+                    <p>미국 국민 배당주 SCHD 특화!<br>역사적 평균 데이터 자동 적용</p>
+                </div>
+            </a>
         </div>
-    </a>
+        
+        <h2 class="category-title">🎮 미니 게임</h2>
+        <div class="grid-container">
+            <a href="memory.html">
+                <div class="tool-card" style="background-color: rgba(236, 72, 153, 0.4); border: 1px solid rgba(236, 72, 153, 0.6);">
+                    <div class="icon">🃏</div>
+                    <h2>캐릭터 메모리 게임</h2>
+                    <p>귀여운 캐릭터들과 함께하는<br>두뇌 훈련 카드 맞추기!</p>
+                </div>
+            </a>
+        </div>
 
+    </div>
 </body>
 </html>
