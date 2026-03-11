@@ -22,7 +22,7 @@
         .header p { font-size: 1.1rem; opacity: 0.9; }
 
         .container {
-            max-width: 1000px; /* 화면 가운데로 예쁘게 모이도록 너비 조정 */
+            max-width: 1000px;
             margin: 0 auto;
         }
 
@@ -44,7 +44,7 @@
 
         /* 도구 카드 공통 디자인 */
         .tool-card { 
-            background-color: rgba(255, 255, 255, 0.15); /* 반투명한 흰색 배경 */
+            background-color: rgba(255, 255, 255, 0.15); 
             border: 1px solid rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             padding: 30px 20px; 
@@ -56,8 +56,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            cursor: pointer;
-            color: white; /* ✨ 모든 글씨를 흰색으로 강제 통일 ✨ */
+            color: white; 
         }
 
         .tool-card:hover {
@@ -66,28 +65,12 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .tool-card h2 { 
-            margin-top: 0; 
-            font-size: 1.4rem; 
-            margin-bottom: 10px; 
-            color: #ffffff; /* 제목 완전한 흰색 */
-        }
-        
-        .tool-card p { 
-            margin: 0; 
-            font-size: 1rem; 
-            color: rgba(255, 255, 255, 0.9); /* 설명은 살짝 부드러운 흰색 */
-            line-height: 1.5; 
-            word-break: keep-all; /* 글자가 예쁘게 끊어지도록 설정 */
-        }
-        
+        .tool-card h2 { margin-top: 0; font-size: 1.4rem; margin-bottom: 10px; color: #ffffff; }
+        .tool-card p { margin: 0; font-size: 1rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; word-break: keep-all; }
         .tool-card .icon { font-size: 3rem; margin-bottom: 15px; }
 
-        /* 특정 카드 포인트 색상 (글씨는 흰색 유지, 배경만 살짝 변경) */
-        .card-schd { background-color: rgba(30, 58, 138, 0.6); border: 1px solid rgba(30, 58, 138, 0.8); }
-        .card-youtube { background-color: rgba(229, 9, 20, 0.4); border: 1px solid rgba(229, 9, 20, 0.6); }
-
-        a { text-decoration: none; color: inherit; display: block; }
+        /* 링크 버튼이 카드 크기에 딱 맞게 꽉 차도록 설정 */
+        a { text-decoration: none; color: inherit; display: block; height: 100%; }
     </style>
 </head>
 <body>
@@ -100,7 +83,7 @@
         <h2 class="category-title">🛠️ 일반 툴</h2>
         <div class="grid-container">
             <a href="youtube.html">
-                <div class="tool-card card-youtube">
+                <div class="tool-card" style="background-color: rgba(229, 9, 20, 0.4); border: 1px solid rgba(229, 9, 20, 0.6);">
                     <div class="icon">▶️</div>
                     <h2>유튜브 인기 급상승</h2>
                     <p>지금 한국에서 가장 핫한<br>유튜브 영상 실시간 순위</p>
@@ -111,6 +94,13 @@
                     <div class="icon">📝</div>
                     <h2>글자수 세기</h2>
                     <p>자기소개서, 블로그 작성 전용<br>실시간 글자수 계산기</p>
+                </div>
+            </a>
+            <a href="bookmark.html">
+                <div class="tool-card" style="background-color: rgba(16, 185, 129, 0.4); border: 1px solid rgba(16, 185, 129, 0.6);">
+                    <div class="icon">🔖</div>
+                    <h2>인터넷 필수 즐겨찾기</h2>
+                    <p>포털, 유머, 투자 사이트 등<br>매일 쓰는 사이트 모음집</p>
                 </div>
             </a>
         </div>
@@ -125,7 +115,7 @@
                 </div>
             </a>
             <a href="schd.html">
-                <div class="tool-card card-schd">
+                <div class="tool-card" style="background-color: rgba(30, 58, 138, 0.6); border: 1px solid rgba(30, 58, 138, 0.8);">
                     <div class="icon">🇺🇸</div>
                     <h2>SCHD 시뮬레이터</h2>
                     <p>미국 국민 배당주 SCHD 특화!<br>역사적 평균 데이터 자동 적용</p>
