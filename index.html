@@ -2,11 +2,11 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>만물상 도구 스토어</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PANDORA TOOLS - 판도라 툴즈</title>
     <style>
-        /* 전체 배경: 세련된 보라색 그라데이션 */
         body { 
-            background: linear-gradient(135deg, #6a5acd, #8a2be2);
+            background: linear-gradient(135deg, #1e1b4b, #4338ca);
             color: white; 
             font-family: '맑은 고딕', sans-serif; 
             padding: 40px 20px; 
@@ -16,123 +16,142 @@
         
         .header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
-        .header h1 { font-size: 2.5rem; margin-bottom: 10px; }
-        .header p { font-size: 1.1rem; opacity: 0.9; }
+        .header .logo { font-size: 3.5rem; margin-bottom: 15px; display: block; }
+        .header h1 { font-size: 2.8rem; margin-bottom: 5px; letter-spacing: 2px; text-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
+        .header p { font-size: 1.1rem; opacity: 0.8; margin-bottom: 20px; }
+        .header .domain-badge { 
+            display: inline-block;
+            background-color: rgba(255,255,255,0.1);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1000px; margin: 0 auto; }
 
         .category-title {
-            border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-            padding-bottom: 10px;
-            margin-top: 50px;
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-            text-align: left;
+            border-left: 5px solid #fbbf24;
+            padding-left: 15px;
+            margin-top: 60px;
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+            font-weight: bold;
         }
 
-        /* 바둑판 정렬 */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-            gap: 20px;
+            gap: 25px;
         }
 
-        /* 도구 카드 공통 디자인 */
         .tool-card { 
-            background-color: rgba(255, 255, 255, 0.15); 
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: 30px 20px; 
-            border-radius: 15px; 
+            background-color: rgba(255, 255, 255, 0.1); 
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 40px 25px; 
+            border-radius: 20px; 
             text-align: center;
-            transition: 0.3s; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             height: 100%;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            color: white; 
         }
 
         .tool-card:hover {
-            background-color: rgba(255, 255, 255, 0.25); 
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            background-color: rgba(255, 255, 255, 0.2); 
+            transform: translateY(-10px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.4);
         }
 
-        .tool-card h2 { margin-top: 0; font-size: 1.4rem; margin-bottom: 10px; color: #ffffff; }
-        .tool-card p { margin: 0; font-size: 1rem; color: rgba(255, 255, 255, 0.9); line-height: 1.5; word-break: keep-all; }
-        .tool-card .icon { font-size: 3rem; margin-bottom: 15px; }
+        .tool-card h2 { margin-top: 0; font-size: 1.4rem; margin-bottom: 12px; color: #fff; }
+        .tool-card p { margin: 0; font-size: 0.95rem; color: rgba(255, 255, 255, 0.8); line-height: 1.6; }
+        .tool-card .icon { font-size: 3.5rem; margin-bottom: 20px; }
 
-        /* 링크 버튼이 카드 크기에 딱 맞게 꽉 차도록 설정 */
         a { text-decoration: none; color: inherit; display: block; height: 100%; }
+
+        footer {
+            text-align: center;
+            margin-top: 100px;
+            padding: 40px;
+            opacity: 0.6;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>✨ 만물상 도구 스토어</h1>
-            <p>나에게 필요한 모든 도구를 한 곳에서 만나보세요!</p>
-        </div>
+        <header class="header">
+            <span class="logo">🎁</span>
+            <h1>PANDORA TOOLS</h1>
+            <p>열면 열수록 놀라운 마법의 도구 스토어</p>
+            <div class="domain-badge">Official : pandoratools.kr</div>
+        </header>
 
-        <h2 class="category-title">🛠️ 일반 툴</h2>
+        <h2 class="category-title">🛠️ 일반 유틸리티</h2>
         <div class="grid-container">
             <a href="youtube.html">
-                <div class="tool-card" style="background-color: rgba(229, 9, 20, 0.4); border: 1px solid rgba(229, 9, 20, 0.6);">
-                    <div class="icon">▶️</div>
-                    <h2>유튜브 인기 급상승</h2>
-                    <p>지금 한국에서 가장 핫한<br>유튜브 영상 실시간 순위</p>
+                <div class="tool-card" style="border-bottom: 4px solid #ef4444;">
+                    <div class="icon">🎬</div>
+                    <h2>유튜브 실시간 랭킹</h2>
+                    <p>분야별 급상승 TOP 10을<br>한눈에 분석하세요.</p>
                 </div>
             </a>
             <a href="word.html">
-                <div class="tool-card">
-                    <div class="icon">📝</div>
+                <div class="tool-card" style="border-bottom: 4px solid #3b82f6;">
+                    <div class="icon">✍️</div>
                     <h2>글자수 세기</h2>
-                    <p>자기소개서, 블로그 작성 전용<br>실시간 글자수 계산기</p>
+                    <p>자기소개서, 블로그 작성 시<br>가장 정확한 카운팅</p>
                 </div>
             </a>
             <a href="bookmark.html">
-                <div class="tool-card" style="background-color: rgba(16, 185, 129, 0.4); border: 1px solid rgba(16, 185, 129, 0.6);">
+                <div class="tool-card" style="border-bottom: 4px solid #10b981;">
                     <div class="icon">🔖</div>
-                    <h2>인터넷 필수 즐겨찾기</h2>
-                    <p>포털, 유머, 투자 사이트 등<br>매일 쓰는 사이트 모음집</p>
+                    <h2>필수 사이트 허브</h2>
+                    <p>인터넷 서핑의 시작,<br>분야별 최적의 즐겨찾기</p>
                 </div>
             </a>
         </div>
 
-        <h2 class="category-title">📈 경제 / 투자 툴</h2>
+        <h2 class="category-title">📈 경제 / 재테크 툴</h2>
         <div class="grid-container">
             <a href="dividend.html">
-                <div class="tool-card">
-                    <div class="icon">💰</div>
-                    <h2>일반 배당금 계산기</h2>
-                    <p>복리의 마법을 직접 확인하세요.<br>자산 성장 완벽 시뮬레이션</p>
+                <div class="tool-card" style="border-bottom: 4px solid #fbbf24;">
+                    <div class="icon">💵</div>
+                    <h2>배당금 시뮬레이터</h2>
+                    <p>미래의 경제적 자유를 위한<br>정밀 복리 계산기</p>
                 </div>
             </a>
             <a href="schd.html">
-                <div class="tool-card" style="background-color: rgba(30, 58, 138, 0.6); border: 1px solid rgba(30, 58, 138, 0.8);">
-                    <div class="icon">🇺🇸</div>
-                    <h2>SCHD 시뮬레이터</h2>
-                    <p>미국 국민 배당주 SCHD 특화!<br>역사적 평균 데이터 자동 적용</p>
+                <div class="tool-card" style="border-bottom: 4px solid #1e3a8a;">
+                    <div class="icon">🏙️</div>
+                    <h2>SCHD 투자 계산기</h2>
+                    <p>미국 배당주의 정석 SCHD,<br>장기 투자 수익률 확인</p>
                 </div>
             </a>
         </div>
         
-        <h2 class="category-title">🎮 미니 게임</h2>
+        <h2 class="category-title">🎮 마법의 상자 (Fun)</h2>
         <div class="grid-container">
             <a href="memory.html">
-                <div class="tool-card" style="background-color: rgba(236, 72, 153, 0.4); border: 1px solid rgba(236, 72, 153, 0.6);">
+                <div class="tool-card" style="border-bottom: 4px solid #ec4899;">
                     <div class="icon">🃏</div>
                     <h2>캐릭터 메모리 게임</h2>
-                    <p>귀여운 캐릭터들과 함께하는<br>두뇌 훈련 카드 맞추기!</p>
+                    <p>잠시 쉬어가는 시간,<br>귀여운 캐릭터 카드 맞추기</p>
                 </div>
             </a>
         </div>
+
+        <footer>
+            &copy; 2026 PANDORA TOOLS. All Rights Reserved. <br>
+            Contact: support@pandoratools.kr
+        </footer>
 
     </div>
 </body>

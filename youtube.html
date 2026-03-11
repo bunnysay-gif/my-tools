@@ -5,93 +5,152 @@
     <title>유튜브 실시간 인기 급상승</title>
     <style>
         body { 
-            background-color: #0f0f0f; /* 유튜브 다크모드 배경색 */
+            background-color: #0f0f0f; 
             color: white; 
             font-family: '맑은 고딕', sans-serif; 
             padding: 30px; 
-            max-width: 1200px;
+            max-width: 1400px; 
             margin: 0 auto; 
             text-align: center;
         }
         
-        h1 { color: #ff0000; margin-bottom: 10px; font-size: 32px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        h1 { color: #ff0000; margin-bottom: 10px; font-size: 32px; }
         p { color: #aaaaaa; margin-bottom: 40px; }
 
-        /* 동영상이 나열될 바둑판 디자인 */
-        .video-grid {
+        /* 3칸씩 알아서 줄바꿈 되도록 설정 (총 6칸이면 2줄이 됩니다!) */
+        .board-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-            text-align: left;
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px;
         }
 
-        /* 개별 영상 카드 */
-        .video-card {
-            background-color: #212121;
-            border-radius: 12px;
-            overflow: hidden;
-            transition: 0.3s;
-            cursor: pointer;
-            text-decoration: none; /* 링크 밑줄 제거 */
-            color: white;
-            display: block;
+        .category-col {
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #333;
         }
-        .video-card:hover { transform: translateY(-5px); background-color: #383838; }
-        
-        /* 썸네일 이미지 영역 */
-        .thumbnail-box { position: relative; }
-        .thumbnail-box img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-        
-        /* 순위 뱃지 */
+
+        .category-col h2 {
+            font-size: 20px;
+            margin-top: 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #333;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .video-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px;
+            text-decoration: none;
+            color: white;
+            text-align: left;
+            border-radius: 10px;
+            transition: 0.2s;
+            margin-bottom: 5px;
+        }
+        .video-item:hover { background-color: #2a2a2a; transform: scale(1.02); }
+
+        .thumb-box {
+            position: relative;
+            width: 120px; 
+            flex-shrink: 0;
+        }
+        .thumb-box img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
         .rank-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
+            top: 4px;
+            left: 4px;
+            background-color: rgba(229, 9, 20, 0.9);
             color: white;
-            padding: 5px 12px;
-            border-radius: 8px;
+            padding: 2px 6px;
+            border-radius: 5px;
             font-weight: bold;
-            font-size: 18px;
-            border: 2px solid #ff0000;
+            font-size: 12px;
         }
 
-        /* 영상 정보 (제목, 채널명, 조회수) */
-        .video-info { padding: 15px; }
+        .video-info { flex-grow: 1; overflow: hidden; }
         .video-title { 
             font-weight: bold; 
-            font-size: 16px; 
-            margin-bottom: 8px; 
-            line-height: 1.4;
-            /* 제목이 두 줄 넘어가면 ...으로 표시 */
+            font-size: 14px; 
+            margin-bottom: 4px; 
+            line-height: 1.3;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        .channel-name { color: #aaaaaa; font-size: 14px; margin-bottom: 5px; }
-        .view-count { color: #aaaaaa; font-size: 13px; }
+        .channel-name { color: #aaaaaa; font-size: 12px; margin-bottom: 2px; }
+        .view-count { color: #888888; font-size: 11px; }
 
-        .back-btn { display: inline-block; padding: 12px 30px; background-color: #3ea6ff; color: #0f0f0f; text-decoration: none; border-radius: 20px; margin-top: 50px; font-weight: bold; transition: 0.2s; }
+        .back-btn-container { text-align: center; margin-top: 50px; }
+        .back-btn { display: inline-block; padding: 15px 30px; background-color: #3ea6ff; color: #0f0f0f; text-decoration: none; border-radius: 20px; font-weight: bold; transition: 0.2s; }
         .back-btn:hover { background-color: #65b8ff; }
+
+        /* 화면이 좁아지면 가로 2칸 -> 1칸으로 자연스럽게 변신 */
+        @media (max-width: 1100px) { .board-container { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .board-container { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <h1>🔥 유튜브 한국 인기 급상승 TOP 12</h1>
-    <p>지금 이 순간, 대한민국에서 가장 많이 보고 있는 영상들입니다.</p>
+    <h1>🔥 유튜브 SEO 최적화 실시간 랭킹</h1>
+    <p>가장 검색량이 많은 핵심 분야별 대한민국 실시간 TOP 10</p>
 
-    <div class="video-grid" id="youtubeContainer">
-        <p style="grid-column: 1 / -1; color: #888;">데이터를 불러오는 중입니다...</p>
+    <div class="board-container">
+        
+        <div class="category-col">
+            <h2>🤣 엔터테인먼트 TOP 10</h2>
+            <div id="enterContainer"><p style="color:#888;">데이터 불러오는 중...</p></div>
+        </div>
+
+        <div class="category-col">
+            <h2>⚽ 스포츠 TOP 10</h2>
+            <div id="sportsContainer"><p style="color:#888;">데이터 불러오는 중...</p></div>
+        </div>
+
+        <div class="category-col">
+            <h2>📈 경제/자기계발 TOP 10</h2>
+            <div id="eduContainer"><p style="color:#888;">데이터 불러오는 중...</p></div>
+        </div>
+
+        <div class="category-col">
+            <h2>💻 IT / 과학기술 TOP 10</h2>
+            <div id="techContainer"><p style="color:#888;">데이터 불러오는 중...</p></div>
+        </div>
+
+        <div class="category-col">
+            <h2>🎮 게임 TOP 10</h2>
+            <div id="gameContainer"><p style="color:#888;">데이터 불러오는 중...</p></div>
+        </div>
+
+        <div class="category-col">
+            <h2>🎵 음악 TOP 10</h2>
+            <div id="musicContainer"><p style="color:#888;">데이터 불러오는 중...</p></div>
+        </div>
+
     </div>
 
-    <a href="index.html" class="back-btn">🏠 대문으로 돌아가기</a>
+    <div class="back-btn-container">
+        <a href="index.html" class="back-btn">🏠 대문으로 돌아가기</a>
+    </div>
 
     <script>
-        // 🔑 중요: 여기에 구글(YouTube)에서 발급받은 API Key를 넣습니다!
+        // 🔑 중요: 발급받은 API 키를 다시 넣어주세요!
         const API_KEY = 'AIzaSyB6SEMhIsYNBleMCPbMKl-cS8FE3gxxG_Y'; 
 
-        // 조회수를 '만 회', '억 회'로 예쁘게 바꿔주는 함수
         function formatViewCount(views) {
             let num = Number(views);
             if (num >= 100000000) return (num / 100000000).toFixed(1) + '억회';
@@ -99,30 +158,27 @@
             return num.toLocaleString() + '회';
         }
 
-        async function loadYouTubeTrending() {
-            const container = document.getElementById('youtubeContainer');
+        async function fetchCategoryRanking(categoryId, containerId) {
+            const container = document.getElementById(containerId);
             
             if(API_KEY === 'YOUR_YOUTUBE_API_KEY_HERE') {
-                container.innerHTML = '<p style="grid-column: 1 / -1; color: #ff4d4d; text-align: center;">⚠️ YouTube API Key가 필요합니다.</p>';
+                container.innerHTML = '<p style="color: #ff4d4d; text-align: center;">⚠️ API Key를 입력하세요.</p>';
                 return;
             }
 
             try {
-                // 유튜브 서버에 한국(KR) 인기 영상 12개를 요청!
-                const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=KR&maxResults=12&key=${API_KEY}`;
+                const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=KR&maxResults=10&videoCategoryId=${categoryId}&key=${API_KEY}`;
                 const response = await fetch(url);
                 const data = await response.json();
                 
                 let html = '';
                 data.items.forEach((video, index) => {
-                    // 고화질 썸네일 가져오기
-                    let thumbnail = video.snippet.thumbnails.maxres ? video.snippet.thumbnails.maxres.url : video.snippet.thumbnails.high.url;
+                    let thumbnail = video.snippet.thumbnails.medium ? video.snippet.thumbnails.medium.url : video.snippet.thumbnails.default.url;
                     
-                    // 카드를 클릭하면 실제 유튜브 영상으로 이동하도록 a 태그 사용
                     html += `
-                        <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="video-card">
-                            <div class="thumbnail-box">
-                                <div class="rank-badge">${index + 1}위</div>
+                        <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="video-item">
+                            <div class="thumb-box">
+                                <div class="rank-badge">${index + 1}</div>
                                 <img src="${thumbnail}" alt="썸네일">
                             </div>
                             <div class="video-info">
@@ -136,12 +192,19 @@
                 container.innerHTML = html;
 
             } catch (error) {
-                container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">데이터를 불러오는 데 실패했습니다.</p>';
+                container.innerHTML = '<p style="text-align: center;">데이터를 불러오지 못했습니다.</p>';
             }
         }
 
-        // 페이지가 열리면 바로 실행
-        window.onload = loadYouTubeTrending;
+        window.onload = function() {
+            // 카테고리 고유 번호 설정
+            fetchCategoryRanking(24, 'enterContainer');  // 엔터테인먼트
+            fetchCategoryRanking(17, 'sportsContainer'); // 스포츠
+            fetchCategoryRanking(25, 'eduContainer');    // 25번(뉴스/정치 - 경제 이슈 포함)으로 변경!
+            fetchCategoryRanking(28, 'techContainer');   // 과학/기술(IT)
+            fetchCategoryRanking(20, 'gameContainer');   // 게임
+            fetchCategoryRanking(10, 'musicContainer');  // 음악
+        };
     </script>
 </body>
 </html>
