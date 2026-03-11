@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캐릭터 메모리카드 게임</title>
+    <style>
+        :root { --main-pink: #ff85a2; --soft-pink: #ffebf0; }
+        body { background-color: var(--soft-pink); font-family: 'Apple SD Gothic Neo', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding-bottom: 30px; }
+        h1 { color: #d63384; margin: 15px 0; text-shadow: 1.5px 1.5px white; font-size: 1.6rem; }
+        .setup-area { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; text-align: center; width: 92%; max-width: 400px; }
+        .control-group { margin: 8px 0; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; font-weight: bold; color: #d63384; }
+        input[type="number"] { width: 60px; height: 38px; font-size: 18px; text-align: center; border: 2px solid var(--main-pink); border-radius: 8px; }
+        .size-btn { width: 38px; height: 38px; border-radius: 8px; border: none; background: var(--main-pink); color: white; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 0 #d63384; }
+        .btn-group { display: flex; justify-content: center; gap: 8px; margin-top: 10px; }
+        .btn { flex: 1; padding: 12px 10px; border: none; background: var(--main-pink); color: white; border-radius: 12px; font-size: 16px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 0 #d63384; }
+        .btn.help { background: #6c5ce7; box-shadow: 0 4px 0 #4834d4; }
+        
+        .game-container { display: grid; grid-template-columns: repeat(auto-fill, var(--card-width, 80px)); gap: 8px; padding: 10px; width: 95vw; max-width: 1000px; justify-content: center; }
+        .card { width: var(--card-width, 80px); aspect-ratio: 3/4; perspective: 1000px; cursor: pointer; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; border-radius: 8px; }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 2.5px solid white; box-shadow: 0 3px 5px rgba(0,0,0,0.1); }
+        .card-front { background: linear-gradient(135deg, #ff85a2, #ffb6c1); color: white; font-size: 1.5rem; }
+        .card-back { background-color: white; transform: rotateY(180deg); overflow: hidden; }
+        .card-back img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* 시작 문구 오버레이 */
+        #countdown-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 3000;
+            justify-content: center; align-items: center; color: white; pointer-events: none;
+        }
+        #countdown-text { font-size: 80px; font-weight: bold; text-shadow: 0 0 20px #ff85a2; }
+        @keyframes pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1.2); opacity: 1; } }
+
+        .modal-content { background: white; width: 85%; max-width: 400px; max-height: 75vh; overflow-y: auto; border-radius: 15px; padding: 20px; position: relative; }
+        .thumb { width: 60px; height: 60px; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <h1>💎 캐릭터 메모리카드 게임 💎</h1>
+
+    <div class="setup-area">
+        <div class="control-group">
+            <label>케릭 수: </label>
+            <input type="number" id="pair-count" value="15" min="2" max="19">
+        </div>
+        <div class="control-group">
+            <label>카드: </label>
+            <button class="size-btn" onclick="changeCardSize(-10)">－</button>
+            <span id="size-display">80px</span>
+            <button class="size-btn" onclick="changeCardSize(10)">＋</button>
+        </div>
+        <div class="btn-group">
+            <button class="btn" onclick="startWithCountdown()">시작! ✨</button>
+            <button class="btn help" onclick="toggleHelp(true)">도감 📖</button>
+        </div>
+    </div>
+
+    <div id="countdown-overlay"><div id="countdown-text"></div></div>
+    <div id="game-board" class="game-container"></div>
+
+    <div id="help-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:1000; justify-content:center; align-items:center;">
+        <div class="modal-content">
+            <span style="float:right; cursor:pointer; font-size:28px; color:#d63384;" onclick="toggleHelp(false)">&times;</span>
+            <h2 style="text-align: center; color: #d63384; font-size: 20px;">🎀 캐릭터 도감 🎀</h2>
+            <table id="help-table" style="width:100%; border-collapse:collapse;"><thead><tr style="font-size:14px;"><th>사진</th><th>이름</th></tr></thead><tbody></tbody></table>
+        </div>
+    </div>
+
+    <audio id="snd-start" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+    <audio id="snd-click" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+    <audio id="snd-match" src="https://assets.mixkit.co/active_storage/sfx/270/270-preview.mp3"></audio>
+    <audio id="snd-success" src="https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3"></audio>
+
+    <script>
+const allCharacters = [
+        { name: '0', img: 'images/memory/0.png' }, { name: '1', img: 'images/memory/1.png' }, { name: '2', img: 'images/memory/2.png' }, { name: '3', img: 'images/memory/3.png' },
+        { name: '4', img: 'images/memory/4.png' }, { name: '5', img: 'images/memory/5.png' }, { name: '6', img: 'images/memory/6.png' },
+        { name: '7', img: 'images/memory/7.png' }, { name: '8', img: 'images/memory/8.png' }, { name: '9', img: 'images/memory/9.png' },
+        { name: '10', img: 'images/memory/10.png' }, { name: '11', img: 'images/memory/11.png' }, { name: '12', img: 'images/memory/12.png' },
+        { name: '13', img: 'images/memory/13.png' }, { name: '14', img: 'images/memory/14.png' }, { name: '15', img: 'images/memory/15.png' },
+        { name: '16', img: 'images/memory/16.png' }, { name: '17', img: 'images/memory/17.png' }, { name: '18', img: 'images/memory/18.png' },
+        { name: '19', img: 'images/memory/19.png' }
+    ];
+
+        let flippedCards = [];
+        let matchedCount = 0;
+        let canFlip = true;
+        let currentCardWidth = 80;
+
+        function startWithCountdown() {
+            const overlay = document.getElementById('countdown-overlay');
+            const text = document.getElementById('countdown-text');
+
+            document.getElementById('game-board').innerHTML = '';
+            overlay.style.display = 'flex';
+            text.innerText = 'START!';
+            
+            text.style.animation = 'none';
+            text.offsetHeight; 
+            text.style.animation = 'pop 0.6s ease';
+            
+            playSound('snd-start');
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                initGame();
+            }, 800);
+        }
+
+        function initGame() {
+            const pairCountInput = document.getElementById('pair-count');
+            let pairCount = parseInt(pairCountInput.value);
+            if (pairCount > allCharacters.length) pairCount = allCharacters.length;
+            
+            const board = document.getElementById('game-board');
+            board.innerHTML = '';
+            matchedCount = 0; flippedCards = []; canFlip = true;
+            let selected = [...allCharacters].sort(() => Math.random() - 0.5).slice(0, pairCount);
+            let gameCards = [...selected, ...selected].sort(() => Math.random() - 0.5);
+            gameCards.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<div class="card-inner"><div class="card-front">?</div><div class="card-back"><img src="${item.img}" onerror="this.src='https://via.placeholder.com/80?text=Err'"></div></div>`;
+                card.onclick = () => flipCard(card, item.name);
+                board.appendChild(card);
+            });
+        }
+
+        function playSound(id) {
+            const audio = document.getElementById(id);
+            if(audio) { audio.pause(); audio.currentTime = 0; audio.play().catch(() => {}); }
+        }
+
+        function flipCard(card, name) {
+            if (!canFlip || card.classList.contains('flipped')) return;
+            playSound('snd-click');
+            card.classList.add('flipped');
+            flippedCards.push({ card, name });
+            if (flippedCards.length === 2) { canFlip = false; checkMatch(); }
+        }
+
+        function checkMatch() {
+            const [c1, c2] = flippedCards;
+            if (c1.name === c2.name) {
+                setTimeout(() => playSound('snd-match'), 150);
+                matchedCount += 2; flippedCards = []; canFlip = true;
+                if (matchedCount === parseInt(document.getElementById('pair-count').value) * 2) {
+                    setTimeout(() => { playSound('snd-success'); alert('미션 완료! 💖'); }, 600);
+                }
+            } else {
+                setTimeout(() => { c1.card.classList.remove('flipped'); c2.card.classList.remove('flipped'); flippedCards = []; canFlip = true; }, 1000);
+            }
+        }
+
+        function changeCardSize(delta) {
+            currentCardWidth = Math.max(60, Math.min(150, currentCardWidth + delta));
+            document.documentElement.style.setProperty('--card-width', currentCardWidth + 'px');
+            document.getElementById('size-display').innerText = currentCardWidth + 'px';
+        }
+
+        function buildHelpTable() {
+            const tbody = document.querySelector('#help-table tbody');
+            tbody.innerHTML = allCharacters.map(char => `<tr><td><img src="${char.img}" class="thumb" onerror="this.src='https://via.placeholder.com/60?text=No+Img'"></td><td><b>${char.name}</b></td></tr>`).join('');
+        }
+        function toggleHelp(show) { document.getElementById('help-modal').style.display = show ? 'flex' : 'none'; }
+
+        buildHelpTable();
+        document.documentElement.style.setProperty('--card-width', '80px');
+    </script>
+</body>
+</html>
