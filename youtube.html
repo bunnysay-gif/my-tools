@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>유튜브 실시간 인기 급상승</title>
+    <style>
+        body { 
+            background-color: #0f0f0f; /* 유튜브 다크모드 배경색 */
+            color: white; 
+            font-family: '맑은 고딕', sans-serif; 
+            padding: 30px; 
+            max-width: 1200px;
+            margin: 0 auto; 
+            text-align: center;
+        }
+        
+        h1 { color: #ff0000; margin-bottom: 10px; font-size: 32px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        p { color: #aaaaaa; margin-bottom: 40px; }
+
+        /* 동영상이 나열될 바둑판 디자인 */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            text-align: left;
+        }
+
+        /* 개별 영상 카드 */
+        .video-card {
+            background-color: #212121;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
+            text-decoration: none; /* 링크 밑줄 제거 */
+            color: white;
+            display: block;
+        }
+        .video-card:hover { transform: translateY(-5px); background-color: #383838; }
+        
+        /* 썸네일 이미지 영역 */
+        .thumbnail-box { position: relative; }
+        .thumbnail-box img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+        
+        /* 순위 뱃지 */
+        .rank-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 18px;
+            border: 2px solid #ff0000;
+        }
+
+        /* 영상 정보 (제목, 채널명, 조회수) */
+        .video-info { padding: 15px; }
+        .video-title { 
+            font-weight: bold; 
+            font-size: 16px; 
+            margin-bottom: 8px; 
+            line-height: 1.4;
+            /* 제목이 두 줄 넘어가면 ...으로 표시 */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .channel-name { color: #aaaaaa; font-size: 14px; margin-bottom: 5px; }
+        .view-count { color: #aaaaaa; font-size: 13px; }
+
+        .back-btn { display: inline-block; padding: 12px 30px; background-color: #3ea6ff; color: #0f0f0f; text-decoration: none; border-radius: 20px; margin-top: 50px; font-weight: bold; transition: 0.2s; }
+        .back-btn:hover { background-color: #65b8ff; }
+    </style>
+</head>
+<body>
+
+    <h1>🔥 유튜브 한국 인기 급상승 TOP 12</h1>
+    <p>지금 이 순간, 대한민국에서 가장 많이 보고 있는 영상들입니다.</p>
+
+    <div class="video-grid" id="youtubeContainer">
+        <p style="grid-column: 1 / -1; color: #888;">데이터를 불러오는 중입니다...</p>
+    </div>
+
+    <a href="index.html" class="back-btn">🏠 대문으로 돌아가기</a>
+
+    <script>
+        // 🔑 중요: 여기에 구글(YouTube)에서 발급받은 API Key를 넣습니다!
+        const API_KEY = 'AIzaSyB6SEMhIsYNBleMCPbMKl-cS8FE3gxxG_Y'; 
+
+        // 조회수를 '만 회', '억 회'로 예쁘게 바꿔주는 함수
+        function formatViewCount(views) {
+            let num = Number(views);
+            if (num >= 100000000) return (num / 100000000).toFixed(1) + '억회';
+            if (num >= 10000) return Math.floor(num / 10000) + '만회';
+            return num.toLocaleString() + '회';
+        }
+
+        async function loadYouTubeTrending() {
+            const container = document.getElementById('youtubeContainer');
+            
+            if(API_KEY === 'YOUR_YOUTUBE_API_KEY_HERE') {
+                container.innerHTML = '<p style="grid-column: 1 / -1; color: #ff4d4d; text-align: center;">⚠️ YouTube API Key가 필요합니다.</p>';
+                return;
+            }
+
+            try {
+                // 유튜브 서버에 한국(KR) 인기 영상 12개를 요청!
+                const url = `https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&chart=mostPopular&regionCode=KR&maxResults=12&key=${API_KEY}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                let html = '';
+                data.items.forEach((video, index) => {
+                    // 고화질 썸네일 가져오기
+                    let thumbnail = video.snippet.thumbnails.maxres ? video.snippet.thumbnails.maxres.url : video.snippet.thumbnails.high.url;
+                    
+                    // 카드를 클릭하면 실제 유튜브 영상으로 이동하도록 a 태그 사용
+                    html += `
+                        <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="video-card">
+                            <div class="thumbnail-box">
+                                <div class="rank-badge">${index + 1}위</div>
+                                <img src="${thumbnail}" alt="썸네일">
+                            </div>
+                            <div class="video-info">
+                                <div class="video-title">${video.snippet.title}</div>
+                                <div class="channel-name">${video.snippet.channelTitle}</div>
+                                <div class="view-count">조회수 ${formatViewCount(video.statistics.viewCount)}</div>
+                            </div>
+                        </a>
+                    `;
+                });
+                container.innerHTML = html;
+
+            } catch (error) {
+                container.innerHTML = '<p style="grid-column: 1 / -1; text-align: center;">데이터를 불러오는 데 실패했습니다.</p>';
+            }
+        }
+
+        // 페이지가 열리면 바로 실행
+        window.onload = loadYouTubeTrending;
+    </script>
+</body>
+</html>
