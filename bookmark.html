@@ -2,16 +2,18 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>인터넷 필수 즐겨찾기 - 만물상</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267"
-     crossorigin="anonymous"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+
     <style>
         body { 
             background-color: #f4f7f9; 
             color: #333; 
             font-family: '맑은 고딕', sans-serif; 
             padding: 40px 20px; 
-            max-width: 1400px; /* 카드가 많아져서 너비를 조금 더 넓혔습니다 */
+            max-width: 1400px; 
             margin: 0 auto; 
         }
         
@@ -81,6 +83,17 @@
         .back-btn-container { text-align: center; margin-top: 50px; }
         .back-btn { display: inline-block; padding: 15px 30px; background-color: #1e3a8a; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px; }
         .back-btn:hover { background-color: #172554; }
+
+        /* 📱 스마트폰 화면 전용 최적화 (1단 배열 & 글자 크기 키우기) */
+        @media (max-width: 768px) {
+            body { padding: 20px 15px; }
+            .page-header h1 { font-size: 26px; }
+            .grid-container { grid-template-columns: 1fr; gap: 15px; } /* 1줄로 쫙 펴기 */
+            .category-card { padding: 20px 15px; }
+            .text-box h4 { font-size: 16px; } /* 폰에서 제목 더 크게 */
+            .text-box p { font-size: 13px; }  /* 폰에서 설명 더 크게 */
+            .icon-box { width: 42px; height: 42px; font-size: 20px; } /* 아이콘 터치하기 편하게 확대 */
+        }
     </style>
 </head>
 <body>
