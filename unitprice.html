@@ -2,98 +2,98 @@
 <html lang="ko">
 <head>
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>단가/가성비 계산기 - 마트 장보기, 쇼핑 가격 비교 | PANDORA TOOLS</title>
     <meta name="description" content="A제품과 B제품 중 어떤 것이 더 저렴할까? 용량, 무게, 개수 대비 정확한 단가(가성비)를 1초 만에 실시간으로 비교해 주는 무료 계산기입니다.">
-    
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
 
     <style>
         body { 
-            background-color: #f8f9fa; color: #333; font-family: '맑은 고딕', sans-serif; 
+            background: linear-gradient(135deg, #1e1b4b, #2e1065);
+            color: white; font-family: '맑은 고딕', sans-serif; 
             padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6;
         }
         
         .page-header { text-align: center; margin-bottom: 30px; }
-        .page-header h1 { color: #0f172a; margin-bottom: 10px; font-size: 28px; }
-        .page-header p { color: #64748b; font-size: 15px; margin-top: 0; }
-        .badge { background-color: #fef08a; color: #854d0e; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+        .page-header h1 { font-size: 32px; margin-bottom: 10px; color: #fde047; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .page-header p { color: #cbd5e1; font-size: 15px; margin-top: 0; }
+        .badge { background-color: rgba(250, 204, 21, 0.2); border: 1px solid #facc15; color: #fef08a; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
         /* 계산기 메인 영역 */
         .calc-section {
-            background-color: white; padding: 25px; border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #e2e8f0;
+            background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
         }
 
         .product-card {
-            background-color: #f8fafc; border: 2px solid #e2e8f0; border-radius: 10px;
-            padding: 20px; margin-bottom: 20px; position: relative; transition: 0.3s;
+            background-color: rgba(15, 23, 42, 0.6); border: 1px solid #475569; border-radius: 12px;
+            padding: 25px; margin-bottom: 20px; position: relative; transition: 0.3s;
         }
-        .product-card.winner { border-color: #f59e0b; background-color: #fffbeb; } /* 승리(더 싼) 제품 강조 */
+        .product-card.winner { border-color: #f59e0b; background-color: rgba(245, 158, 11, 0.15); box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); } 
         
-        .product-title { margin-top: 0; font-size: 18px; color: #334155; margin-bottom: 15px; display: flex; align-items: center; justify-content: space-between; }
-        .winner-badge { display: none; background-color: #f59e0b; color: white; padding: 3px 10px; border-radius: 12px; font-size: 13px; font-weight: bold; }
+        .product-title { margin-top: 0; font-size: 18px; color: #f8fafc; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
+        .winner-badge { display: none; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: bold; }
         .product-card.winner .winner-badge { display: inline-block; animation: popIn 0.3s ease; }
 
         @keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        .input-group { display: flex; gap: 15px; margin-bottom: 10px; }
+        .input-group { display: flex; gap: 15px; margin-bottom: 15px; }
         .input-box { flex: 1; display: flex; flex-direction: column; }
-        .input-box label { font-size: 14px; color: #64748b; font-weight: bold; margin-bottom: 5px; }
+        .input-box label { font-size: 14px; color: #cbd5e1; font-weight: bold; margin-bottom: 8px; }
         .input-box input {
-            padding: 12px; font-size: 16px; border: 1px solid #cbd5e1;
-            border-radius: 8px; text-align: right; box-sizing: border-box; outline: none; transition: 0.2s;
+            padding: 15px; font-size: 16px; background-color: rgba(255,255,255,0.05); border: 1px solid #475569;
+            border-radius: 8px; text-align: right; color: white; box-sizing: border-box; outline: none; transition: 0.2s;
         }
-        .input-box input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2); }
+        .input-box input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3); background-color: rgba(255,255,255,0.1); }
 
-        .unit-price-display { margin-top: 15px; font-size: 16px; color: #475569; text-align: right; }
-        .unit-price-display strong { font-size: 20px; color: #1e293b; }
+        .unit-price-display { margin-top: 15px; font-size: 16px; color: #94a3b8; text-align: right; }
+        .unit-price-display strong { font-size: 22px; color: #fef08a; }
 
         /* 결과 요약창 */
         .result-banner {
-            background-color: #1e293b; color: white; padding: 20px; border-radius: 10px;
+            background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 20px; border-radius: 12px;
             text-align: center; font-size: 18px; font-weight: bold; line-height: 1.5;
-            display: none; /* 초기에는 숨김 */
+            display: none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); margin-top: 10px;
         }
-        .result-banner .highlight { color: #fcd34d; font-size: 24px; }
+        .result-banner .highlight { color: #fef08a; font-size: 24px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
 
         /* 내부 링크 */
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; margin-top: 30px; }
         .link-card {
-            flex: 1; background-color: #eff6ff; padding: 20px; border-radius: 12px;
-            text-decoration: none; color: #1e3a8a; font-weight: bold; text-align: center;
-            border: 1px solid #bfdbfe; transition: 0.2s;
+            flex: 1; background-color: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;
+            text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center;
+            border: 1px solid rgba(255,255,255,0.1); transition: 0.2s;
         }
-        .link-card:hover { background-color: #dbeafe; transform: translateY(-3px); }
-        .link-card span { display: block; font-size: 13px; color: #3b82f6; font-weight: normal; margin-top: 5px; }
+        .link-card:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-3px); border-color: #3b82f6; }
+        .link-card span { display: block; font-size: 13px; color: #94a3b8; font-weight: normal; margin-top: 5px; }
 
         /* SEO 최적화 설명 섹션 */
         .seo-section {
-            background-color: white; padding: 30px; border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 4px solid #f59e0b;
+            background-color: rgba(30, 41, 59, 0.7); padding: 30px; border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px;
         }
-        .seo-section h2 { color: #1e293b; font-size: 22px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0; }
-        .seo-section h3 { color: #334155; font-size: 18px; margin-top: 25px; }
-        .seo-section p { color: #475569; font-size: 15px; }
+        .seo-section h2 { color: #fde047; font-size: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-top: 0; }
+        .seo-section h3 { color: #fcd34d; font-size: 17px; margin-top: 25px; margin-bottom: 10px; }
+        .seo-section p { color: #cbd5e1; font-size: 15px; line-height: 1.7; margin-bottom: 15px; }
         
-        /* 🏛️ 공식 기관 출처 박스 (SEO 가점) */
+        /* 🏛️ 공식 기관 출처 박스 */
         .law-box {
-            background-color: #f8fafc; border-left: 4px solid #f59e0b;
-            padding: 20px; border-radius: 8px; margin-top: 30px;
+            background-color: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b;
+            padding: 20px; border-radius: 8px; margin-top: 30px; border-right: 1px solid rgba(245,158,11,0.2);
         }
-        .law-box h4 { margin: 0 0 10px 0; color: #b45309; font-size: 16px; }
-        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: #92400e; }
-        .law-link {
-            display: inline-block; color: #d97706; font-weight: bold; text-decoration: none; font-size: 15px;
-        }
-        .law-link:hover { text-decoration: underline; color: #b45309; }
+        .law-box h4 { margin: 0 0 10px 0; color: #fde047; font-size: 16px; }
+        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: #fef08a; opacity: 0.9; }
+        .law-link { display: inline-block; color: #f59e0b; font-weight: bold; text-decoration: none; font-size: 15px; }
+        .law-link:hover { text-decoration: underline; color: #fcd34d; }
 
-        .back-btn { display: block; text-align: center; padding: 15px; background-color: #64748b; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; }
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 12px; font-weight: bold; margin-bottom: 40px; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2); }
+        .back-btn:hover { background-color: rgba(255,255,255,0.2); }
 
         @media (max-width: 600px) {
             .input-group { flex-direction: column; gap: 10px; }
@@ -103,8 +103,7 @@
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
-        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="page-header">
         <h1>🛒 단가 & 가성비 계산기</h1>
         <p><span class="badge">실시간 가격 비교</span> 대용량이라고 무조건 싼 건 아닙니다!</p>
@@ -170,10 +169,8 @@
     <a href="index.html" class="back-btn">🏠 홈으로 돌아가기</a>
 
     <script>
-        // 숫자 소수점 2자리 처리 및 콤마 찍기
         function formatNumber(num) {
             if (!isFinite(num) || isNaN(num)) return "0";
-            // 소수점 2자리까지만 표시 (단가가 0.xx원일 수 있으므로)
             let rounded = Math.round(num * 100) / 100;
             return rounded.toLocaleString('ko-KR');
         }
@@ -188,48 +185,40 @@
             const cardB = document.getElementById('cardB');
             const resultBanner = document.getElementById('resultBanner');
 
-            // 초기화
             cardA.classList.remove('winner');
             cardB.classList.remove('winner');
             document.getElementById('unitA').innerText = "0";
             document.getElementById('unitB').innerText = "0";
             resultBanner.style.display = "none";
 
-            // A 제품 단가 계산
             let unitPriceA = 0;
             if (priceA > 0 && qtyA > 0) {
                 unitPriceA = priceA / qtyA;
                 document.getElementById('unitA').innerText = formatNumber(unitPriceA);
             }
 
-            // B 제품 단가 계산
             let unitPriceB = 0;
             if (priceB > 0 && qtyB > 0) {
                 unitPriceB = priceB / qtyB;
                 document.getElementById('unitB').innerText = formatNumber(unitPriceB);
             }
 
-            // 둘 다 정상적으로 입력되었을 때만 비교 실행
             if (unitPriceA > 0 && unitPriceB > 0) {
                 resultBanner.style.display = "block";
 
                 if (unitPriceA < unitPriceB) {
-                    // A가 더 싼 경우
                     cardA.classList.add('winner');
                     document.getElementById('winName').innerText = "A 제품";
-                    // 몇 % 더 싼지 계산: ((비싼단가 - 싼단가) / 비싼단가) * 100
                     let percent = ((unitPriceB - unitPriceA) / unitPriceB) * 100;
                     document.getElementById('savePercent').innerText = formatNumber(percent) + "%";
                 } 
                 else if (unitPriceB < unitPriceA) {
-                    // B가 더 싼 경우
                     cardB.classList.add('winner');
                     document.getElementById('winName').innerText = "B 제품";
                     let percent = ((unitPriceA - unitPriceB) / unitPriceA) * 100;
                     document.getElementById('savePercent').innerText = formatNumber(percent) + "%";
                 } 
                 else {
-                    // 가격이 같은 경우
                     resultBanner.style.display = "block";
                     resultBanner.innerHTML = "저런! 두 제품의 <span class='highlight'>가성비가 완전히 똑같습니다!</span>";
                 }

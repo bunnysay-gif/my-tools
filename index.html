@@ -8,7 +8,7 @@
     })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PANDORA TOOLS - 일상을 편하게 만드는 마법의 도구</title>
+    <title>PANDORA TOOLS - 일상을 편하게 만드는 마법의 도구 스토어</title>
     <meta name="description" content="단가 계산기, 대출 이자, 연차 달력, 글자수 세기, 배당금 시뮬레이터 등 일상과 재테크에 필요한 모든 스마트 도구를 무료로 제공합니다.">
     
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
@@ -45,7 +45,7 @@
 
         .tool-card { 
             background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(12px); padding: 40px 25px; border-radius: 20px; text-align: center;
+            backdrop-filter: blur(12px); padding: 30px 25px; border-radius: 20px; text-align: center;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-sizing: border-box;
             display: flex; flex-direction: column; justify-content: center; position: relative;
         }
@@ -57,13 +57,15 @@
         /* 신규 오픈 뱃지 */
         .new-badge {
             position: absolute; top: 15px; right: 15px; background-color: #ef4444; color: white;
-            padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; animation: pulse 2s infinite;
+            padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; animation: pulse 2s infinite;
         }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        .tool-card h2 { margin-top: 0; font-size: 1.4rem; margin-bottom: 12px; color: #fff; }
-        .tool-card p { margin: 0; font-size: 0.95rem; color: rgba(255, 255, 255, 0.8); line-height: 1.6; }
-        .tool-card .icon { font-size: 3.5rem; margin-bottom: 20px; }
+        .tool-card h2 { margin-top: 0; font-size: 1.25rem; margin-bottom: 10px; color: #fff; }
+        .tool-card p { margin: 0; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); line-height: 1.6; }
+        
+        /* 📏 아이콘 크기 최적화 (핵심 변경점) */
+        .tool-card .icon { font-size: 2.8rem; margin-bottom: 15px; display: block; }
 
         a { text-decoration: none; color: inherit; display: block; height: 100%; }
 
@@ -92,7 +94,6 @@
             </a>
             <a href="delivery.html">
                 <div class="tool-card" style="border-bottom: 4px solid #f97316;">
-                    <div class="new-badge">NEW</div>
                     <div class="icon">🛵</div>
                     <h2>배달 팁 더치페이</h2>
                     <p>배달비, 메뉴별로 공평하게!<br>1원 단위 더치페이 계산기</p>
@@ -100,7 +101,6 @@
             </a>
             <a href="converter.html">
                 <div class="tool-card" style="border-bottom: 4px solid #8b5cf6;">
-                    <div class="new-badge">NEW</div>
                     <div class="icon">📏</div>
                     <h2>실생활 단위 변환기</h2>
                     <p>100제곱미터가 몇 평이지?<br>평수, 인치, 무게 즉시 변환</p>
@@ -128,7 +128,7 @@
                 <div class="tool-card" style="border-bottom: 4px solid #ec4899;">
                     <div class="new-badge">HOT</div>
                     <div class="icon">✈️</div>
-                    <h2>황금 연휴 달력</h2>
+                    <h2>황금 연차 달력</h2>
                     <p>연차 하루 쓰고 5일 쉰다!<br>2026~2030 휴가 전략 총정리</p>
                 </div>
             </a>

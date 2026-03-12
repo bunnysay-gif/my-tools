@@ -15,74 +15,78 @@
 
     <style>
         body { 
-            background-color: #f8f9fa; color: #333; font-family: '맑은 고딕', sans-serif; 
+            background: linear-gradient(135deg, #1e1b4b, #2e1065); color: white; font-family: '맑은 고딕', sans-serif; 
             padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6;
         }
         
         .page-header { text-align: center; margin-bottom: 30px; }
-        .page-header h1 { color: #0f172a; margin-bottom: 10px; font-size: 28px; }
-        .page-header p { color: #64748b; font-size: 15px; margin-top: 0; }
-        .badge { background-color: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+        .page-header h1 { color: #fde047; margin-bottom: 10px; font-size: 28px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .page-header p { color: #cbd5e1; font-size: 15px; margin-top: 0; }
+        .badge { background-color: rgba(99, 102, 241, 0.2); color: #c7d2fe; border: 1px solid #818cf8; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
-        /* 계산기 영역 */
+        /* 계산기 영역 (다크 유리창) */
         .calc-section {
-            background-color: white; padding: 25px; border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #e2e8f0;
-            border-left: 5px solid #6366f1;
+            background-color: rgba(30, 41, 59, 0.8); padding: 25px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px); border-left: 5px solid #818cf8;
         }
-        .calc-title { color: #4338ca; font-size: 18px; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; }
+        .calc-title { color: #e0e7ff; font-size: 18px; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; }
 
         .input-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .input-group label { font-size: 14px; color: #64748b; font-weight: bold; }
+        .input-group label { font-size: 14px; color: #94a3b8; font-weight: bold; }
         .input-row { display: flex; gap: 10px; align-items: center; }
         
         input[type="date"], input[type="number"] {
-            width: 100%; padding: 12px; font-size: 16px; border: 1px solid #cbd5e1;
+            width: 100%; padding: 12px; font-size: 16px; border: 1px solid #475569; background-color: rgba(15, 23, 42, 0.6); color: white;
             border-radius: 8px; box-sizing: border-box; outline: none; transition: 0.2s; font-family: inherit;
         }
-        input:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+        input:focus { border-color: #818cf8; box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3); background-color: rgba(255,255,255,0.1); }
+        
+        /* 다크 모드에서 달력 아이콘 하얗게 반전 */
+        input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
 
         .btn-calc {
-            width: 100%; padding: 14px; background-color: #6366f1; color: white; border: none;
-            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s;
+            width: 100%; padding: 14px; background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; border: none;
+            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
         }
-        .btn-calc:hover { background-color: #4f46e5; }
+        .btn-calc:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99, 102, 241, 0.6); }
 
         .result-box {
-            background-color: #eef2ff; padding: 20px; border-radius: 8px; border: 1px solid #c7d2fe;
+            background-color: rgba(99, 102, 241, 0.1); padding: 20px; border-radius: 8px; border: 1px solid rgba(99, 102, 241, 0.3);
             text-align: center; margin-top: 15px; display: none; animation: fadeIn 0.4s;
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
         
-        .result-title { font-size: 15px; color: #4f46e5; font-weight: bold; margin-bottom: 5px; }
-        .result-value { font-size: 32px; color: #3730a3; font-weight: 900; letter-spacing: 1px; }
+        .result-title { font-size: 15px; color: #c7d2fe; font-weight: bold; margin-bottom: 5px; }
+        .result-value { font-size: 32px; color: #818cf8; font-weight: 900; letter-spacing: 1px; text-shadow: 1px 1px 5px rgba(129, 140, 248, 0.4); }
 
         /* 내부 링크 */
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
         .link-card {
-            flex: 1; background-color: #eff6ff; padding: 20px; border-radius: 12px;
-            text-decoration: none; color: #1e3a8a; font-weight: bold; text-align: center;
-            border: 1px solid #bfdbfe; transition: 0.2s;
+            flex: 1; background-color: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;
+            text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center;
+            border: 1px solid rgba(255,255,255,0.1); transition: 0.2s;
         }
-        .link-card:hover { background-color: #dbeafe; transform: translateY(-3px); }
-        .link-card span { display: block; font-size: 13px; color: #3b82f6; font-weight: normal; margin-top: 5px; }
+        .link-card:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-3px); border-color: #818cf8; }
+        .link-card span { display: block; font-size: 13px; color: #94a3b8; font-weight: normal; margin-top: 5px; }
 
         /* SEO 최적화 설명 섹션 */
         .seo-section {
-            background-color: white; padding: 30px; border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 4px solid #4338ca;
+            background-color: rgba(30, 41, 59, 0.7); padding: 30px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); border-top: 4px solid #818cf8; backdrop-filter: blur(10px);
         }
-        .seo-section h2 { color: #1e293b; font-size: 22px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0; }
-        .seo-section h3 { color: #334155; font-size: 18px; margin-top: 25px; }
-        .seo-section p { color: #475569; font-size: 15px; }
+        .seo-section h2 { color: #fde047; font-size: 22px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-top: 0; }
+        .seo-section h3 { color: #a5b4fc; font-size: 18px; margin-top: 25px; }
+        .seo-section p { color: #cbd5e1; font-size: 15px; }
         
-        .law-box { background-color: #f8fafc; border-left: 4px solid #6366f1; padding: 20px; border-radius: 8px; margin-top: 30px; }
-        .law-box h4 { margin: 0 0 10px 0; color: #3730a3; font-size: 16px; }
-        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: #4338ca; }
-        .law-link { display: inline-block; color: #4f46e5; font-weight: bold; text-decoration: none; font-size: 15px; margin-bottom: 5px;}
-        .law-link:hover { text-decoration: underline; color: #3730a3; }
+        .law-box { background-color: rgba(99, 102, 241, 0.1); border-left: 4px solid #818cf8; padding: 20px; border-radius: 8px; margin-top: 30px; border-right: 1px solid rgba(99, 102, 241, 0.2); }
+        .law-box h4 { margin: 0 0 10px 0; color: #e0e7ff; font-size: 16px; }
+        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: #c7d2fe; }
+        .law-link { display: inline-block; color: #818cf8; font-weight: bold; text-decoration: none; font-size: 15px; margin-bottom: 5px;}
+        .law-link:hover { text-decoration: underline; color: #a5b4fc; }
 
-        .back-btn { display: block; text-align: center; padding: 15px; background-color: #64748b; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; }
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s;}
+        .back-btn:hover { background-color: rgba(255,255,255,0.2); }
     </style>
 </head>
 <body>
@@ -117,7 +121,7 @@
             <label>며칠 째 되는 날이 궁금하신가요?</label>
             <div class="input-row">
                 <input type="number" id="plusDays" placeholder="예: 100">
-                <span style="font-weight:bold; color:#64748b;">일 째</span>
+                <span style="font-weight:bold; color:#94a3b8;">일 째</span>
             </div>
         </div>
         <button class="btn-calc" onclick="calcAnniversary()">기념일 계산하기</button>
@@ -159,7 +163,6 @@
             return new Date(today.getTime() - offset);
         }
 
-        // 1번: 디데이 계산 (미래/과거 목표일까지 며칠 남았는지)
         function calcDday() {
             const targetStr = document.getElementById('targetDate').value;
             if (!targetStr) { alert("목표일을 선택해주세요!"); return; }
@@ -169,25 +172,22 @@
             const target = new Date(targetStr);
             target.setHours(0,0,0,0);
 
-            // 시간 차이를 일(Day)로 변환
             const diffTime = target.getTime() - today.getTime();
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             let resultText = "";
             if (diffDays > 0) {
-                resultText = "D - " + diffDays; // 미래
+                resultText = "D - " + diffDays; 
             } else if (diffDays === 0) {
-                resultText = "D - Day!"; // 당일
+                resultText = "D - Day!"; 
             } else {
-                resultText = "D + " + Math.abs(diffDays); // 과거
+                resultText = "D + " + Math.abs(diffDays); 
             }
 
             document.getElementById('ddayValue').innerText = resultText;
             document.getElementById('ddayResultBox').style.display = "block";
         }
 
-        // 2번: 기념일 계산 (기준일 + N일)
-        // 한국식 커플 계산: 사귄 날을 1일로 치기 때문에 N-1 일을 더해야 함
         function calcAnniversary() {
             const baseStr = document.getElementById('baseDate').value;
             const plusDays = parseInt(document.getElementById('plusDays').value);
@@ -196,7 +196,6 @@
             if (plusDays <= 0) { alert("1 이상의 숫자를 입력해주세요."); return; }
 
             const baseDate = new Date(baseStr);
-            // 한국식 기준: 사귄 날이 1일이므로, 100일째는 실제 99일 뒤임
             baseDate.setDate(baseDate.getDate() + (plusDays - 1));
 
             const year = baseDate.getFullYear();
