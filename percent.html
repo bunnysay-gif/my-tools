@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>퍼센트 계산기 - 백분율, 할인율, 수익률 실시간 계산 | PANDORA TOOLS</title>
+    <meta name="description" content="버튼을 누를 필요 없는 실시간 퍼센트 계산기. 비율 계산, 할인율, 주가 증감률, 마진율 등 복잡한 백분율을 1초 만에 쉽게 계산해 드립니다.">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+
+    <style>
+        body { 
+            background-color: #f8f9fa; color: #333; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6;
+        }
+        
+        .page-header { text-align: center; margin-bottom: 30px; }
+        .page-header h1 { color: #0f172a; margin-bottom: 10px; font-size: 28px; }
+        .page-header p { color: #64748b; font-size: 15px; margin-top: 0; }
+        .badge { background-color: #dcfce7; color: #166534; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+
+        /* 계산기 카드 섹션 */
+        .calc-section {
+            background-color: white; padding: 25px; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #e2e8f0;
+            border-left: 5px solid #10b981; /* 에메랄드 그린 포인트 */
+        }
+        
+        .calc-title { color: #065f46; font-size: 18px; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; }
+        
+        .input-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; font-size: 16px; font-weight: bold; color: #475569; }
+        .input-row input {
+            width: 120px; padding: 10px; font-size: 16px; border: 1px solid #cbd5e1;
+            border-radius: 8px; text-align: right; outline: none; transition: 0.2s;
+        }
+        .input-row input:focus { border-color: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+
+        .result-box {
+            background-color: #f0fdf4; padding: 15px; border-radius: 8px; border: 1px solid #bbf7d0;
+            font-size: 18px; color: #166534; font-weight: bold; text-align: center;
+        }
+        .result-number { color: #059669; font-size: 24px; }
+
+        /* 내부 링크 */
+        .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
+        .link-card {
+            flex: 1; background-color: #eff6ff; padding: 20px; border-radius: 12px;
+            text-decoration: none; color: #1e3a8a; font-weight: bold; text-align: center;
+            border: 1px solid #bfdbfe; transition: 0.2s;
+        }
+        .link-card:hover { background-color: #dbeafe; transform: translateY(-3px); }
+        .link-card span { display: block; font-size: 13px; color: #3b82f6; font-weight: normal; margin-top: 5px; }
+
+        /* SEO 최적화 설명 섹션 */
+        .seo-section {
+            background-color: white; padding: 30px; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 4px solid #10b981;
+        }
+        .seo-section h2 { color: #1e293b; font-size: 22px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0; }
+        .seo-section h3 { color: #334155; font-size: 18px; margin-top: 25px; }
+        .seo-section p { color: #475569; font-size: 15px; }
+        .highlight { background-color: #dcfce7; padding: 2px 5px; border-radius: 4px; color: #166534; font-weight: bold; }
+
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: #64748b; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; }
+
+        @media (max-width: 600px) {
+            .input-row { flex-direction: column; align-items: flex-start; }
+            .input-row input { width: 100%; box-sizing: border-box; }
+            .internal-links { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="page-header">
+        <h1>💯 실시간 퍼센트 계산기</h1>
+        <p><span class="badge">자동 계산 지원</span> 할인율, 주가 수익률, 마진율을 1초 만에!</p>
+    </div>
+
+    <div class="calc-section">
+        <h3 class="calc-title">📌 1. 전체의 일정 퍼센트는 얼마인가요? (할인 금액 계산)</h3>
+        <div class="input-row">
+            <input type="number" id="v1_a" placeholder="전체값" oninput="calc1()"> 의 
+            <input type="number" id="v1_b" placeholder="비율(%)" oninput="calc1()"> % 는 얼마?
+        </div>
+        <div class="result-box">결과: <span class="result-number" id="res1">0</span></div>
+    </div>
+
+    <div class="calc-section">
+        <h3 class="calc-title">📌 2. 전체에서 일부는 몇 퍼센트인가요? (비중 계산)</h3>
+        <div class="input-row">
+            <input type="number" id="v2_a" placeholder="전체값" oninput="calc2()"> 중에서 
+            <input type="number" id="v2_b" placeholder="일부값" oninput="calc2()"> 은/는 몇 %?
+        </div>
+        <div class="result-box">결과: <span class="result-number" id="res2">0</span> %</div>
+    </div>
+
+    <div class="calc-section">
+        <h3 class="calc-title">📌 3. 값이 변하면 몇 퍼센트 증감했나요? (수익률 계산)</h3>
+        <div class="input-row">
+            <input type="number" id="v3_a" placeholder="이전값" oninput="calc3()"> 에서 
+            <input type="number" id="v3_b" placeholder="변경값" oninput="calc3()"> (으)로 변하면?
+        </div>
+        <div class="result-box">결과: <span class="result-number" id="res3">0</span> % 증감</div>
+    </div>
+
+    <div class="calc-section">
+        <h3 class="calc-title">📌 4. 일정 퍼센트 증가/감소하면 얼마인가요? (최종가 계산)</h3>
+        <div class="input-row">
+            <input type="number" id="v4_a" placeholder="기준값" oninput="calc4()"> 에서 
+            <input type="number" id="v4_b" placeholder="증감률(%)" oninput="calc4()"> % 증감하면?
+        </div>
+        <div class="result-box">결과: <span class="result-number" id="res4">0</span></div>
+    </div>
+
+    <div class="internal-links">
+        <a href="dividend.html" class="link-card">💰 배당투자 시뮬레이터<span>내 주식 배당률, 복리로 계산하면?</span></a>
+        <a href="severance.html" class="link-card">💸 예상 퇴직금 계산기<span>세전/세후 퇴직금 금액 확인하기</span></a>
+    </div>
+
+    <div class="seo-section">
+        <h2>💡 실생활에서 200% 활용하는 퍼센트 계산법</h2>
+        
+        <h3>1. 쇼핑할 때 '할인율' 계산하기 (1번, 4번 계산기 활용)</h3>
+        <p>인터넷 쇼핑을 하거나 마트에 갔을 때 <span class="highlight">"150,000원짜리 옷을 30% 할인한다"</span>면 얼마일까요? 1번 계산기에 [150,000]의 [30]%를 입력하면 할인 금액인 45,000원이 나옵니다. 최종 결제 금액이 궁금하다면 4번 계산기에 [150,000]에서 [-30]% 증감을 입력하면 최종 105,000원이 정확히 계산됩니다.</p>
+
+        <h3>2. 내 주식/코인 '수익률' 확인하기 (3번 계산기 활용)</h3>
+        <p>내가 산 주식이 <span class="highlight">"50,000원에서 65,000원으로 올랐을 때"</span> 수익률이 몇 퍼센트인지 헷갈리시나요? 3번 계산기의 이전값에 [50,000], 변경값에 [65,000]을 입력하면 내 계좌의 수익률이 정확히 +30% 상승했음을 확인할 수 있습니다. 주식 투자자라면 배당 수익률 계산과 함께 필수로 알아두어야 할 기능입니다.</p>
+
+        <h3>3. 우리 가게 '마진율(이익률)' 계산하기 (2번 계산기 활용)</h3>
+        <p>자영업자나 쇼핑몰 사장님이시라면 <span class="highlight">"매출 1,000만 원 중에서 순이익이 250만 원일 때"</span> 마진율을 계산해야 합니다. 2번 계산기 전체값에 [10,000,000]을, 일부값에 [2,500,000]을 넣으면 내 사업의 마진율이 25%임을 즉시 알 수 있습니다.</p>
+    </div>
+
+    <a href="index.html" class="back-btn">🏠 홈으로 돌아가기</a>
+
+    <script>
+        // 소수점 2자리까지만 예쁘게 잘라주고, 콤마 찍어주는 함수
+        function format(num) {
+            if (isNaN(num) || !isFinite(num)) return "0";
+            // 소수점이 있으면 최대 2자리까지만, 정수면 정수만 출력
+            let rounded = Math.round(num * 100) / 100;
+            return rounded.toLocaleString('ko-KR');
+        }
+
+        // 1번: A의 B%는 얼마? (A * B / 100)
+        function calc1() {
+            let a = parseFloat(document.getElementById('v1_a').value) || 0;
+            let b = parseFloat(document.getElementById('v1_b').value) || 0;
+            document.getElementById('res1').innerText = format(a * (b / 100));
+        }
+
+        // 2번: A에서 B는 몇 %? (B / A * 100)
+        function calc2() {
+            let a = parseFloat(document.getElementById('v2_a').value);
+            let b = parseFloat(document.getElementById('v2_b').value) || 0;
+            if (!a || a === 0) { document.getElementById('res2').innerText = "0"; return; }
+            document.getElementById('res2').innerText = format((b / a) * 100);
+        }
+
+        // 3번: A에서 B로 변하면 증감률? ((B - A) / A * 100)
+        function calc3() {
+            let a = parseFloat(document.getElementById('v3_a').value);
+            let b = parseFloat(document.getElementById('v3_b').value) || 0;
+            if (!a || a === 0) { document.getElementById('res3').innerText = "0"; return; }
+            let result = ((b - a) / a) * 100;
+            let prefix = result > 0 ? "+" : ""; // 양수면 + 기호 붙이기
+            document.getElementById('res3').innerText = prefix + format(result);
+        }
+
+        // 4번: A에서 B% 증감하면? (A * (1 + B / 100))
+        function calc4() {
+            let a = parseFloat(document.getElementById('v4_a').value) || 0;
+            let b = parseFloat(document.getElementById('v4_b').value) || 0;
+            document.getElementById('res4').innerText = format(a * (1 + (b / 100)));
+        }
+    </script>
+</body>
+</html>

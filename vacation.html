@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026~2030 황금 연차 달력 - 연휴 & 대체공휴일 | PANDORA TOOLS</title>
+    <meta name="description" content="2026년부터 2030년까지 1~12월 전체 달력 제공. 공휴일, 대체공휴일을 활용해 가장 길게 쉴 수 있는 황금연휴 달력과 추천 연차일을 확인하세요.">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+
+    <style>
+        body { background: #131127; color: white; font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; line-height: 1.6; }
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { font-size: 32px; margin-bottom: 10px; color: #fff; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .badge { background-color: rgba(236, 72, 153, 0.2); border: 1px solid #ec4899; color: #fbcfe8; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+
+        .year-tabs { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+        .tab-btn { flex: 1; padding: 15px 20px; text-align: center; background-color: #1e1b3a; color: #94a3b8; font-weight: bold; border-radius: 12px; cursor: pointer; border: 1px solid #2d2a4a; transition: 0.3s; white-space: nowrap; font-size: 16px; }
+        .tab-btn.active { background-color: #4c1d95; color: white; border-color: #6d28d9; box-shadow: 0 0 15px rgba(109, 40, 217, 0.4); }
+        .tab-btn:hover:not(.active) { background-color: #2d2a4a; color: white; }
+
+        #calendar-container { animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .month-card { background-color: #22203c; border-radius: 16px; margin-bottom: 30px; border: 1px solid #333055; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; }
+        .month-header { background: linear-gradient(90deg, #2a274c, #3f2f63); padding: 15px 25px; border-bottom: 1px solid #333055; display: flex; justify-content: space-between; align-items: center; }
+        .month-header h2 { margin: 0; font-size: 24px; font-weight: 900; color: #fff; }
+        .month-header .vacation-days { background-color: #ec4899; color: white; padding: 4px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; display: none; }
+        .month-header .vacation-days.show { display: inline-block; }
+
+        .month-body { display: flex; padding: 25px; gap: 30px; }
+        .calendar-box { background-color: #1a1831; border-radius: 12px; padding: 20px; min-width: 260px; border: 1px solid #2d2a4a; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; }
+        .cal-header { font-size: 13px; color: #94a3b8; font-weight: bold; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #2d2a4a; }
+        .cal-day { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; margin: 0 auto; border-radius: 8px; color: #cbd5e1; transition: 0.2s; }
+        .cal-day.empty { background: transparent; }
+        
+        .day-sun { color: #f87171; }
+        .day-sat { color: #60a5fa; }
+        .day-holiday { background-color: #ec4899; color: white; font-weight: bold; box-shadow: 0 0 10px rgba(236,72,153,0.5); }
+        .day-vacation { background-color: #10b981; color: white; font-weight: bold; box-shadow: 0 0 10px rgba(16,185,129,0.5); }
+
+        .info-panel { flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: center; }
+        .no-event-msg { color: #64748b; font-size: 15px; text-align: center; font-style: italic; }
+        .info-row { background-color: #2a274c; padding: 15px 20px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333055; }
+        .info-date { font-size: 15px; font-weight: bold; color: #e2e8f0; }
+        .info-desc { font-size: 14px; font-weight: bold; }
+        
+        .strategy-box { margin-top: 10px; background: linear-gradient(90deg, #4c1d95, #701a75); padding: 20px; border-radius: 10px; border: 1px solid #86198f; text-align: center; font-size: 18px; font-weight: bold; color: #fdf2f8; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .strategy-box .highlight { color: #fde047; font-size: 22px; }
+
+        .seo-section { background-color: #1e1b3a; padding: 30px; border-radius: 16px; border: 1px solid #2d2a4a; margin-bottom: 30px; }
+        .seo-section h2 { color: #e0e7ff; font-size: 20px; border-bottom: 1px solid #333055; padding-bottom: 15px; margin-top: 0; }
+        .seo-section p { color: #94a3b8; font-size: 15px; line-height: 1.7; }
+
+        /* 💰 쿠팡 파트너스 전용 쇼핑 카드 스타일 */
+        .affiliate-section { background: #1a1831; padding: 30px; border-radius: 16px; border: 1px solid #333055; margin-bottom: 40px; text-align: center; }
+        .affiliate-section h2 { color: #fff; font-size: 22px; margin-top: 0; margin-bottom: 10px; }
+        .affiliate-section p { color: #94a3b8; font-size: 15px; margin-bottom: 25px; }
+        
+        .aff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .aff-card {
+            display: flex; flex-direction: column; background-color: #22203c; border-radius: 12px; padding: 20px;
+            text-decoration: none; border: 1px solid #2d2a4a; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .aff-card:hover { transform: translateY(-5px); border-color: #3b82f6; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2); }
+        
+        .aff-img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background-color: #fff; }
+        .aff-title { color: white; font-weight: bold; font-size: 16px; margin-bottom: 8px; text-align: left; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .aff-sub { color: #facc15; font-size: 14px; font-weight: bold; text-align: left; margin-bottom: 15px; }
+        .aff-btn { background-color: #3b82f6; color: white; padding: 12px; border-radius: 8px; font-weight: bold; text-align: center; transition: 0.2s; }
+        .aff-card:hover .aff-btn { background-color: #2563eb; }
+
+        .aff-disclosure { font-size: 12px; color: #64748b; text-align: center; margin-top: 25px; border-top: 1px solid #2d2a4a; padding-top: 15px; }
+
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: #2d2a4a; color: white; text-decoration: none; border-radius: 12px; font-weight: bold; transition: 0.2s; border: 1px solid #333055; margin-bottom: 40px; }
+        .back-btn:hover { background-color: #3f2f63; }
+
+        @media (max-width: 768px) {
+            .month-body { flex-direction: column; padding: 15px; gap: 20px; }
+            .calendar-box { min-width: auto; }
+            .strategy-box { font-size: 16px; }
+            .strategy-box .highlight { font-size: 18px; }
+            .year-tabs { font-size: 14px; }
+            .info-row { flex-direction: column; align-items: flex-start; gap: 5px; }
+            .aff-img { height: 180px; }
+        }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <div class="page-header">
+        <h1>✈️ 황금 연차 & 휴가 달력</h1>
+        <p><span class="badge">직장인 생존 가이드</span> 연차 하루 쓰고 길게 쉬는 완벽한 타이밍!</p>
+    </div>
+
+    <div class="year-tabs">
+        <div class="tab-btn active" onclick="loadYear(2026, this)">2026년</div>
+        <div class="tab-btn" onclick="loadYear(2027, this)">2027년</div>
+        <div class="tab-btn" onclick="loadYear(2028, this)">2028년</div>
+        <div class="tab-btn" onclick="loadYear(2029, this)">2029년</div>
+        <div class="tab-btn" onclick="loadYear(2030, this)">2030년</div>
+    </div>
+
+    <div id="calendar-container"></div>
+
+    <div class="seo-section">
+        <h2>💡 황금 연휴와 대체공휴일 완벽 활용 가이드 (SEO 꿀팁)</h2>
+        <p><strong>🔥 블로그 및 유튜브 키워드 전략:</strong> 매년 하반기가 되면 가장 먼저 검색창에 오르내리는 키워드가 바로 <strong>"내년 대체공휴일", "명절 연차", "황금연휴 달력"</strong>입니다. 직장인들은 해외여행 항공권을 미리 저렴하게 예매하기 위해 이 일정을 가장 중요하게 생각합니다. 이 페이지를 즐겨찾기 해두시고, 주변 직장인 동료들에게 공유해 보세요.</p>
+        <p><strong>📌 공휴일 중복 및 대체공휴일 법령:</strong> 현행 '관공서의 공휴일에 관한 규정'에 따라 추석, 설날, 어린이날 등이 주말과 겹치는 경우 그다음 비공휴일이 <strong>대체공휴일로 지정</strong>됩니다. 판도라 툴즈의 캘린더는 이러한 최신 데이터를 반영하여 연차 효율이 가장 높은 날짜(초록색)를 짚어드립니다.</p>
+    </div>
+
+    <div class="affiliate-section">
+        <h2>✈️ 연휴 여행 준비, 품절되기 전에 쟁여두세요!</h2>
+        <p>황금연휴 필수품! 지금 쿠팡에서 가장 많이 팔리는 여행 꿀템입니다.</p>
+        
+        <div class="aff-grid">
+            <a href="https://link.coupang.com/a/d202XT" target="_blank" class="aff-card">
+                <img src="images/shopping/1.jpg" alt="수린 여행용 압축파우치 6종세트" class="aff-img" onerror="this.src='https://via.placeholder.com/300?text=이미지+준비중'">
+                <div class="aff-title">수린 여행용 압축파우치 6종세트 수납 정리 파우치</div>
+                <div class="aff-sub">⭐ 짐 부피를 반으로 뚝! 기내수하물 필수템</div>
+                <div class="aff-btn">쿠팡 최저가 확인하기 👉</div>
+            </a>
+            
+            <a href="https://link.coupang.com/a/d21CQ8" target="_blank" class="aff-card">
+                <img src="images/shopping/2.png" alt="대용량 USB 충전 멀티 캐리어" class="aff-img" onerror="this.src='https://via.placeholder.com/300?text=이미지+준비중'">
+                <div class="aff-title">대용량 USB 충전포트 핸드폰 거치대 멀티 패션 캐리어</div>
+                <div class="aff-sub">🔥 품절대란! 편의성 끝판왕 캐리어</div>
+                <div class="aff-btn">쿠팡 최저가 확인하기 👉</div>
+            </a>
+        </div>
+        
+        <div class="aff-disclosure">
+            "이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다."
+        </div>
+    </div>
+
+    <a href="index.html" class="back-btn">🏠 대문으로 돌아가기</a>
+
+    <script>
+        const eventDB = {
+            2026: {
+                2: { badge: "최대 9일 연휴", holidays: [16, 17, 18], vacs: [19, 20], rows: [{ date: "16일(월) ~ 18일(수)", desc: "설날 연휴", color: "#ec4899" }, { date: "19일(목) ~ 20일(금)", desc: "✨ 추천 연차", color: "#10b981" }], strategy: "👉 목/금 <strong>연차 2일</strong> 사용 시 <br><span class='highlight'>총 9일 (14일~22일) 꿀휴식!</span>" },
+                5: { badge: "가성비 4일 연휴", holidays: [5, 24, 25], vacs: [4], rows: [{ date: "5일(화)", desc: "어린이날", color: "#ec4899" }, { date: "24일(일) / 25일(월)", desc: "부처님오신날 & 대체", color: "#ec4899" }, { date: "4일(월)", desc: "✨ 추천 연차", color: "#10b981" }], strategy: "👉 4일(월) <strong>연차 1일</strong> 사용 시 <br><span class='highlight'>총 4일 (2일~5일) 휴식!</span>" },
+                9: { badge: "초대박 11일 연휴", holidays: [24, 25, 26, 28], vacs: [29, 30], rows: [{ date: "24일(목) ~ 26일(토)", desc: "추석 연휴", color: "#ec4899" }, { date: "28일(월)", desc: "대체 공휴일", color: "#ec4899" }, { date: "29일(화) ~ 30일(수)", desc: "✨ 추천 연차", color: "#10b981" }], strategy: "👉 이어지는 10월 연차와 결합 시 <br><span class='highlight'>총 11일 초대박 연휴 완성!</span>" },
+                10: { holidays: [3, 9], vacs: [1, 2], rows: [{ date: "1일(목) ~ 2일(금)", desc: "✨ 추천 연차", color: "#10b981" }, { date: "3일(토)", desc: "개천절", color: "#ec4899" }] }
+            },
+            2027: {
+                2: { badge: "최대 9일 연휴", holidays: [6, 7, 8, 9], vacs: [10, 11, 12], rows: [{ date: "6일(토) ~ 8일(월)", desc: "설날 연휴", color: "#ec4899" }, { date: "9일(화)", desc: "대체 공휴일", color: "#ec4899" }, { date: "10일(수) ~ 12일(금)", desc: "✨ 추천 연차", color: "#10b981" }], strategy: "👉 수/목/금 <strong>연차 3일</strong> 사용 시 <br><span class='highlight'>총 9일 (6일~14일) 휴식!</span>" }
+            },
+            2028: {
+                1: { holidays: [26, 27, 28], vacs: [], rows: [{ date: "26일(수) ~ 28일(금)", desc: "설날 연휴", color: "#ec4899" }] },
+                10: { badge: "🔥 전설의 10일 연휴", holidays: [2, 3, 4, 5, 9], vacs: [6], rows: [{ date: "2일(월) ~ 4일(수)", desc: "추석 연휴", color: "#ec4899" }, { date: "3일(화)", desc: "개천절 (중복)", color: "#ec4899" }, { date: "5일(목)", desc: "대체 공휴일", color: "#ec4899" }, { date: "6일(금)", desc: "✨ 추천 연차", color: "#10b981" }, { date: "9일(월)", desc: "한글날", color: "#ec4899" }], strategy: "👉 6일(금) <strong>연차 단 1일</strong> 사용 시 <br><span class='highlight'>무려 10일 (9/30~10/9) 연속 휴식!</span>" }
+            },
+            2029: {
+                2: { holidays: [12, 13, 14], vacs: [], rows: [{ date: "12일(월) ~ 14일(수)", desc: "설날 연휴", color: "#ec4899" }] },
+                9: { holidays: [21, 22, 23, 24], vacs: [], rows: [{ date: "21일(금) ~ 24일(월)", desc: "추석 & 대체휴일", color: "#ec4899" }] },
+                12: { badge: "가성비 4일 연휴", holidays: [25], vacs: [24], rows: [{ date: "24일(월)", desc: "✨ 추천 연차", color: "#10b981" }, { date: "25일(화)", desc: "크리스마스", color: "#ec4899" }], strategy: "👉 월요일 <strong>연차 1일</strong> 사용 시 <span class='highlight'>총 4일 연말 휴식!</span>" }
+            },
+            2030: {
+                2: { holidays: [2, 3, 4, 5], vacs: [], rows: [{ date: "2일(토) ~ 5일(화)", desc: "설날 & 대체휴일", color: "#ec4899" }] },
+                9: { badge: "최대 9일 연휴", holidays: [11, 12, 13], vacs: [9, 10], rows: [{ date: "9일(월) ~ 10일(화)", desc: "✨ 추천 연차", color: "#10b981" }, { date: "11일(수) ~ 13일(금)", desc: "추석 연휴", color: "#ec4899" }], strategy: "👉 월/화 <strong>연차 2일</strong> 사용 시 <span class='highlight'>총 9일(8일~15일) 가을 휴식!</span>" }
+            }
+        };
+
+        function loadYear(year, btnElement) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            if(btnElement) btnElement.classList.add('active');
+
+            const container = document.getElementById('calendar-container');
+            container.innerHTML = ''; 
+            
+            for (let month = 1; month <= 12; month++) {
+                const monthData = (eventDB[year] && eventDB[year][month]) ? eventDB[year][month] : null;
+                const firstDay = new Date(year, month - 1, 1).getDay(); 
+                const daysInMonth = new Date(year, month, 0).getDate();
+                
+                let daysHtml = '';
+                for (let i = 0; i < firstDay; i++) { daysHtml += `<div class="cal-day empty"></div>`; }
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    let classes = "cal-day";
+                    let currentDayOfWeek = new Date(year, month - 1, day).getDay();
+                    if (currentDayOfWeek === 0) classes += " day-sun";
+                    if (currentDayOfWeek === 6) classes += " day-sat";
+                    
+                    if (monthData) {
+                        if (monthData.holidays && monthData.holidays.includes(day)) classes += " day-holiday";
+                        if (monthData.vacs && monthData.vacs.includes(day)) classes += " day-vacation";
+                    }
+                    daysHtml += `<div class="${classes}">${day}</div>`;
+                }
+
+                let infoHtml = ''; let badgeHtml = '';
+                if (monthData) {
+                    if(monthData.badge) badgeHtml = `<div class="vacation-days show">${monthData.badge}</div>`;
+                    monthData.rows.forEach(row => { infoHtml += `<div class="info-row"><span class="info-date">${row.date}</span><span class="info-desc" style="color:${row.color};">${row.desc}</span></div>`; });
+                    if (monthData.strategy) infoHtml += `<div class="strategy-box">${monthData.strategy}</div>`;
+                } else {
+                    infoHtml = `<div class="no-event-msg">특별한 공휴일이 없는 달입니다.<br>열심히 달려봅시다! 💪</div>`;
+                }
+
+                const monthCard = `
+                    <div class="month-card">
+                        <div class="month-header"><h2>${month}월</h2>${badgeHtml}</div>
+                        <div class="month-body">
+                            <div class="calendar-box">
+                                <div class="cal-grid cal-header"><div class="day-sun">일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div class="day-sat">토</div></div>
+                                <div class="cal-grid">${daysHtml}</div>
+                            </div>
+                            <div class="info-panel">${infoHtml}</div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += monthCard;
+            }
+        }
+
+        window.onload = () => { loadYear(2026, document.querySelector('.tab-btn.active')); };
+    </script>
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디데이(D-Day) & 기념일 계산기 - 수능, 전역일, 커플 날짜 | PANDORA TOOLS</title>
+    <meta name="description" content="수능, 전역일, 시험 등 중요한 디데이(D-Day)와 커플 100일, 1주년 기념일을 날짜 오차 없이 정확하게 실시간으로 계산해 주는 무료 도구입니다.">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+
+    <style>
+        body { 
+            background-color: #f8f9fa; color: #333; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6;
+        }
+        
+        .page-header { text-align: center; margin-bottom: 30px; }
+        .page-header h1 { color: #0f172a; margin-bottom: 10px; font-size: 28px; }
+        .page-header p { color: #64748b; font-size: 15px; margin-top: 0; }
+        .badge { background-color: #e0e7ff; color: #4338ca; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+
+        /* 계산기 영역 */
+        .calc-section {
+            background-color: white; padding: 25px; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; border: 1px solid #e2e8f0;
+            border-left: 5px solid #6366f1;
+        }
+        .calc-title { color: #4338ca; font-size: 18px; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; }
+
+        .input-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .input-group label { font-size: 14px; color: #64748b; font-weight: bold; }
+        .input-row { display: flex; gap: 10px; align-items: center; }
+        
+        input[type="date"], input[type="number"] {
+            width: 100%; padding: 12px; font-size: 16px; border: 1px solid #cbd5e1;
+            border-radius: 8px; box-sizing: border-box; outline: none; transition: 0.2s; font-family: inherit;
+        }
+        input:focus { border-color: #6366f1; box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2); }
+
+        .btn-calc {
+            width: 100%; padding: 14px; background-color: #6366f1; color: white; border: none;
+            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s;
+        }
+        .btn-calc:hover { background-color: #4f46e5; }
+
+        .result-box {
+            background-color: #eef2ff; padding: 20px; border-radius: 8px; border: 1px solid #c7d2fe;
+            text-align: center; margin-top: 15px; display: none; animation: fadeIn 0.4s;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .result-title { font-size: 15px; color: #4f46e5; font-weight: bold; margin-bottom: 5px; }
+        .result-value { font-size: 32px; color: #3730a3; font-weight: 900; letter-spacing: 1px; }
+
+        /* 내부 링크 */
+        .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
+        .link-card {
+            flex: 1; background-color: #eff6ff; padding: 20px; border-radius: 12px;
+            text-decoration: none; color: #1e3a8a; font-weight: bold; text-align: center;
+            border: 1px solid #bfdbfe; transition: 0.2s;
+        }
+        .link-card:hover { background-color: #dbeafe; transform: translateY(-3px); }
+        .link-card span { display: block; font-size: 13px; color: #3b82f6; font-weight: normal; margin-top: 5px; }
+
+        /* SEO 최적화 설명 섹션 */
+        .seo-section {
+            background-color: white; padding: 30px; border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; border-top: 4px solid #4338ca;
+        }
+        .seo-section h2 { color: #1e293b; font-size: 22px; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-top: 0; }
+        .seo-section h3 { color: #334155; font-size: 18px; margin-top: 25px; }
+        .seo-section p { color: #475569; font-size: 15px; }
+        
+        .law-box { background-color: #f8fafc; border-left: 4px solid #6366f1; padding: 20px; border-radius: 8px; margin-top: 30px; }
+        .law-box h4 { margin: 0 0 10px 0; color: #3730a3; font-size: 16px; }
+        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: #4338ca; }
+        .law-link { display: inline-block; color: #4f46e5; font-weight: bold; text-decoration: none; font-size: 15px; margin-bottom: 5px;}
+        .law-link:hover { text-decoration: underline; color: #3730a3; }
+
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: #64748b; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="page-header">
+        <h1>📅 D-Day & 기념일 계산기</h1>
+        <p><span class="badge">오차 없는 정확도</span> 수능, 전역일, 커플 100일 언제일까?</p>
+    </div>
+
+    <div class="calc-section">
+        <h3 class="calc-title">⏳ 1. 디데이 계산 (목표일까지 며칠 남았을까?)</h3>
+        <div class="input-group">
+            <label>목표일 (예: 수능일, 전역일, 출산예정일)</label>
+            <input type="date" id="targetDate">
+        </div>
+        <button class="btn-calc" onclick="calcDday()">디데이 계산하기</button>
+        <div class="result-box" id="ddayResultBox">
+            <div class="result-title">오늘을 기준으로</div>
+            <div class="result-value" id="ddayValue">D-0</div>
+        </div>
+    </div>
+
+    <div class="calc-section">
+        <h3 class="calc-title">💕 2. 기념일 날짜 계산 (100일은 언제일까?)</h3>
+        <div class="input-group">
+            <label>기준일 (예: 사귄 날, 아기 태어난 날)</label>
+            <input type="date" id="baseDate">
+        </div>
+        <div class="input-group">
+            <label>며칠 째 되는 날이 궁금하신가요?</label>
+            <div class="input-row">
+                <input type="number" id="plusDays" placeholder="예: 100">
+                <span style="font-weight:bold; color:#64748b;">일 째</span>
+            </div>
+        </div>
+        <button class="btn-calc" onclick="calcAnniversary()">기념일 계산하기</button>
+        <div class="result-box" id="anniResultBox">
+            <div class="result-title">그 날은 바로</div>
+            <div class="result-value" id="anniValue">0000년 00월 00일</div>
+        </div>
+    </div>
+
+    <div class="seo-section">
+        <h2>💡 한국인만 아는 디데이(D-Day) 계산법의 비밀</h2>
+        
+        <h3>1. 수능, 전역일은 'D-Day', 커플 기념일은 '1일'부터?</h3>
+        <p>한국에서는 계산 목적에 따라 날짜를 세는 방식이 조금 다릅니다. <strong>수능이나 시험, 전역일</strong>처럼 미래의 목표를 기다릴 때는 당일을 포함하지 않고 남은 일수만 계산합니다 (예: 내일이 시험이면 D-1). 반면 <strong>연인들의 100일이나 아기 백일</strong>을 계산할 때는 사귀기 시작한 날(또는 태어난 날)을 '1일'로 포함하여 계산하는 것이 일반적인 국룰입니다. 본 판도라 툴즈 계산기는 이러한 한국의 문화를 완벽하게 반영하여 오차 없이 계산해 드립니다.</p>
+
+        <h3>2. 전역일 계산, 언제 끝날까?</h3>
+        <p>가족이나 연인을 군대에 보냈다면 하루하루가 길게 느껴질 텐데요. 현재 육군 및 해병대의 복무 기간은 18개월, 해군은 20개월, 공군은 21개월입니다. 입대일을 기준으로 D-Day를 설정해 두면 전역일까지 남은 시간을 한눈에 확인할 수 있습니다.</p>
+
+        <div class="law-box">
+            <h4>📌 주요 일정 공식 사이트 확인</h4>
+            <p>수능일정이나 입대/전역 관련 정확한 정보는 아래 공식 국가 기관 사이트에서 확인하시는 것이 가장 확실합니다.</p>
+            <a href="https://www.mma.go.kr/" target="_blank" class="law-link">🔗 병무청 (군입대 및 전역일 확인) 👉</a><br>
+            <a href="https://www.suneung.re.kr/" target="_blank" class="law-link">🔗 대학수학능력시험 공식 홈페이지 👉</a>
+        </div>
+    </div>
+
+    <div class="internal-links">
+        <a href="age.html" class="link-card">🎂 만 나이 계산기<span>올해 생일 지났나요? 정확한 나이 확인</span></a>
+        <a href="percent.html" class="link-card">💯 실시간 퍼센트 계산기<span>목표일까지 몇 %나 왔는지 확인해보세요!</span></a>
+    </div>
+
+    <a href="index.html" class="back-btn">🏠 홈으로 돌아가기</a>
+
+    <script>
+        // 오늘 날짜를 YYYY-MM-DD 형태로 가져오기 (시간 무시, KST 기준)
+        function getToday() {
+            const today = new Date();
+            const offset = today.getTimezoneOffset() * 60000;
+            return new Date(today.getTime() - offset);
+        }
+
+        // 1번: 디데이 계산 (미래/과거 목표일까지 며칠 남았는지)
+        function calcDday() {
+            const targetStr = document.getElementById('targetDate').value;
+            if (!targetStr) { alert("목표일을 선택해주세요!"); return; }
+
+            const today = getToday();
+            today.setHours(0,0,0,0);
+            const target = new Date(targetStr);
+            target.setHours(0,0,0,0);
+
+            // 시간 차이를 일(Day)로 변환
+            const diffTime = target.getTime() - today.getTime();
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            let resultText = "";
+            if (diffDays > 0) {
+                resultText = "D - " + diffDays; // 미래
+            } else if (diffDays === 0) {
+                resultText = "D - Day!"; // 당일
+            } else {
+                resultText = "D + " + Math.abs(diffDays); // 과거
+            }
+
+            document.getElementById('ddayValue').innerText = resultText;
+            document.getElementById('ddayResultBox').style.display = "block";
+        }
+
+        // 2번: 기념일 계산 (기준일 + N일)
+        // 한국식 커플 계산: 사귄 날을 1일로 치기 때문에 N-1 일을 더해야 함
+        function calcAnniversary() {
+            const baseStr = document.getElementById('baseDate').value;
+            const plusDays = parseInt(document.getElementById('plusDays').value);
+
+            if (!baseStr || !plusDays) { alert("기준일과 궁금한 일수를 정확히 입력해주세요!"); return; }
+            if (plusDays <= 0) { alert("1 이상의 숫자를 입력해주세요."); return; }
+
+            const baseDate = new Date(baseStr);
+            // 한국식 기준: 사귄 날이 1일이므로, 100일째는 실제 99일 뒤임
+            baseDate.setDate(baseDate.getDate() + (plusDays - 1));
+
+            const year = baseDate.getFullYear();
+            const month = String(baseDate.getMonth() + 1).padStart(2, '0');
+            const day = String(baseDate.getDate()).padStart(2, '0');
+            
+            const days = ['일', '월', '화', '수', '목', '금', '토'];
+            const dayOfWeek = days[baseDate.getDay()];
+
+            const resultText = `${year}년 ${month}월 ${day}일 (${dayOfWeek})`;
+            
+            document.getElementById('anniValue').innerText = resultText;
+            document.getElementById('anniResultBox').style.display = "block";
+        }
+    </script>
+</body>
+</html>

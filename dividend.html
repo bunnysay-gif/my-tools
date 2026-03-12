@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>배당투자 계산기 - 만물상 도구 스토어</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267"
      crossorigin="anonymous"></script>
@@ -156,7 +162,6 @@
         th { background-color: #f8f9fa; text-align: center; color: #495057; }
         td:first-child { text-align: center; font-weight: bold; color: #6c757d; }
 
-        /* ✨ 하단 유용한 정보 섹션 디자인 ✨ */
         .info-section {
             background-color: white;
             padding: 40px;
@@ -178,7 +183,6 @@
         .info-block p { color: #475569; line-height: 1.7; font-size: 15px; margin: 0; }
         .highlight { background-color: #fef08a; padding: 2px 6px; border-radius: 3px; font-weight: bold; color: #b45309; }
         
-        /* 추천 콘텐츠 박스 */
         .tip-box { 
             background-color: #f8fafc; 
             border-left: 4px solid #3b82f6; 
@@ -198,9 +202,36 @@
             border-radius: 5px;
             font-weight: bold;
         }
+
+        /* 📱 스마트폰 화면 전용 최적화 (여기가 핵심 추가 코드입니다!) */
+        @media (max-width: 768px) {
+            body { padding: 15px; } /* 여백 줄이기 */
+            h1 { font-size: 24px; }
+            
+            .input-card { padding: 20px 15px; }
+            .input-group { 
+                flex-direction: column; /* 세로로 배치 */
+                align-items: flex-start; 
+                gap: 10px;
+            }
+            .input-group label { width: 100%; } /* 라벨이 한 줄 다 쓰게 */
+            .input-wrapper { width: 100%; justify-content: flex-start; } /* 입력창도 왼쪽 정렬 */
+            
+            .summary-wrapper { flex-direction: column; gap: 10px; } /* 결과 박스 세로 정렬 */
+            .summary-box { margin-bottom: 10px; }
+            
+            .table-header { flex-direction: column; gap: 15px; align-items: flex-start; } /* 엑셀 버튼 위치 조정 */
+            
+            /* 넓은 표를 폰에서 좌우로 스크롤 할 수 있게 만듭니다 */
+            table { display: block; overflow-x: auto; white-space: nowrap; } 
+            
+            .info-section { padding: 20px; } /* 설명란 여백 축소 */
+        }
     </style>
 </head>
 <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <h1>💰 배당투자 시뮬레이터</h1>
 

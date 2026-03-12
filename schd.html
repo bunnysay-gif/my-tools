@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SCHD 배당 시뮬레이터 - 만물상 도구 스토어</title>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267"
      crossorigin="anonymous"></script>
@@ -116,7 +122,7 @@
             margin-top: 40px;
             margin-bottom: 30px;
             text-align: left;
-            border-top: 4px solid #1e3a8a; /* SCHD를 상징하는 진한 파란색 */
+            border-top: 4px solid #1e3a8a; 
         }
         .info-section h2 { color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-top: 0; }
         .info-block { margin-bottom: 30px; }
@@ -129,9 +135,36 @@
         
         .back-btn-wrapper { text-align: center; margin-top: 40px; margin-bottom: 50px; }
         .back-btn { display: inline-block; padding: 12px 25px; background-color: #64748b; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+
+        /* 📱 스마트폰 화면 전용 최적화 (이 부분이 추가되었습니다!) */
+        @media (max-width: 768px) {
+            body { padding: 15px; } /* 폰에서는 양옆 여백을 줄여 넓게 씁니다 */
+            .page-header h1 { font-size: 24px; }
+            
+            .input-card { padding: 20px 15px; }
+            .input-group { 
+                flex-direction: column; /* 가로 배열을 세로 배열로 변경 */
+                align-items: flex-start; 
+                gap: 10px;
+            }
+            .input-group label { width: 100%; } /* 라벨이 한 줄을 다 차지하게 */
+            .input-wrapper { width: 100%; justify-content: flex-start; } /* 입력창을 왼쪽 정렬 */
+            
+            .summary-wrapper { flex-direction: column; gap: 10px; } /* 결과 박스 세로 정렬 */
+            .summary-box { margin-bottom: 10px; }
+            
+            .table-header { flex-direction: column; gap: 15px; align-items: flex-start; } /* 엑셀 다운로드 버튼 위치 조정 */
+            
+            /* 넓은 엑셀 표를 스마트폰에서 좌우로 스크롤 할 수 있게 만듭니다 */
+            table { display: block; overflow-x: auto; white-space: nowrap; } 
+            
+            .info-section { padding: 20px; } /* 설명란 여백 축소 */
+        }
     </style>
 </head>
 <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="page-header">
         <h1>미국 국민 배당주 SCHD 시뮬레이터</h1>

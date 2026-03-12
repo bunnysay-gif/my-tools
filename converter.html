@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실생활 단위 변환기 - 평수, 인치, 금 한 돈, 고기 한 근 계산 | PANDORA TOOLS</title>
+    <meta name="description" content="부동산 평수(제곱미터), TV 모니터 인치(센티미터), 금 한 돈, 고기 한 근(그램) 등 한국인이 일상에서 가장 많이 쓰는 단위를 실시간으로 변환해 주는 무료 도구입니다.">
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+
+    <style>
+        body { 
+            background: linear-gradient(135deg, #1e1b4b, #2e1065);
+            color: white; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; max-width: 900px; margin: 0 auto; line-height: 1.6;
+        }
+        
+        .page-header { text-align: center; margin-bottom: 40px; }
+        .page-header h1 { font-size: 32px; margin-bottom: 10px; color: #e0e7ff; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .badge { background-color: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6; color: #ddd6fe; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+
+        /* 카테고리 탭 */
+        .category-tabs { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .tab-btn {
+            flex: 1; min-width: 100px; padding: 12px 10px; text-align: center; background-color: rgba(255,255,255,0.05);
+            color: #cbd5e1; font-weight: bold; border-radius: 12px; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;
+        }
+        .tab-btn.active { background-color: rgba(59, 130, 246, 0.3); color: white; border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+
+        /* 계산기 영역 */
+        .convert-section { display: none; animation: fadeIn 0.4s ease; }
+        .convert-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .calc-card {
+            background-color: rgba(30, 41, 59, 0.8); border-radius: 16px; padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); margin-bottom: 30px;
+        }
+
+        .convert-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin-bottom: 20px; }
+        
+        .input-box { flex: 1; display: flex; flex-direction: column; }
+        .input-box label { font-size: 15px; color: #94a3b8; font-weight: bold; margin-bottom: 8px; }
+        .input-wrapper { display: flex; align-items: center; background-color: rgba(15, 23, 42, 0.6); border: 1px solid #475569; border-radius: 8px; padding: 0 15px; transition: 0.3s; }
+        .input-wrapper:focus-within { border-color: #8b5cf6; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3); }
+        .input-wrapper input { flex: 1; background: transparent; border: none; color: white; font-size: 20px; padding: 15px 0; outline: none; text-align: center; font-weight: bold; }
+        .input-wrapper span { color: #cbd5e1; font-weight: bold; font-size: 16px; margin-left: 10px; }
+
+        .equals-sign { font-size: 24px; color: #64748b; font-weight: bold; padding-top: 25px; }
+
+        /* 빠른 입력 버튼 */
+        .quick-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 5px; justify-content: center; }
+        .quick-btn {
+            background-color: rgba(255,255,255,0.05); color: #cbd5e1; border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 15px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: 0.2s; font-weight: bold;
+        }
+        .quick-btn:hover { background-color: rgba(139, 92, 246, 0.2); color: #ddd6fe; border-color: #8b5cf6; }
+
+        /* 결과 설명 (공식) */
+        .formula-box { text-align: center; background-color: rgba(15, 23, 42, 0.4); padding: 15px; border-radius: 8px; margin-top: 20px; color: #94a3b8; font-size: 14px; border: 1px dashed #475569; }
+        .formula-box strong { color: #fde047; }
+
+        /* SEO 최적화 설명 섹션 */
+        .seo-section { background-color: rgba(30, 41, 59, 0.7); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; }
+        .seo-section h2 { color: #e0e7ff; font-size: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-top: 0; }
+        .seo-section h3 { color: #c084fc; font-size: 17px; margin-top: 25px; margin-bottom: 10px; }
+        .seo-section p { color: #cbd5e1; font-size: 15px; line-height: 1.7; margin-bottom: 15px; }
+
+        /* 내부 링크 */
+        .internal-links { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
+        .link-card { flex: 1; min-width: 200px; background-color: rgba(139, 92, 246, 0.1); padding: 20px; border-radius: 12px; text-decoration: none; color: #ddd6fe; font-weight: bold; text-align: center; border: 1px solid rgba(139, 92, 246, 0.2); transition: 0.2s; }
+        .link-card:hover { background-color: rgba(139, 92, 246, 0.2); transform: translateY(-3px); }
+        .link-card span { display: block; font-size: 13px; color: #a78bfa; font-weight: normal; margin-top: 5px; }
+
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 12px; font-weight: bold; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2); margin-bottom: 40px; }
+        .back-btn:hover { background-color: rgba(255,255,255,0.2); }
+
+        @media (max-width: 600px) {
+            .convert-row { flex-direction: column; gap: 10px; }
+            .equals-sign { padding-top: 0; transform: rotate(90deg); margin: 5px 0; }
+        }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <div class="page-header">
+        <h1>📏 실생활 단위 변환기</h1>
+        <p><span class="badge">한국인 전용</span> 평수, 인치, 한 근... 헷갈리는 단위 1초 해결!</p>
+    </div>
+
+    <div class="category-tabs">
+        <div class="tab-btn active" onclick="switchTab('area')">🏠 부동산 (평/㎡)</div>
+        <div class="tab-btn" onclick="switchTab('length')">📺 TV/화면 (인치/cm)</div>
+        <div class="tab-btn" onclick="switchTab('weight')">🥩 고기/금 (근/돈)</div>
+    </div>
+
+    <div id="tab-area" class="convert-section active">
+        <div class="calc-card">
+            <div class="convert-row">
+                <div class="input-box">
+                    <label>공급/전용 면적</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="sqm" placeholder="0" oninput="convertArea('sqm')">
+                        <span>㎡ (제곱미터)</span>
+                    </div>
+                </div>
+                <div class="equals-sign">↔</div>
+                <div class="input-box">
+                    <label>아파트 평수</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="pyeong" placeholder="0" oninput="convertArea('pyeong')">
+                        <span>평</span>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-btns">
+                <button class="quick-btn" onclick="setQuickArea('sqm', 59)">전용 59㎡ (24평형)</button>
+                <button class="quick-btn" onclick="setQuickArea('sqm', 84)">전용 84㎡ (32평형)</button>
+                <button class="quick-btn" onclick="setQuickArea('sqm', 114)">전용 114㎡ (40평형)</button>
+            </div>
+            <div class="formula-box">💡 <strong>1평 = 3.305785㎡</strong> / 아파트 모델하우스 갈 때 필수 확인!</div>
+        </div>
+    </div>
+
+    <div id="tab-length" class="convert-section">
+        <div class="calc-card">
+            <div class="convert-row">
+                <div class="input-box">
+                    <label>화면/바지 사이즈</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="inch" placeholder="0" oninput="convertLength('inch')">
+                        <span>인치 (inch)</span>
+                    </div>
+                </div>
+                <div class="equals-sign">↔</div>
+                <div class="input-box">
+                    <label>실제 길이</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="cm" placeholder="0" oninput="convertLength('cm')">
+                        <span>cm (센티미터)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-btns">
+                <button class="quick-btn" onclick="setQuickLength('inch', 27)">27인치 (모니터)</button>
+                <button class="quick-btn" onclick="setQuickLength('inch', 65)">65인치 (거실TV)</button>
+                <button class="quick-btn" onclick="setQuickLength('inch', 32)">32인치 (허리둘레)</button>
+            </div>
+            <div class="formula-box">💡 <strong>1인치 = 2.54cm</strong> / 대각선 길이를 잴 때 주로 사용합니다.</div>
+        </div>
+    </div>
+
+    <div id="tab-weight" class="convert-section">
+        <div class="calc-card">
+            <div class="convert-row">
+                <div class="input-box">
+                    <label>전통 단위 (고기/금)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="trad" placeholder="0" oninput="convertWeight('trad')">
+                        <select id="tradUnit" onchange="convertWeight('trad')" style="background:transparent; border:none; color:#cbd5e1; font-size:16px; font-weight:bold; outline:none;">
+                            <option value="geun" style="color:black;">근 (고기)</option>
+                            <option value="don" style="color:black;">돈 (금)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="equals-sign">↔</div>
+                <div class="input-box">
+                    <label>무게 (그램)</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="gram" placeholder="0" oninput="convertWeight('gram')">
+                        <span>g (그램)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="quick-btns">
+                <button class="quick-btn" onclick="setQuickWeight('geun', 1)">삼겹살 1근 (600g)</button>
+                <button class="quick-btn" onclick="setQuickWeight('don', 1)">순금 1돈 (3.75g)</button>
+                <button class="quick-btn" onclick="setQuickWeight('don', 10)">순금 10돈 (1냥)</button>
+            </div>
+            <div class="formula-box">💡 <strong>고기 1근 = 600g / 금 1돈 = 3.75g</strong> / 정육점과 금은방 필수 상식!</div>
+        </div>
+    </div>
+
+    <div class="seo-section">
+        <h2>💡 왜 우리는 아직도 평, 인치, 근을 쓸까요?</h2>
+        
+        <h3>🏠 전용면적 84제곱미터는 몇 평? (부동산 상식)</h3>
+        <p>대한민국은 공식적으로 '제곱미터(㎡)'를 법정 계량 단위로 사용하고 있습니다. 하지만 수십 년간 사용해 온 '평' 단위에 익숙한 사람들이 많아 여전히 <strong>"32평형 아파트"</strong>라는 말이 더 직관적으로 다가옵니다. 아파트 분양에서 가장 인기 있는 <strong>'전용면적 84㎡'는 과거 기준으로 약 25.4평(공급면적 기준 약 32~34평형)</strong>에 해당합니다.</p>
+
+        <h3>📺 TV 65인치의 실제 크기는?</h3>
+        <p>TV나 모니터의 크기를 말할 때 쓰는 '인치(inch)'는 화면의 가로, 세로 길이가 아니라 <strong>대각선의 길이</strong>를 뜻합니다. 예를 들어 65인치 TV는 대각선 길이가 약 165cm에 달하는 대형 화면을 의미합니다. 청바지 허리 사이즈를 말할 때도 전 세계적으로 인치 단위를 통용하여 사용합니다.</p>
+
+        <h3>🥩 삼겹살 한 근과 금 한 돈의 무게</h3>
+        <p>식당이나 정육점에서는 여전히 고기 무게를 <strong>'근(600g)'</strong>으로 많이 계산합니다. 보통 성인 1인분을 200g으로 잡기 때문에 1근은 3인분 정도의 양입니다. 반면 돌반지를 선물할 때 주로 쓰는 금의 무게는 <strong>'돈(3.75g)'</strong>을 씁니다. 금 10돈이 모이면 '1냥(37.5g)'이 됩니다.</p>
+    </div>
+
+    <div class="internal-links">
+        <a href="unitprice.html" class="link-card">⚖️ 단가/가성비 계산기<span>단위 변환 후, 마트 상품 가성비 1초 비교!</span></a>
+        <a href="loan.html" class="link-card">💰 대출 이자 계산기<span>아파트 평수 확인했으면 대출 이자 계산으로!</span></a>
+    </div>
+
+    <a href="index.html" class="back-btn">🏠 PANDORA TOOLS 대문으로</a>
+
+    <script>
+        // 탭 전환 로직
+        function switchTab(tabName) {
+            // 버튼 활성화 토글
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // 섹션 활성화 토글
+            document.querySelectorAll('.convert-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('tab-' + tabName).classList.add('active');
+        }
+
+        // 1. 부동산 (평수 ↔ 제곱미터) 변환
+        // 1평 = 3.305785 ㎡
+        function convertArea(source) {
+            const sqm = document.getElementById('sqm');
+            const pyeong = document.getElementById('pyeong');
+            
+            if (source === 'sqm') {
+                const val = parseFloat(sqm.value);
+                pyeong.value = isNaN(val) ? '' : (val / 3.305785).toFixed(2);
+            } else {
+                const val = parseFloat(pyeong.value);
+                sqm.value = isNaN(val) ? '' : (val * 3.305785).toFixed(2);
+            }
+        }
+
+        function setQuickArea(type, val) {
+            const input = document.getElementById(type);
+            input.value = val;
+            convertArea(type);
+        }
+
+        // 2. 길이 (인치 ↔ cm) 변환
+        // 1인치 = 2.54 cm
+        function convertLength(source) {
+            const inch = document.getElementById('inch');
+            const cm = document.getElementById('cm');
+            
+            if (source === 'inch') {
+                const val = parseFloat(inch.value);
+                cm.value = isNaN(val) ? '' : (val * 2.54).toFixed(1);
+            } else {
+                const val = parseFloat(cm.value);
+                inch.value = isNaN(val) ? '' : (val / 2.54).toFixed(1);
+            }
+        }
+
+        function setQuickLength(type, val) {
+            const input = document.getElementById(type);
+            input.value = val;
+            convertLength(type);
+        }
+
+        // 3. 무게 (근/돈 ↔ 그램) 변환
+        // 1근 = 600g / 1돈 = 3.75g
+        function convertWeight(source) {
+            const trad = document.getElementById('trad');
+            const gram = document.getElementById('gram');
+            const unitType = document.getElementById('tradUnit').value;
+            
+            const multiplier = (unitType === 'geun') ? 600 : 3.75;
+
+            if (source === 'trad' || source === 'select') {
+                const val = parseFloat(trad.value);
+                gram.value = isNaN(val) ? '' : (val * multiplier).toFixed(1);
+            } else {
+                const val = parseFloat(gram.value);
+                trad.value = isNaN(val) ? '' : (val / multiplier).toFixed(2);
+            }
+        }
+
+        function setQuickWeight(unit, val) {
+            document.getElementById('tradUnit').value = unit;
+            const input = document.getElementById('trad');
+            input.value = val;
+            convertWeight('trad');
+        }
+    </script>
+</body>
+</html>
