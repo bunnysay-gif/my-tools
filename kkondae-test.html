@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 안의 꼰대력 테스트 - PANDORA TOOLS</title>
+    <style>
+        /* 기본 테마 (index.html과 통일) */
+        body { 
+            background: linear-gradient(135deg, #1e1b4b, #2e1065);
+            color: white; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; margin: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        .container {
+            max-width: 600px; width: 100%;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 40px 30px; border-radius: 20px;
+            text-align: center; box-sizing: border-box;
+            margin-top: 40px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 1.8rem; color: #d97706; margin-bottom: 10px; }
+        .subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 30px; word-break: keep-all; }
+
+        /* 진행률 바 */
+        .progress-bar {
+            width: 100%; height: 10px; background-color: rgba(255,255,255,0.1);
+            border-radius: 5px; margin-bottom: 30px; overflow: hidden;
+        }
+        .progress {
+            height: 100%; background-color: #d97706; width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* 퀴즈 영역 */
+        #quiz-section { display: block; }
+        .question { font-size: 1.25rem; font-weight: bold; margin-bottom: 30px; color: #fff; word-break: keep-all; line-height: 1.5; }
+        
+        .btn-answer {
+            display: block; width: 100%; padding: 15px 20px; margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px; color: white; font-size: 1rem; cursor: pointer;
+            transition: 0.2s; word-break: keep-all; text-align: left;
+        }
+        .btn-answer:hover {
+            background-color: rgba(217, 119, 6, 0.2);
+            border-color: #d97706; transform: translateY(-2px);
+        }
+
+        /* 결과 영역 */
+        #result-section { display: none; animation: fadeIn 0.8s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .grade { font-size: 4rem; font-weight: bold; margin: 20px 0; text-shadow: 0 0 20px rgba(217, 119, 6, 0.8); }
+        .grade-S { color: #ef4444; } /* 꼰대력 높으면 빨간색(위험) */
+        .grade-A { color: #f59e0b; }
+        .grade-C { color: #10b981; }
+        .grade-F { color: #3b82f6; } /* 꼰대력 낮으면 파란색(안전) */
+
+        .result-title { font-size: 1.5rem; margin-bottom: 15px; font-weight: bold; }
+        .result-desc { color: #cbd5e1; line-height: 1.6; margin-bottom: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; }
+
+        /* 하단 버튼 */
+        .action-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .btn-share {
+            background: linear-gradient(135deg, #d97706, #b45309); border: none;
+            padding: 12px 25px; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-share:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(217, 119, 6, 0.5); }
+        
+        .btn-home {
+            background: transparent; border: 1px solid rgba(255,255,255,0.3);
+            padding: 12px 25px; border-radius: 25px; color: white; text-decoration: none; font-weight: bold;
+            transition: 0.3s; display: inline-block;
+        }
+        .btn-home:hover { background: rgba(255,255,255,0.1); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>☕ 내 안의 꼰대력 테스트</h1>
+        <p class="subtitle">"나 혹시 꼰대인가?" MZ와 기성세대의 아슬아슬한 경계선</p>
+
+        <div id="quiz-section">
+            <div class="progress-bar"><div class="progress" id="progress"></div></div>
+            <div class="question" id="question-text">질문이 여기에 표시됩니다.</div>
+            <div id="answer-buttons">
+                </div>
+        </div>
+
+        <div id="result-section">
+            <div class="grade" id="result-grade">결과</div>
+            <div class="result-title" id="result-title">나의 꼰대 레벨은?</div>
+            <div class="result-desc" id="result-desc">설명이 여기에 표시됩니다.</div>
+            
+            <div class="action-btns">
+                <button class="btn-share" onclick="shareResult()">단톡방에 공유하고 팩폭 받기</button>
+                <button class="btn-home" style="background: rgba(255,255,255,0.1);" onclick="location.reload()">다른 문제로 다시 하기</button>
+                <a href="index.html" class="btn-home">홈으로</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 꼰대력 테스트 60문제 풀(Pool) (10점: 완전 꼰대, 5점: 젊은 꼰대, 0점: 맑눈광 MZ)
+        const allQuestions = [
+            // [근태 & 업무 태도]
+            { q: "출근 시간 9시, 후배가 8시 59분에 헐레벌떡 뛰어온다면?", answers: [{ text: "'최소 10분 전엔 와서 준비해야지' 속으로 혀를 찬다.", score: 10 }, { text: "'지각만 안 하면 되지 뭐' 하고 넘어간다.", score: 0 }, { text: "일단 지켜보다가 반복되면 한마디 한다.", score: 5 }] },
+            { q: "후배가 업무 중에 노이즈 캔슬링 이어폰을 끼고 있다면?", answers: [{ text: "누가 부르면 어쩌려고? 당장 빼라고 지적한다.", score: 10 }, { text: "요즘 애들 방식이려니 하고 참지만 속으론 맘에 안 든다.", score: 5 }, { text: "능률만 오르면 상관없다. 나도 끼고 일한다.", score: 0 }] },
+            { q: "후배의 휴가 기안서 사유란에 '개인 휴식'이라고 적혀 있다면?", answers: [{ text: "휴가 사유를 더 구체적으로 적으라고 반려한다.", score: 10 }, { text: "사유가 어찌 됐든 본인 연차 쓰는 거니 바로 결재한다.", score: 0 }, { text: "결재는 해주지만 '어디 가냐?'고 꼬치꼬치 묻는다.", score: 5 }] },
+            { q: "퇴근 시간 10분 전, 내가 업무를 지시했는데 후배가 '내일 오전에 하겠습니다'라고 한다면?", answers: [{ text: "'이걸 내일 한다고?' 기분 나쁜 티를 팍팍 낸다.", score: 10 }, { text: "'급한 거 아니면 내일 해~' 쿨하게 넘어간다.", score: 0 }, { text: "'급한 건데 오늘 하고 가면 안 될까?' 은근슬쩍 강요한다.", score: 5 }] },
+            { q: "후배가 복장 자율화라며 크록스와 트레이닝복을 입고 출근했다.", answers: [{ text: "회사에 놀러 왔나? 당장 옷차림을 지적한다.", score: 10 }, { text: "TPO에 안 맞는다 생각하지만 시대가 변했으니 참는다.", score: 5 }, { text: "오 편해 보이네~ 나도 내일 저렇게 입어야지.", score: 0 }] },
+            { q: "업무 중 카톡으로 지시를 내렸는데 후배가 '넹' 또는 이모티콘만 보낸다면?", answers: [{ text: "어디 상사한테 '넹'이야? 기본 예의가 없다고 생각한다.", score: 10 }, { text: "대답만 하면 됐지 뭐. 나도 이모티콘 보낸다.", score: 0 }, { text: "기분은 살짝 묘하지만 요즘 트렌드라 생각하고 넘긴다.", score: 5 }] },
+            { q: "점심시간, 막내가 선배들 수저를 안 놓고 멍 때리고 있다면?", answers: [{ text: "눈치가 없네... 일부러 헛기침하며 눈치를 준다.", score: 10 }, { text: "내가 내 수저 챙기면서 막내 것도 놔준다.", score: 0 }, { text: "'막내야 수저 좀 놔라~' 하고 직접 시킨다.", score: 5 }] },
+            { q: "상사가 아직 퇴근을 안 했는데, 내 일이 끝났다면?", answers: [{ text: "눈치 보이다가 상사 퇴근할 때까지 뭔가 하는 척한다.", score: 10 }, { text: "'저 먼저 들어가 보겠습니다!' 쿨하게 인사하고 간다.", score: 0 }, { text: "'도와드릴 일 있을까요?' 예의상 한 번 묻고 간다.", score: 5 }] },
+            { q: "새로 온 신입이 점심시간에 혼자 밥을 먹겠다고 한다면?", answers: [{ text: "조직 생활 적응 안 하려나? 억지로라도 데리고 간다.", score: 10 }, { text: "혼자 쉬고 싶은가 보다~ 하고 편하게 둔다.", score: 0 }, { text: "알겠다고는 하지만 뒤에서 '좀 유별나네' 하고 뒷담화한다.", score: 5 }] },
+            { q: "회의 중에 내 의견에 후배가 '그건 아닌 것 같습니다'라고 대놓고 반박한다면?", answers: [{ text: "감히 내 의견에? 기분이 상해서 목소리가 커진다.", score: 10 }, { text: "합리적인 반박이면 쿨하게 인정하고 수용한다.", score: 0 }, { text: "수용은 하지만 속으로는 '싸가지 없네' 라고 생각한다.", score: 5 }] },
+
+            // [회식 & 사교]
+            { q: "부서 회식이 잡혔는데 막내가 '저 선약이 있어서요' 하고 빠진다면?", answers: [{ text: "회식도 업무의 연장인데! 당장 취소하라고 압박한다.", score: 10 }, { text: "아쉬운 티를 내며 '다음엔 꼭 참석해~'라고 눈치를 준다.", score: 5 }, { text: "'오케이 재밌게 놀아~' 강요 1도 없이 쿨하게 보내준다.", score: 0 }] },
+            { q: "회식 자리에서 고기를 구워야 하는 타이밍이 왔다.", answers: [{ text: "당연히 막내나 직급 낮은 사람이 집게를 들어야 한다.", score: 10 }, { text: "고기 잘 굽는 사람이나 집게 가까운 사람이 굽는다.", score: 0 }, { text: "내가 굽긴 굽는데, 안 굽는 후배를 보며 괘씸해한다.", score: 5 }] },
+            { q: "건배사를 돌아가면서 시키는 분위기, 나의 속마음은?", answers: [{ text: "회식의 꽃이지! 막내부터 한 명씩 일어나서 시킨다.", score: 10 }, { text: "진짜 극혐. 조용히 밥이나 먹고 집에 가고 싶다.", score: 0 }, { text: "내가 하긴 싫지만 남이 하는 거 보는 건 재밌다.", score: 5 }] },
+            { q: "회식 자리에서 상사가 1절, 2절, 3절 라떼 이야기를 꺼낸다면?", answers: [{ text: "맞장구치며 '역시 부장님 대단하십니다' 아부한다.", score: 10 }, { text: "영혼 없는 리액션만 하다가 화장실 가는 척 도망간다.", score: 0 }, { text: "적당히 듣다가 자연스럽게 화제를 다른 곳으로 돌린다.", score: 5 }] },
+            { q: "주말에 부서원들과 등산이나 체육대회를 가자고 한다면?", answers: [{ text: "조직력 강화에 최고지! 무조건 전원 참석해야 한다.", score: 10 }, { text: "가고 싶은 사람만 자유롭게 모여서 간다.", score: 0 }, { text: "주말은 무조건 내 시간! 수당 안 주면 절대 안 간다.", score: 0 }] },
+            { q: "회식 다음 날, 숙취로 힘들어하는 후배에게", answers: [{ text: "'술도 못 마시면서 왜 나댔어~' 라며 은근히 꼽을 준다.", score: 10 }, { text: "'컨디션 괜찮아?' 숙취해소제를 건네준다.", score: 0 }, { text: "'나 때는 술 마시고도 다음날 쌩쌩했는데~' 라떼 시전.", score: 5 }] },
+            { q: "상사가 주말에 사적인 내용으로 카톡을 보냈다면?", answers: [{ text: "당장 1분 내로 확인하고 예의 바르게 답장한다.", score: 10 }, { text: "월요일 출근해서 '아 주말에 폰을 잘 안 봐서요' 한다.", score: 0 }, { text: "읽씹 하긴 찔려서 한참 뒤에 단답으로 보낸다.", score: 5 }] },
+            { q: "사내 연애 소문을 들었을 때 나는?", answers: [{ text: "누구야?! 당장 캐내서 온 동네방네 떠들고 다닌다.", score: 10 }, { text: "하든 말든 내 알 바 아니다. 전혀 관심 없다.", score: 0 }, { text: "호기심에 친한 동료와 살짝 뒷담화만 한다.", score: 5 }] },
+            { q: "결혼을 앞둔 후배, 청첩장을 단톡방에 모바일로만 돌린다면?", answers: [{ text: "최소한 찾아와서 종이 청첩장을 줘야지 예의가 없네.", score: 10 }, { text: "친환경적이고 편하네~ 계좌번호로 축의금만 쏜다.", score: 0 }, { text: "축하해주긴 하는데 서운한 마음은 어쩔 수 없다.", score: 5 }] },
+            { q: "회사 사람들과 SNS(인스타 등) 맞팔을 하는 것에 대해?", answers: [{ text: "우리가 남이가! 무조건 서로 맞팔하고 소통해야지.", score: 10 }, { text: "절대 불가. 일은 일이고 사생활은 철저히 분리한다.", score: 0 }, { text: "본계정은 숨기고 아무것도 없는 부계정으로 맞팔한다.", score: 5 }] },
+
+            // [가치관 & 대화법]
+            { q: "후배가 고민 상담을 해올 때 나의 화법은?", answers: [{ text: "'그건 네가 몰라서 그러는데~ 내 말 들어봐' (가르침 모드)", score: 10 }, { text: "'그랬구나 많이 힘들었겠다' 묵묵히 들어주기만 한다.", score: 0 }, { text: "'근데 그건 네가 이렇게 했어야지~' 해결책부터 제시한다.", score: 5 }] },
+            { q: "요즘 유행하는 밈이나 신조어를 들었을 때", answers: [{ text: "'저게 대체 무슨 말이야? 우리말 파괴하네' 언짢아한다.", score: 10 }, { text: "모르지만 티 안 내고 나중에 혼자 검색해 본다.", score: 5 }, { text: "당장 실생활에 써먹으며 인싸인 척한다.", score: 0 }] },
+            { q: "내가 생각하는 '요즘 애들'의 특징은?", answers: [{ text: "이기적이고 자기 권리만 주장하며 끈기가 없다.", score: 10 }, { text: "합리적이고 불필요한 관습을 깰 줄 안다.", score: 0 }, { text: "솔직하고 당당한 건 좋지만 가끔 선을 넘는다.", score: 5 }] },
+            { q: "대화 중 '나 때는 말이야~' 라는 말을 해본 적이 있다?", answers: [{ text: "자주 한다. 내 경험이 그들에게 피가 되고 살이 될 테니.", score: 10 }, { text: "절대 안 한다. 내가 제일 극혐하는 말이다.", score: 0 }, { text: "속으로는 생각하지만 입 밖으로는 꾹 참는다.", score: 5 }] },
+            { q: "후배가 나보다 더 좋은 아이디어를 내면?", answers: [{ text: "속으로 자존심 상해서 어떻게든 단점을 찾아내 까내린다.", score: 10 }, { text: "'오 좋은데? 이걸로 가자!' 쿨하게 박수 쳐준다.", score: 0 }, { text: "'좋긴 한데 내 아이디어랑 스까보자' 숟가락을 얹는다.", score: 5 }] },
+            { q: "식당에서 종업원이 실수를 했을 때", answers: [{ text: "매니저 부르라며 큰소리치고 진상을 부린다.", score: 10 }, { text: "'그럴 수도 있죠 괜찮아요' 하고 부드럽게 넘어간다.", score: 0 }, { text: "티는 안 내지만 속으로 팁이나 리뷰를 테러할 궁리를 한다.", score: 5 }] },
+            { q: "내가 생각하는 성공의 가장 중요한 요소는?", answers: [{ text: "윗사람에게 잘 보이고 사내 정치를 잘하는 싹싹함.", score: 10 }, { text: "오직 개인의 압도적인 실력과 능력.", score: 0 }, { text: "어느 정도의 실력과 운, 그리고 적당한 눈치.", score: 5 }] },
+            { q: "내 의견과 다수결의 의견이 다를 때", answers: [{ text: "내가 선배니까(또는 나이가 많으니까) 내 뜻대로 강행한다.", score: 10 }, { text: "다수결의 원칙을 존중하고 쿨하게 승복한다.", score: 0 }, { text: "따르긴 하지만 나중에 문제 생기면 '거봐 내 말이 맞지' 시전.", score: 5 }] },
+            { q: "나이가 어린 사람이 나에게 충고나 조언을 한다면?", answers: [{ text: "머리에 피도 안 마른 게 어디서 지적질이야? 분노한다.", score: 10 }, { text: "나이를 떠나서 맞는 말이면 기꺼이 수용한다.", score: 0 }, { text: "앞에선 듣는 척하지만 속으로는 무시한다.", score: 5 }] },
+            { q: "내가 가장 듣기 싫은 말은?", answers: [{ text: "'그건 예전 방식이고요, 요즘은 그렇게 안 해요.'", score: 10 }, { text: "'잔소리 좀 그만하세요.'", score: 5 }, { text: "'오늘 야근 좀 해야겠는데?'", score: 0 }] },
+
+            // [기타 등등 (60개 채우기 위한 일상 꼰대력)]
+            { q: "버스나 지하철에서 어르신이 내 앞에 서 계신다면?", answers: [{ text: "당연히 벌떡 일어나서 자리를 양보해야 한다.", score: 5 }, { text: "내가 너무 피곤하면 모른 척 자는 척한다.", score: 0 }, { text: "요즘 젊은 것들은 양보를 안 한다며 쯧쯧 혀를 찬다.", score: 10 }] },
+            { q: "아르바이트생의 태도가 조금 퉁명스럽다면?", answers: [{ text: "'서비스직이 기본이 안 되어있네' 당장 훈계한다.", score: 10 }, { text: "'오늘 기분 안 좋은 일 있나 보네' 하고 무시한다.", score: 0 }, { text: "인터넷 커뮤니티나 리뷰에 불만을 장문으로 적는다.", score: 5 }] },
+            { q: "명절에 조카들이 인사를 안 하고 폰만 본다면?", answers: [{ text: "가정교육이 어떻게 된 거냐며 부모(형제)에게 한소리 한다.", score: 10 }, { text: "나도 내 폰 보느라 바쁘다. 서로 터치 안 함.", score: 0 }, { text: "'용돈 줄까?' 돈으로 관심을 유도해 본다.", score: 5 }] },
+            { q: "친한 후배가 '저 내일 퇴사합니다'라고 통보한다면?", answers: [{ text: "나한테 먼저 상의도 없이? 서운함과 괘씸함 폭발.", score: 10 }, { text: "'와 부럽다. 이직처는 정했어?' 진심으로 축하해 준다.", score: 0 }, { text: "'요즘 애들은 끈기가 없어' 속으로 혀를 찬다.", score: 5 }] },
+            { q: "자장면 통일! 상사가 자장면 시켰는데 막내가 짬뽕을 시키면?", answers: [{ text: "눈치 더럽게 없네... 속으로 점수를 깎는다.", score: 10 }, { text: "나도 탕수육이랑 볶음밥 등 먹고 싶은 거 맘대로 시킨다.", score: 0 }, { text: "'오 짬뽕 맛있겠다 나도 짬뽕' 메뉴를 잽싸게 바꾼다.", score: 5 }] },
+            { q: "누군가 내 옷차림이나 취향을 지적한다면?", answers: [{ text: "'네가 뭔데 평가질이야?' 발끈하며 따진다.", score: 0 }, { text: "'내 짬바에 이 정도도 못 입나?' 권위로 뭉갠다.", score: 10 }, { text: "'아 그런가?' 앞으론 눈치 보며 안 입는다.", score: 5 }] },
+            { q: "업무 메일을 쓸 때 나의 스타일은?", answers: [{ text: "인사말 3줄, 날씨 이야기, 안부 등 서론이 엄청 길다.", score: 10 }, { text: "제목에 [요청] 달고 본문은 핵심만 3줄 요약해서 보낸다.", score: 0 }, { text: "적당히 예의 갖춘 템플릿을 복붙해서 쓴다.", score: 5 }] },
+            { q: "점심시간에 메뉴를 정할 때", answers: [{ text: "'아무거나 다 좋아~ (근데 내가 원하는 거 나올 때까지 반려)'", score: 10 }, { text: "내가 먹고 싶은 곳 링크 3개 보내서 투표 올린다.", score: 0 }, { text: "상사가 먹자는 거에 군말 없이 따라간다.", score: 5 }] },
+            { q: "길에서 이어폰 꽂고 춤추며 걸어가는 사람을 보면?", answers: [{ text: "'세상 참 말세다...' 눈살을 찌푸리며 피한다.", score: 10 }, { text: "'틱톡 찍나? 재밌네' 하고 흥미롭게 구경한다.", score: 0 }, { text: "이어폰에서 무슨 노래 나오는지 궁금해한다.", score: 5 }] },
+            { q: "나의 연애 가치관에 대해 누군가 참견한다면?", answers: [{ text: "꼰대 납셨네, 내 연애는 내가 알아서 한다고 철벽 친다.", score: 0 }, { text: "어른들 말이 다 피가 되고 살이 된다며 경청한다.", score: 10 }, { text: "앞에선 웃어넘기고 뒤에선 내 맘대로 한다.", score: 5 }] },
+            
+            // 추가 문제 (난이도 조절용)
+            { q: "후배가 업무용 단톡방에 'ㅋㅋㅋㅋ'를 남발한다면?", answers: [{ text: "선배들 다 있는데 장난치나? 당장 지적한다.", score: 10 }, { text: "나도 'ㅋㅋㅋㅋ'로 화답하며 분위기를 띄운다.", score: 0 }, { text: "거슬리긴 하지만 참는다.", score: 5 }] },
+            { q: "팀장이 '오늘 번개 회식 어때?'라고 한다면?", answers: [{ text: "'번개 좋죠!' 무조건 참석하고 후배들 눈치 준다.", score: 10 }, { text: "'저 오늘 요가 학원 예약이 있어서요~' 단칼 거절.", score: 0 }, { text: "가기 싫지만 어쩔 수 없이 끌려간다.", score: 5 }] },
+            { q: "사무실 책상에 연예인 아이돌 굿즈가 잔뜩 있다면?", answers: [{ text: "여기가 회사야 덕질 공간이야? 한소리 한다.", score: 10 }, { text: "취향 존중! 내 책상엔 피규어가 있다.", score: 0 }, { text: "일만 잘하면 상관없다고 생각한다.", score: 5 }] },
+            { q: "휴가 간 사람에게 급한 업무로 연락해야 한다면?", answers: [{ text: "전화해서 '휴가 중에 미안한데~' 하고 당장 시킨다.", score: 10 }, { text: "절대 연락 안 하고 내가 직접 해결하거나 미룬다.", score: 0 }, { text: "카톡 남겨두고 볼 때까지 기다린다.", score: 5 }] },
+            { q: "후배가 '이 업무는 왜 제가 해야 하죠?'라고 묻는다면?", answers: [{ text: "'까라면 까는 거지 말이 많아!' 권위로 짓누른다.", score: 10 }, { text: "명확한 R&R과 이유를 논리적으로 설명해 준다.", score: 0 }, { text: "나도 모르지만 위에서 시켰으니 달래서 시킨다.", score: 5 }] },
+            { q: "오전 9시 정각에 컴퓨터를 켜고 있는 후배를 보면?", answers: [{ text: "9시부터 업무 시작하려면 8시 반엔 와야지! 분노함.", score: 10 }, { text: "9시에 맞췄으면 지각 아니지. 쿨하게 넘김.", score: 0 }, { text: "자기는 일찍 왔으면서 유세 부린다고 생각할까 봐 참음.", score: 5 }] },
+            { q: "회사 탕비실 간식이 떨어져 갈 때", answers: [{ text: "막내들이 안 채워놓고 뭐 하나 유심히 지켜본다.", score: 10 }, { text: "눈에 띈 사람이 채워 넣거나, 내가 직접 채운다.", score: 0 }, { text: "관리 담당자한테 메신저로 채워달라고 톡 한다.", score: 5 }] },
+            { q: "회식에서 막내가 취해서 꾸벅꾸벅 졸고 있다면?", answers: [{ text: "정신 상태가 빠졌네! 억지로 깨워서 술을 먹인다.", score: 10 }, { text: "택시비 쥐여주고 집으로 귀가시킨다.", score: 0 }, { text: "냅두고 우리끼리 마신다.", score: 5 }] },
+            { q: "회사 워크숍, 장기자랑 시간이 다가온다면?", answers: [{ text: "무조건 막내급들이 나가서 재롱 잔치를 해야 한다고 생각함.", score: 10 }, { text: "진짜 최악. 조용히 박수만 치다가 화장실로 튄다.", score: 0 }, { text: "내가 나가서 트로트 부르고 분위기 다 띄운다.", score: 5 }] },
+            { q: "회사에서 유튜브나 브이로그를 찍겠다는 직원이 있다면?", answers: [{ text: "보안 문제도 있고 일에 집중 못 한다며 절대 반대한다.", score: 10 }, { text: "회사 홍보도 되고 요즘 트렌드니 적극 지원한다.", score: 0 }, { text: "내 얼굴만 안 나오면 알아서 하라고 냅둔다.", score: 5 }] }
+        ];
+
+        let questions = []; // 뽑힌 10문제
+        let currentQuestionIndex = 0;
+        let totalScore = 0;
+
+        const quizSection = document.getElementById('quiz-section');
+        const resultSection = document.getElementById('result-section');
+        const questionText = document.getElementById('question-text');
+        const answerButtons = document.getElementById('answer-buttons');
+        const progressBar = document.getElementById('progress');
+
+        // 🎲 배열 섞기 알고리즘
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function startQuiz() {
+            // 전체 60문제 중 무작위 10문제만 쏙 뽑기
+            shuffleArray(allQuestions);
+            questions = allQuestions.slice(0, 10); 
+            
+            currentQuestionIndex = 0;
+            totalScore = 0;
+            quizSection.style.display = 'block';
+            resultSection.style.display = 'none';
+            showQuestion();
+        }
+
+        function showQuestion() {
+            // 진행률 업데이트 (10문제 기준)
+            const progressPercent = (currentQuestionIndex / questions.length) * 100;
+            progressBar.style.width = progressPercent + '%';
+
+            // 질문 세팅
+            const currentQuestion = questions[currentQuestionIndex];
+            questionText.innerText = `Q${currentQuestionIndex + 1}. ${currentQuestion.q}`;
+            
+            // 버튼 초기화 및 생성 (버튼 순서도 섞어서 패턴 파악 방지)
+            answerButtons.innerHTML = '';
+            let answers = [...currentQuestion.answers];
+            shuffleArray(answers);
+            
+            answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.innerText = answer.text;
+                button.classList.add('btn-answer');
+                button.addEventListener('click', () => selectAnswer(answer.score));
+                answerButtons.appendChild(button);
+            });
+        }
+
+        function selectAnswer(score) {
+            totalScore += score;
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                // 마지막 문제 응답 시 프로그레스 바 100% 채우기
+                progressBar.style.width = '100%';
+                setTimeout(showResult, 300);
+            }
+        }
+
+        function showResult() {
+            quizSection.style.display = 'none';
+            resultSection.style.display = 'block';
+            
+            const gradeEl = document.getElementById('result-grade');
+            const titleEl = document.getElementById('result-title');
+            const descEl = document.getElementById('result-desc');
+
+            // 점수 구간 (10문제 * 10점 = 총 100점 만점)
+            if (totalScore >= 80) {
+                gradeEl.innerText = "S";
+                gradeEl.className = "grade grade-S";
+                titleEl.innerText = "👑 숨 막히는 진골 꼰대";
+                descEl.innerHTML = "삐빅- 당신 곁에 있으면 숨이 턱턱 막힙니다.<br>'나 때는 말이야'가 자동 재생되는 뼛속까지 진성 꼰대 그 자체!<br>본인은 후배들을 위한다고 하는 말이지만, 제발 잔소리 좀 멈춰주세요.<br>후배들이 당신만 오면 카톡방을 파서 뒷담화하고 있을지 모릅니다.";
+            } else if (totalScore >= 55) {
+                gradeEl.innerText = "A";
+                gradeEl.className = "grade grade-A";
+                titleEl.innerText = "🧐 합리화하는 젊은 꼰대";
+                descEl.innerHTML = "본인 입으로는 '난 깨어있는 선배지'라고 말하고 다니지만, <br>결정적인 순간에 꼰대 본능이 튀어나오는 무서운 '젊은 꼰대'입니다.<br>머리로는 MZ세대를 이해하려고 노력하지만 가슴으로는 끓어오르는 화를 주체하지 못하네요.<br>차라리 대놓고 꼰대짓을 하는 게 덜 얄밉습니다!";
+            } else if (totalScore >= 30) {
+                gradeEl.innerText = "C";
+                gradeEl.className = "grade grade-C";
+                titleEl.innerText = "🐥 눈치 보는 예비 꼰대";
+                descEl.innerHTML = "아직 꼰대는 아니지만, 가끔 후배들 행동을 보며 '이건 좀 아닌데?' 하고 욱하는 타이밍이 있습니다.<br>사회생활의 때가 적당히 묻어서 타협할 줄 아는 평범한 직장인 멘탈이네요.<br>조금만 더 나이를 먹거나 직급이 올라가면 언제든 꼰대로 진화할 수 있는 싹이 보입니다.";
+            } else {
+                gradeEl.innerText = "F";
+                gradeEl.className = "grade grade-F";
+                titleEl.innerText = "🎧 맑은 눈의 광인 (MZ 그 자체)";
+                descEl.innerHTML = "당신에게 꼰대력이란 1%도 존재하지 않습니다.<br>남이 뭘 하든 신경 쓰지 않고, 나만 잘 먹고 잘 살면 되는 완벽한 마이웨이 성향입니다.<br>기성세대 상사들이 당신을 보며 매일 뒷목을 잡고 쓰러질지 몰라도, <br>스트레스 안 받고 오래 사는 데는 최고의 성격입니다!";
+            }
+        }
+
+        function shareResult() {
+            const dummyUrl = window.location.href;
+            navigator.clipboard.writeText(dummyUrl).then(() => {
+                alert("링크가 복사되었습니다! 직장 단톡방이나 친구들에게 공유하고 팩폭을 날려보세요.");
+            });
+        }
+
+        // 스크립트 로드 시 퀴즈 자동 시작
+        startQuiz();
+    </script>
+</body>
+</html>
