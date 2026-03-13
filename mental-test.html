@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>유리 멘탈 vs 강철 멘탈 진단기 - PANDORA TOOLS</title>
+    <style>
+        /* 기본 테마 */
+        body { 
+            background: linear-gradient(135deg, #1e1b4b, #2e1065);
+            color: white; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; margin: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        .container {
+            max-width: 600px; width: 100%;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 40px 30px; border-radius: 20px;
+            text-align: center; box-sizing: border-box;
+            margin-top: 40px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 1.8rem; color: #14b8a6; margin-bottom: 10px; }
+        .subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 30px; word-break: keep-all; }
+
+        /* 진행률 바 */
+        .progress-bar {
+            width: 100%; height: 10px; background-color: rgba(255,255,255,0.1);
+            border-radius: 5px; margin-bottom: 30px; overflow: hidden;
+        }
+        .progress {
+            height: 100%; background-color: #14b8a6; width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* 퀴즈 영역 */
+        #quiz-section { display: block; }
+        .question { font-size: 1.25rem; font-weight: bold; margin-bottom: 30px; color: #fff; word-break: keep-all; line-height: 1.5; }
+        
+        .btn-answer {
+            display: block; width: 100%; padding: 15px 20px; margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px; color: white; font-size: 1rem; cursor: pointer;
+            transition: 0.2s; word-break: keep-all; text-align: left;
+        }
+        .btn-answer:hover {
+            background-color: rgba(20, 184, 166, 0.2);
+            border-color: #14b8a6; transform: translateY(-2px);
+        }
+
+        /* 결과 영역 */
+        #result-section { display: none; animation: fadeIn 0.8s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .grade { font-size: 5rem; font-weight: bold; margin: 20px 0; text-shadow: 0 0 20px rgba(20, 184, 166, 0.8); }
+        .grade-S { color: #94a3b8; } /* 티타늄(은색) */
+        .grade-A { color: #38bdf8; } /* 강철(파란색) */
+        .grade-C { color: #fcd34d; } /* 쿠쿠다스(노란색) */
+        .grade-F { color: #f87171; } /* 순두부(빨간색/경고) */
+
+        .result-title { font-size: 1.5rem; margin-bottom: 15px; font-weight: bold; }
+        .result-desc { color: #cbd5e1; line-height: 1.6; margin-bottom: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; }
+
+        /* 하단 버튼 */
+        .action-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .btn-share {
+            background: linear-gradient(135deg, #14b8a6, #0d9488); border: none;
+            padding: 12px 25px; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-share:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(20, 184, 166, 0.5); }
+        
+        .btn-home {
+            background: transparent; border: 1px solid rgba(255,255,255,0.3);
+            padding: 12px 25px; border-radius: 25px; color: white; text-decoration: none; font-weight: bold;
+            transition: 0.3s; display: inline-block;
+        }
+        .btn-home:hover { background: rgba(255,255,255,0.1); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🛡️ 유리 멘탈 vs 강철 멘탈</h1>
+        <p class="subtitle">상사의 팩폭에 내 멘탈은 얼마나 버틸 수 있을까?</p>
+
+        <div id="quiz-section">
+            <div class="progress-bar"><div class="progress" id="progress"></div></div>
+            <div class="question" id="question-text">질문이 여기에 표시됩니다.</div>
+            <div id="answer-buttons">
+                </div>
+        </div>
+
+        <div id="result-section">
+            <div class="grade" id="result-grade">F</div>
+            <div class="result-title" id="result-title">순두부 멘탈</div>
+            <div class="result-desc" id="result-desc">설명이 여기에 표시됩니다.</div>
+            
+            <div class="action-btns">
+                <button class="btn-share" onclick="shareResult()">단톡방에 내 멘탈 등급 공유하기</button>
+                <button class="btn-home" style="background: rgba(255,255,255,0.1);" onclick="location.reload()">새로운 문제로 다시 진단</button>
+                <a href="index.html" class="btn-home">홈으로</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 빅데이터 멘탈 진단 100문제 풀 (10점: 강철, 5점: 일반, 0점: 유리)
+        const mentalPool = {
+            // [1. 직장/학업 스트레스 영역 - 25문제]
+            WORK: [
+                { q: "모두가 있는 회의실에서 상사에게 크게 혼났다. 나의 반응은?", answers: [{ text: "'아 X팔려...' 하루 종일 우울해하며 자책한다.", score: 0 }, { text: "'내가 잘못하긴 했지' 반성하고 빨리 잊으려 노력한다.", score: 5 }, { text: "'어쩌라고, 혼날 수도 있지' 자리로 돌아와서 평온하게 일한다.", score: 10 }] },
+                { q: "퇴근 10분 전, 상사가 급한 업무를 던져주고 간다면?", answers: [{ text: "짜증 나지만 티 안 내고 속으로 욕하며 야근한다.", score: 5 }, { text: "'진짜 미친 거 아냐?' 너무 스트레스받아서 눈물이 찔끔 난다.", score: 0 }, { text: "'내일 오전에 하겠습니다'라고 단호하고 쿨하게 말하고 퇴근한다.", score: 10 }] },
+                { q: "열심히 준비한 프로젝트가 결국 엎어졌다.", answers: [{ text: "허무함에 빠져 며칠 동안 무기력증에 시달린다.", score: 0 }, { text: "'월급 루팡 개꿀!' 오히려 일 줄었다며 속으로 좋아한다.", score: 10 }, { text: "속상하긴 하지만 어쩔 수 없지 하며 다음 일을 준비한다.", score: 5 }] },
+                { q: "입사 동기가 나보다 먼저 승진/좋은 평가를 받았다면?", answers: [{ text: "'역시 난 안 되나 봐' 자존감이 바닥을 친다.", score: 0 }, { text: "질투는 나지만 겉으로는 축하해 주고 나도 더 열심히 해야지 다짐한다.", score: 5 }, { text: "'걔가 일을 잘하긴 했지' 쿨하게 인정하거나 신경도 안 쓴다.", score: 10 }] },
+                { q: "업무 중 큰 실수를 저질러 회사에 금전적 손해를 입혔다.", answers: [{ text: "심장이 쿵 내려앉고 밤새 죄책감에 잠을 설친다.", score: 0 }, { text: "수습 방법을 미친 듯이 찾고 상사에게 이실직고한다.", score: 5 }, { text: "'내 회사도 아닌데 뭐, 자르기야 하겠어?' 일단 밥부터 먹는다.", score: 10 }] },
+                { q: "회식 자리에서 술을 강권하는 상사 앞에서는?", answers: [{ text: "거절을 못 해서 억지로 다 받아 마시고 다음날 죽어간다.", score: 0 }, { text: "적당히 마시는 척하며 물을 타거나 눈치껏 버린다.", score: 5 }, { text: "'저 오늘 약 먹어서요' 정색하고 확실하게 선을 긋는다.", score: 10 }] },
+                { q: "중요한 발표(프레젠테이션)를 앞두고 나의 심리 상태는?", answers: [{ text: "심장이 터질 것 같고 전날 밤부터 청심환을 먹어야 한다.", score: 0 }, { text: "긴장되긴 하지만 대본을 수십 번 외우며 멘탈을 잡는다.", score: 5 }, { text: "적당한 긴장감이 오히려 좋아. 무대 체질이라 실전에 강하다.", score: 10 }] },
+                { q: "매일 아침 출근길, 회사 건물을 볼 때 드는 생각은?", answers: [{ text: "'하... 또 지옥 시작이네' 숨이 턱 막힌다.", score: 0 }, { text: "'아 돈 벌어야지' 기계적으로 생각하며 들어간다.", score: 5 }, { text: "아무 생각 없다. 그냥 걷다 보니 회사다.", score: 10 }] },
+                { q: "상사가 내 아이디어를 대놓고 무시했다.", answers: [{ text: "'내 능력이 부족한가 보다' 위축되어 다음엔 아이디어를 내지 않는다.", score: 0 }, { text: "기분은 상하지만 상사의 관점이 다를 수 있다고 인정한다.", score: 5 }, { text: "'네가 뭘 알아?' 속으로 상사 욕을 하며 내 아이디어에 자부심을 가진다.", score: 10 }] },
+                { q: "진상 고객(클라이언트)이 말도 안 되는 억지를 부린다면?", answers: [{ text: "손이 덜덜 떨리고 눈물이 날 것 같아 일단 죄송하다고 한다.", score: 0 }, { text: "규정을 설명하며 최대한 이성적으로 대처하려고 노력한다.", score: 5 }, { text: "한 귀로 듣고 한 귀로 흘리며 로봇처럼 영혼 없이 응대한다.", score: 10 }] },
+                { q: "나를 싫어하는 게 티가 나는 직장 동료가 있다.", answers: [{ text: "'나한테 왜 그러지?' 눈치를 보며 어떻게든 잘 보이려 노력한다.", score: 0 }, { text: "'나도 너 싫어' 철저히 공적으로만 대하고 사적 대화는 단절한다.", score: 10 }, { text: "스트레스는 받지만 티 안 내고 평소처럼 대한다.", score: 5 }] },
+                { q: "이직 면접에서 압박 질문을 심하게 받았다.", answers: [{ text: "당황해서 얼굴이 붉어지고 아무 말이나 더듬거리다 망친다.", score: 0 }, { text: "침착하게 방어하려고 노력하지만 멘탈이 흔들리는 게 느껴진다.", score: 5 }, { text: "'이딴 회사 안 오고 만다' 생각하며 오히려 당당하게 역질문한다.", score: 10 }] },
+                { q: "회사에 내 뒷담화가 돌고 있다는 사실을 알게 되었다.", answers: [{ text: "누가 시작했는지, 왜 그랬는지 억울해서 미칠 것 같다.", score: 0 }, { text: "'남 욕하는 게 제일 재밌지 뭐' 신경 안 쓰고 내 할 일 한다.", score: 10 }, { text: "친한 동료에게 털어놓으며 억울함을 호소한다.", score: 5 }] },
+                { q: "아무리 노력해도 성과가 오르지 않을 때", answers: [{ text: "자포자기하고 퇴사를 진지하게 고민한다.", score: 0 }, { text: "방법이 잘못되었나 분석하고 선배에게 조언을 구한다.", score: 5 }, { text: "'월급은 똑같이 나오니까 괜찮아' 마인드 컨트롤을 한다.", score: 10 }] },
+                { q: "휴가 중에 회사에서 업무 카톡이 온다면?", answers: [{ text: "심장이 철렁 내려앉고 어쩔 수 없이 노트북을 켠다.", score: 0 }, { text: "알림만 꺼두고 복귀하는 날 아침에 확인한다.", score: 10 }, { text: "일단 내용은 확인하고, 급한 것만 짧게 대답해 준다.", score: 5 }] },
+                { q: "업무 지시가 계속해서 번복되어 기안서를 5번째 수정 중이다.", answers: [{ text: "분노 게이지 상승! 속으로 욕을 한 바가지 하며 수정한다.", score: 5 }, { text: "스트레스로 두통이 오고 회의감이 몰려와서 일이 손에 안 잡힌다.", score: 0 }, { text: "뇌를 빼고 시키는 대로만 기계적으로 수정한다.", score: 10 }] },
+                { q: "점심시간에 나만 빼고 동료들끼리 밥을 먹으러 나갔다면?", answers: [{ text: "'내가 왕따인가?' 충격받고 입맛이 떨어진다.", score: 0 }, { text: "서운하긴 하지만 바빠서 그랬겠지 하고 대수롭지 않게 여긴다.", score: 5 }, { text: "'혼밥 개꿀! 유튜브 보면서 먹어야지' 오히려 좋아한다.", score: 10 }] },
+                { q: "새로 들어온 신입이 나보다 일을 더 잘한다면?", answers: [{ text: "내 입지가 좁아질까 봐 불안하고 자격지심을 느낀다.", score: 0 }, { text: "'일 잘하네, 얘한테 일 좀 넘겨야겠다' 편하게 생각한다.", score: 10 }, { text: "경쟁심이 생겨서 나도 더 열심히 업무에 매진한다.", score: 5 }] },
+                { q: "상사가 퇴근 후 단톡방에 기사를 공유하며 '다들 읽어봐라' 한다면?", answers: [{ text: "가장 먼저 읽고 '좋은 기사 공유 감사합니다'라고 답장한다.", score: 0 }, { text: "아무도 답장 안 하길래 나도 조용히 읽씹한다.", score: 5 }, { text: "단체방 알림 꺼놔서 다음날 출근해서야 알게 된다.", score: 10 }] },
+                { q: "회사 컴퓨터가 갑자기 다운되어 3시간 작업물이 날아갔다.", answers: [{ text: "현실을 부정하며 멍하니 모니터만 바라본다. 멘탈 붕괴.", score: 0 }, { text: "쌍욕을 한번 찰지게 뱉고 심호흡 후 다시 처음부터 한다.", score: 10 }, { text: "한숨을 깊게 쉬고 억지로 마인드 컨트롤하며 복구를 시도한다.", score: 5 }] },
+                { q: "월급날인데, 세금 떼고 남은 통장 잔고를 보았을 때", answers: [{ text: "'내 인생 왜 이러지' 한숨만 나오고 우울해진다.", score: 0 }, { text: "'그래도 이번 달 잘 버텼다' 소소한 보상을 준비한다.", score: 5 }, { text: "아무 감흥 없다. 어차피 다 카드값으로 빠져나갈 사이버 머니다.", score: 10 }] },
+                { q: "나보다 낙하산으로 들어온 직원이 승승장구할 때", answers: [{ text: "세상의 불공평함에 분노하며 회사 다닐 의욕을 상실한다.", score: 0 }, { text: "'더러운 세상'이라고 욕하지만 내 밥줄을 위해 조용히 다닌다.", score: 5 }, { text: "그 직원과 친해져서 어떻게든 나에게 콩고물이 떨어지게 만든다.", score: 10 }] },
+                { q: "회의 중에 내 의견을 발표하는데 분위기가 싸해졌다.", answers: [{ text: "말끝을 흐리고 얼굴이 붉어지며 황급히 발표를 마무리한다.", score: 0 }, { text: "당황하지만 억지로 텐션을 올려서 준비한 것만 끝낸다.", score: 5 }, { text: "'반응이 왜 이래?' 속으로 생각하며 철판 깔고 꿋꿋하게 할 말 다 한다.", score: 10 }] },
+                { q: "팀장이 내 이름을 자꾸 다른 사람 이름으로 부른다.", answers: [{ text: "나한테 관심이 없나 봐... 섭섭해서 혼자 상처받는다.", score: 0 }, { text: "웃으며 정정해주지만 속으로는 '언제까지 저러나' 짜증 난다.", score: 5 }, { text: "나도 팀장님 직급을 깎아서 부르거나 못 들은 척한다.", score: 10 }] },
+                { q: "퇴사를 결심했지만 아직 사직서를 못 낸 이유는?", answers: [{ text: "팀장님한테 말 꺼내는 게 너무 무섭고 눈치 보여서.", score: 0 }, { text: "아직 이직할 곳이 확실하게 안 정해져서 고민 중이다.", score: 5 }, { text: "난 언제든 던질 수 있다. 퇴직금 채우려고 며칠 버티는 것뿐.", score: 10 }] }
+            ],
+            // [2. 대인관계/갈등 영역 - 25문제]
+            PEOPLE: [
+                { q: "친구가 내 카톡을 읽고 5시간째 답장이 없다.", answers: [{ text: "'내가 뭐 실수했나?' 이전 대화 기록을 계속 올려본다.", score: 0 }, { text: "'바쁜가 보지 뭐' 잊어버리고 내 할 일 한다.", score: 10 }, { text: "은근히 신경 쓰여서 다른 SNS(인스타 등) 활동을 염탐한다.", score: 5 }] },
+                { q: "길을 걷다가 모르는 사람이 내 어깨를 세게 부딪히고 그냥 지나갔다.", answers: [{ text: "그 자리에 멈춰서 하루 종일 기분 나빠하고 속앓이를 한다.", score: 0 }, { text: "뒤통수에 대고 찰진 쌍욕을 한 번 날려주고 잊어버린다.", score: 10 }, { text: "'뭐 저런 미친 X이 다 있어' 혼잣말하며 툴툴거린다.", score: 5 }] },
+                { q: "오랜만에 만난 지인이 '너 요즘 살쪘다?'라고 팩폭을 날렸다.", answers: [{ text: "'아 진짜?' 겉으론 웃지만 며칠 동안 거울을 보며 우울해한다.", score: 0 }, { text: "'오랜만에 봐서 그런가?' 적당히 받아치고 넘긴다.", score: 5 }, { text: "'너도 많이 늙었다야~' 똑같이 웃으면서 팩폭으로 꽂아버린다.", score: 10 }] },
+                { q: "SNS에 사진을 올렸는데 '좋아요'나 댓글이 하나도 없다면?", answers: [{ text: "'나 인기 진짜 없나 봐' 사진을 당장 삭제해 버린다.", score: 0 }, { text: "아무도 안 보나 싶어서 섭섭하긴 하지만 놔둔다.", score: 5 }, { text: "내 일기장인데 남이 보든 말든! 전혀 신경 쓰지 않는다.", score: 10 }] },
+                { q: "식당에서 음식을 시켰는데 머리카락이 나왔다.", answers: [{ text: "말하기 민망해서 그냥 머리카락만 빼고 조용히 먹는다.", score: 0 }, { text: "종업원을 조용히 불러서 음식을 다시 해달라고 정중히 요구한다.", score: 5 }, { text: "큰 소리로 사장님을 불러 당당하게 환불이나 교환을 요구한다.", score: 10 }] },
+                { q: "친구가 10만 원을 빌려 가고 며칠째 갚지 않고 있다.", answers: [{ text: "달라고 말하기 껄끄러워서 알아서 줄 때까지 마냥 기다린다.", score: 0 }, { text: "'저번에 빌려 간 거 언제 줄 수 있어?' 조심스럽게 물어본다.", score: 5 }, { text: "'10만 원 입금해라' 카톡 송금 알림을 다이렉트로 날린다.", score: 10 }] },
+                { q: "모임에서 사람들이 다 같이 웃고 있는데 나만 그 농담을 이해 못 했다.", answers: [{ text: "소외감에 상처받고 다음부터는 모임에 나가기 꺼려진다.", score: 0 }, { text: "대충 눈치껏 분위기 맞춰서 억지웃음을 짓는다.", score: 5 }, { text: "'나만 이해 못 함? 설명 좀' 당당하게 물어보고 분위기를 주도한다.", score: 10 }] },
+                { q: "전 연인(엑스)이 다른 사람과 환승 연애하는 걸 알게 되었다.", answers: [{ text: "배신감에 매일 밤 눈물로 지새우며 SNS를 염탐한다.", score: 0 }, { text: "미친 X이라고 욕을 퍼붓고 두 번 다시 연락 안 오게 차단한다.", score: 10 }, { text: "화나고 어이없지만 '끼리끼리 만났네' 하고 잊으려 노력한다.", score: 5 }] },
+                { q: "누군가 내 뒤에서 안 좋은 소문을 냈다는 걸 알았다.", answers: [{ text: "세상이 무너지는 것 같고 해명하고 싶어 안달이 난다.", score: 0 }, { text: "'내 얘기할 만큼 걔 인생이 할 일 없나 보지' 무시한다.", score: 10 }, { text: "당사자를 직접 찾아가서 삼자대면하고 따져 묻는다.", score: 5 }] },
+                { q: "친구가 약속 당일에 갑자기 '나 오늘 피곤해서 못 나갈 듯'이라며 파투를 냈다.", answers: [{ text: "나를 만나는 게 별로 안 중요했나 싶어서 상처받는다.", score: 0 }, { text: "화는 나지만 '그래 쉬어라' 하고 혼자 넷플릭스 본다.", score: 5 }, { text: "쌍욕을 박아주고 그 친구와는 당분간 약속을 절대 안 잡는다.", score: 10 }] },
+                { q: "내가 베푼 호의에 대해 상대방이 고맙다는 인사조차 없다면?", answers: [{ text: "괘씸하지만 속으로만 생각하고 다음에도 호의를 베푼다.", score: 0 }, { text: "서운함을 느끼고 다음부터는 절대 호의를 베풀지 않는다.", score: 5 }, { text: "'고맙단 말 한마디가 그렇게 어렵냐?' 대놓고 꼽을 준다.", score: 10 }] },
+                { q: "술자리에서 은근슬쩍 나를 무시하는 발언을 하는 사람이 있다.", answers: [{ text: "분위기 망칠까 봐 그냥 바보같이 웃으며 넘겨버린다.", score: 0 }, { text: "정색하며 '말조심해'라고 분위기 싸하게 만들어 버린다.", score: 10 }, { text: "웃으면서 뼈 있는 농담으로 똑같이 되돌려준다.", score: 5 }] },
+                { q: "오랜만에 연락 온 친구, 알고 보니 보험(또는 다단계) 가입 권유였다.", answers: [{ text: "실망감이 크지만, 미안해서 거절 못 하고 하나 들어준다.", score: 0 }, { text: "단호하게 '안 해'라고 자르고 전화 끊어버린다.", score: 10 }, { text: "빙빙 돌려가며 핑계를 대고 연락을 피한다.", score: 5 }] },
+                { q: "단톡방에 말을 던졌는데 아무도 대답하지 않는다. (안읽씹/읽씹)", answers: [{ text: "분위기가 너무 뻘쭘해서 톡 보낸 걸 후회하고 삭제하고 싶다.", score: 0 }, { text: "다들 바쁜가 보다 생각하고 크게 연연하지 않는다.", score: 5 }, { text: "'야 대답 좀 해라ㅋㅋ' 꿋꿋하게 계속 톡을 보낸다.", score: 10 }] },
+                { q: "새로 사귄 친구가 정치, 종교 등 나와 극단적으로 다른 가치관을 강요한다.", answers: [{ text: "싸우기 싫어서 겉으로는 동조해 주며 스트레스를 받는다.", score: 0 }, { text: "'난 너랑 생각 달라' 칼같이 선 긋고 안 맞으면 손절한다.", score: 10 }, { text: "적당히 대화 주제를 돌리며 논쟁을 피한다.", score: 5 }] },
+                { q: "길을 걷다 사이비/도를 아십니까가 자꾸 나를 잡고 안 놔준다.", answers: [{ text: "어어.. 하다가 끌려가서 30분 동안 설교를 듣고 풀려난다.", score: 0 }, { text: "'바빠요' 하고 무시하며 빠른 걸음으로 지나친다.", score: 5 }, { text: "오히려 역으로 그 사람의 관상을 봐주거나 외계어 방언을 터트린다.", score: 10 }] },
+                { q: "내가 잘못한 게 맞는데, 상대방이 너무 심하게 화를 낸다면?", answers: [{ text: "모든 게 내 잘못 같아 주눅 들고 계속 미안하다고만 한다.", score: 0 }, { text: "잘못한 건 인정하지만, 선 넘는 발언에는 '말이 심하네' 반박한다.", score: 10 }, { text: "일단 상황을 모면하려고 영혼 없이 사과하고 본다.", score: 5 }] },
+                { q: "친구가 내 옷차림을 보고 '그 옷 진짜 별로다'라고 지적한다.", answers: [{ text: "하루 종일 신경 쓰여서 집에 가서 당장 옷을 갈아입고 싶다.", score: 0 }, { text: "'네 패션 센스가 더 별로야' 내 취향 확고하게 밀고 나간다.", score: 10 }, { text: "'그런가?' 적당히 수긍하며 다음엔 그 옷을 안 입는다.", score: 5 }] },
+                { q: "연인이 갑자기 '우리 시간 좀 갖자'라고 통보했다.", answers: [{ text: "세상이 끝난 것처럼 매달리며 이유를 묻고 자책한다.", score: 0 }, { text: "'그래, 생각 정리되면 연락해' 쿨하게 돌아서고 내 생활을 즐긴다.", score: 10 }, { text: "불안하지만 티 내지 않고 며칠 기다려 본다.", score: 5 }] },
+                { q: "친구 무리에서 나만 빼고 비밀을 공유한 사실을 알게 되었다.", answers: [{ text: "나를 진정한 친구로 생각 안 하는 것 같아 심하게 배신감을 느낀다.", score: 0 }, { text: "섭섭하긴 하지만 '나한테 말하기 힘든 사정이 있겠지' 이해해 본다.", score: 5 }, { text: "나도 다른 친구랑 비밀 만들면 됨. 별 타격 없다.", score: 10 }] },
+                { q: "누군가 나를 뚫어지게 쳐다본다면?", answers: [{ text: "'얼굴에 뭐 묻었나? 내가 뭘 잘못했나?' 눈치를 보며 시선을 피한다.", score: 0 }, { text: "나도 똑같이 뚫어지게 쳐다보며 기싸움을 건다.", score: 10 }, { text: "가볍게 눈인사를 하거나 별생각 없이 내 할 일을 한다.", score: 5 }] },
+                { q: "모임에서 대화에 끼지 못하고 겉돌고 있을 때", answers: [{ text: "뻘쭘하고 숨 막혀서 핑계를 대고 집에 가버린다.", score: 0 }, { text: "그냥 맛있는 거나 많이 먹고 와야겠다고 마인드를 바꾼다.", score: 10 }, { text: "어떻게든 틈을 타서 리액션이라도 크게 치며 끼어들려 노력한다.", score: 5 }] },
+                { q: "층간 소음이 너무 심해서 미칠 것 같다면?", answers: [{ text: "항의하러 갔다가 싸움 날까 무서워서 이어폰만 꽉 낀다.", score: 0 }, { text: "참다 참다 경비실에 연락해서 정중히 해결을 요청한다.", score: 5 }, { text: "우퍼 스피커를 달거나 천장을 고무망치로 두드려 보복한다.", score: 10 }] },
+                { q: "택시 기사님이 길을 빙빙 돌아가는 것 같다.", answers: [{ text: "기분 탓이겠지 하며, 무서워서 한마디도 못 하고 요금을 다 낸다.", score: 0 }, { text: "내비게이션을 켜서 보여주며 '이쪽으로 가주세요'라고 똑바로 말한다.", score: 10 }, { text: "도착해서 요금을 낼 때 넌지시 '오늘 길이 많이 막혔나 보네요' 돌려 말한다.", score: 5 }] },
+                { q: "거절해야 하는 부탁을 받았을 때 나의 대처법은?", answers: [{ text: "미안해서 빙빙 돌려 말하다가 결국 수락해버린다.", score: 0 }, { text: "합당한 핑계를 만들어서 조심스럽게 거절한다.", score: 5 }, { text: "'안 돼' 두 글자로 1초 만에 철벽을 친다.", score: 10 }] }
+            ],
+            // [3. 자존감/실패 영역 - 25문제]
+            SELF: [
+                { q: "아무리 노력해도 시험이나 면접에서 계속 떨어진다면?", answers: [{ text: "내 인생은 실패작이라며 세상 모든 것을 원망하고 은둔한다.", score: 0 }, { text: "'내가 부족했네' 우울해하지만 이내 다시 계획을 짠다.", score: 5 }, { text: "'이 회사(학교)가 내 진가를 못 알아보네' 마인드로 미련 없이 턴한다.", score: 10 }] },
+                { q: "거울을 볼 때 드는 나의 솔직한 생각은?", answers: [{ text: "'왜 이렇게 못생겼지? 여기도 고치고 싶고 저기도 고치고 싶다.'", score: 0 }, { text: "'뭐 이 정도면 평타는 치지. 괜찮아.'", score: 5 }, { text: "'와 진짜 개잘생겼다/예쁘다. 나 자신 최고.' 자아도취에 빠진다.", score: 10 }] },
+                { q: "친구의 인스타에 올라온 호화로운 호캉스/명품 사진을 보면?", answers: [{ text: "내 비루한 현실과 비교되며 한없이 비참하고 우울해진다.", score: 0 }, { text: "부럽긴 하지만 '쟤도 빚내서 갔을 수도 있지' 합리화한다.", score: 5 }, { text: "아무 감흥 없다. '좋겠다' 하고 1초 만에 뒤로 가기 누른다.", score: 10 }] },
+                { q: "실수를 저질러서 남들 앞에서 창피를 당했다.", answers: [{ text: "그날의 기억이 매일 밤 이불킥으로 재생되어 미칠 것 같다.", score: 0 }, { text: "시간이 약이다. 며칠 지나면 다들 잊겠지 하며 버틴다.", score: 5 }, { text: "그걸 개그 소재로 승화시켜서 내가 먼저 떠들고 다닌다.", score: 10 }] },
+                { q: "나의 가장 큰 콤플렉스를 누군가 장난으로 건드렸다.", answers: [{ text: "얼굴이 굳어지고 눈물이 핑 돌며 그 자리를 뛰쳐나온다.", score: 0 }, { text: "정색하고 화를 내서 다시는 못 건드리게 만든다.", score: 10 }, { text: "속으론 상처받지만 분위기 망칠까 봐 억지로 같이 웃어준다.", score: 5 }] },
+                { q: "다이어트를 결심했는데 3일 만에 폭식을 해버렸다.", answers: [{ text: "의지박약인 내 자신을 쓰레기라 욕하며 다이어트를 포기한다.", score: 0 }, { text: "'오늘까지만 먹고 내일 진짜 뺀다' 긍정적인 합리화를 시전한다.", score: 10 }, { text: "죄책감에 시달리며 다음날 굶는 강박을 보인다.", score: 5 }] },
+                { q: "타인의 칭찬을 들었을 때 나의 반응은?", answers: [{ text: "'아니에요 제가 뭘요...' 끝까지 부정하며 민망해한다.", score: 0 }, { text: "'감사합니다' 웃으며 겸손하게 받아들인다.", score: 5 }, { text: "'제가 좀 하죠? 더 칭찬해 주세요' 뻔뻔하게 받아친다.", score: 10 }] },
+                { q: "과거의 흑역사가 갑자기 떠올랐다.", answers: [{ text: "괴로워서 머리를 쥐어뜯고 소리를 지른다.", score: 0 }, { text: "'그땐 진짜 왜 그랬지' 피식 웃고 넘긴다.", score: 10 }, { text: "이불을 발로 몇 번 차고 나면 금방 잊어버린다.", score: 5 }] },
+                { q: "나는 혼자 밥 먹고 혼자 노는 것(혼밥, 혼영)을 어떻게 생각하나?", answers: [{ text: "남들이 날 불쌍하게 볼까 봐 절대 혼자 못 한다.", score: 0 }, { text: "신경 안 쓴다. 눈치 안 보고 내가 하고 싶은 대로 혼자 잘 다닌다.", score: 10 }, { text: "할 수는 있지만 은근히 주변 시선이 의식된다.", score: 5 }] },
+                { q: "내가 내린 결정이 최악의 결과로 돌아왔다면?", answers: [{ text: "내 선택을 뼈저리게 후회하며 과거에 갇혀 산다.", score: 0 }, { text: "이미 엎질러진 물. 수습할 방법부터 찾고 책임을 진다.", score: 10 }, { text: "후회는 하지만 '그 상황에선 어쩔 수 없었어' 위안을 삼는다.", score: 5 }] },
+                { q: "나를 모르는 익명의 누군가가 인터넷에 악플을 달았다.", answers: [{ text: "심장이 쿵쾅거리고 하루 종일 그 악플만 생각난다.", score: 0 }, { text: "바로 신고하고 고소장 양식을 다운로드하여 정의구현을 준비한다.", score: 10 }, { text: "'세상엔 참 이상한 놈들이 많네' 무시하고 차단한다.", score: 5 }] },
+                { q: "내 의견을 말할 때 자주 쓰는 화법은?", answers: [{ text: "'제 생각은 확실하게 이렇습니다.' 주관이 뚜렷하다.", score: 10 }, { text: "'~인 것 같아요. ~아닐까요?' 자신 없고 눈치를 본다.", score: 0 }, { text: "'이런 부분도 있지만 저런 부분도 있죠' 중립을 지킨다.", score: 5 }] },
+                { q: "경쟁에서 패배했을 때 나의 마인드는?", answers: [{ text: "나는 패배자라며 한동안 슬럼프에 빠져 허우적댄다.", score: 0 }, { text: "승자를 인정하고, 패인을 분석해서 다음엔 꼭 이기겠다고 다짐한다.", score: 10 }, { text: "'이번엔 운이 없었네' 적당한 변명으로 스스로를 방어한다.", score: 5 }] },
+                { q: "다른 사람들이 나를 어떻게 생각하는지?", answers: [{ text: "나를 미워할까 봐 항상 전전긍긍하며 피곤하게 산다.", score: 0 }, { text: "나를 좋아해 주면 고맙지만, 싫어해도 내 알 바 아니다.", score: 10 }, { text: "적당히 좋은 사람으로 남고 싶어서 기본 매너는 지킨다.", score: 5 }] },
+                { q: "성공의 기준은 무엇이라고 생각하는가?", answers: [{ text: "남들이 우러러보는 돈, 명예, 스펙을 갖추는 것.", score: 0 }, { text: "남들 시선 상관없이 내가 만족하고 행복하게 사는 것.", score: 10 }, { text: "적당히 남들만큼 살면서 평범하게 누리는 것.", score: 5 }] },
+                { q: "처음 해보는 어려운 일에 직면했을 때", answers: [{ text: "'난 절대 못 해' 지레 겁먹고 도망칠 핑계부터 찾는다.", score: 0 }, { text: "'일단 부딪혀보자! 까짓것 해보면 알겠지' 자신감 있게 덤빈다.", score: 10 }, { text: "망설여지지만 남들이 다 하면 눈치껏 따라 한다.", score: 5 }] },
+                { q: "나보다 모든 면에서 잘난 사람을 곁에 두면?", answers: [{ text: "자격지심에 시달려서 같이 있는 게 너무 괴롭다.", score: 0 }, { text: "그 사람의 장점을 쏙쏙 빨아먹고 나도 발전하는 기회로 삼는다.", score: 10 }, { text: "부럽긴 하지만 내 삶도 나름 괜찮다며 비교하지 않는다.", score: 5 }] },
+                { q: "스트레스 임계치에 도달하면 나는 어떤 행동을 하는가?", answers: [{ text: "모든 연락을 끊고 동굴로 들어가 버린다. (잠수 타기)", score: 0 }, { text: "운동이나 격렬한 취미로 땀을 흘리며 다 날려버린다.", score: 10 }, { text: "가까운 사람에게 짜증을 내거나 감정 쓰레기통으로 쓴다.", score: 5 }] },
+                { q: "거절에 대한 나의 태도는?", answers: [{ text: "거절당하는 게 무서워서 부탁 자체를 아예 안 한다.", score: 0 }, { text: "'안 되면 말고' 마인드로 밑져야 본전이라 생각하며 막 던진다.", score: 10 }, { text: "거절당하면 조금 상처받지만 겉으론 쿨한 척한다.", score: 5 }] },
+                { q: "불안감이 엄습할 때 나의 신체적 반응은?", answers: [{ text: "위장병, 불면증, 두통 등 몸이 바로 아프기 시작한다.", score: 0 }, { text: "마음은 불안해도 밥은 잘 넘어간다. (식욕 폭발)", score: 10 }, { text: "안절부절못하며 손톱을 물어뜯거나 다리를 떤다.", score: 5 }] },
+                { q: "목표를 이루지 못했을 때 탓하는 대상은?", answers: [{ text: "무능한 내 탓이라며 자학의 끝을 달린다.", score: 0 }, { text: "외부 환경, 운, 다른 사람 탓으로 돌리며 정신 승리한다.", score: 10 }, { text: "내 잘못과 상황을 적절히 섞어서 냉정하게 복기한다.", score: 5 }] },
+                { q: "어릴 적 트라우마나 안 좋은 기억은?", answers: [{ text: "여전히 내 삶을 지배하며 문득문득 나를 괴롭힌다.", score: 0 }, { text: "그 덕분에 지금의 내가 더 강해졌다고 긍정적으로 여긴다.", score: 10 }, { text: "시간이 약이라, 지금은 그냥 희미한 추억 정도로 남아있다.", score: 5 }] },
+                { q: "나의 장점을 3가지 말해보라고 한다면?", answers: [{ text: "아무리 쥐어짜도 한 가지도 제대로 말하기 힘들다.", score: 0 }, { text: "장점 3가지? 10가지도 넘게 막힘없이 술술 말할 수 있다.", score: 10 }, { text: "평범한 성격, 책임감 등 뻔하지만 무난한 답변을 한다.", score: 5 }] },
+                { q: "기대하던 영화나 공연을 혼자 보러 가야 한다면?", answers: [{ text: "혼자 보는 건 뻘쭘해서 그냥 포기한다.", score: 0 }, { text: "오히려 좋아. 옆 사람 눈치 안 보고 팝콘 혼자 다 먹는다.", score: 10 }, { text: "아쉽지만 어떻게든 같이 갈 사람을 끝까지 구해서 간다.", score: 5 }] },
+                { q: "인생은 〇〇다. 빈칸에 들어갈 말은?", answers: [{ text: "인생은 고통의 연속이다. 버티는 것일 뿐.", score: 0 }, { text: "인생은 롤러코스터! 오르막이 있으면 내리막도 있는 재미난 게임.", score: 10 }, { text: "인생은 예측불가. 그냥 흘러가는 대로 사는 거지.", score: 5 }] }
+            ],
+            // [4. 돌발상황/위기대처 영역 - 25문제]
+            CRISIS: [
+                { q: "중요한 미팅 10분 전, 흰 셔츠에 아메리카노를 쏟았다!", answers: [{ text: "패닉 상태에 빠져 아무것도 못 하고 울먹거린다.", score: 0 }, { text: "화장실로 뛰어가 대충 물을 묻혀 지워보려 애쓴다.", score: 5 }, { text: "'이왕 이렇게 된 거' 근처 매장에서 새 옷을 사입거나 당당하게 재킷을 여민다.", score: 10 }] },
+                { q: "핸드폰 배터리 1%, 당장 충전할 곳도 없는 길거리라면?", answers: [{ text: "세상과 단절된 공포감에 극도로 불안해한다.", score: 0 }, { text: "'까짓것 아날로그 낭만이지' 주변 풍경을 감상하며 걷는다.", score: 10 }, { text: "주변 편의점을 미친 듯이 뒤져서 일회용 배터리를 산다.", score: 5 }] },
+                { q: "해외여행 중 여권과 지갑이 든 가방을 통째로 잃어버렸다.", answers: [{ text: "그 자리에 주저앉아 대성통곡하며 여행을 포기하고 싶다.", score: 0 }, { text: "대사관 연락, 카드 정지 등 해결책을 기계처럼 빠르게 착착 진행한다.", score: 10 }, { text: "멘붕이 오지만 같이 간 동행에게 기대서 겨우겨우 수습한다.", score: 5 }] },
+                { q: "방에 바퀴벌레가 나왔다!", answers: [{ text: "소리를 지르며 방 밖으로 도망쳐서 가족이나 친구를 부른다.", score: 0 }, { text: "휴지나 파리채를 들고 단번에 내리쳐서 암살한다.", score: 10 }, { text: "에프킬라를 한 통 다 쓸 기세로 뿌려놓고 죽을 때까지 기다린다.", score: 5 }] },
+                { q: "식당에서 계산하려는데 카드가 '한도 초과/잔액 부족'으로 결제 거절되었다.", answers: [{ text: "얼굴이 홍당무가 되어 쥐구멍에라도 숨고 싶다.", score: 0 }, { text: "'어? 이상하네요' 능청스럽게 다른 카드를 꺼내거나 계좌이체 한다.", score: 10 }, { text: "당황해서 손을 떨며 은행 앱을 켜서 잔고를 확인한다.", score: 5 }] },
+                { q: "지하철 반대 방향으로 잘못 타서 약속 시간에 지각하게 생겼다.", answers: [{ text: "자책하며 발을 동동 구르고 극심한 스트레스를 받는다.", score: 0 }, { text: "당장 약속 상대에게 사실대로 말하고 늦는 시간을 정확히 알린다.", score: 10 }, { text: "식은땀을 흘리며 일단 내린 후 택시를 잡을 수 있는지 검색한다.", score: 5 }] },
+                { q: "길을 걷다 돌부리에 걸려 사람들 앞에서 크게 넘어졌다.", answers: [{ text: "쪽팔려서 아픈 줄도 모르고 0.1초 만에 튕겨 일어난다.", score: 10 }, { text: "수치심에 고개를 푹 숙이고 그 길로는 두 번 다시 안 간다.", score: 0 }, { text: "넘어진 채로 주변 눈치를 살피며 쭈뼛쭈뼛 일어난다.", score: 5 }] },
+                { q: "발표 중 머릿속이 하얘져서 대사를 완전히 까먹었다.", answers: [{ text: "10초 이상 정적이 흐르고 얼굴이 새하얗게 질린다.", score: 0 }, { text: "'너무 긴장해서 까먹었네요 하하' 농담으로 넘기고 자료를 본다.", score: 10 }, { text: "당황한 티를 팍팍 내며 대본을 허둥지둥 찾아서 읽는다.", score: 5 }] },
+                { q: "내일이 시험/마감인데 지금 밤 10시다. 진도는 절반도 못 뺐다.", answers: [{ text: "'망했다'는 생각에 압도되어 포기하고 잠을 잔다.", score: 0 }, { text: "초인적인 힘을 발휘해 밤을 새워 핵심만 미친 듯이 파고든다.", score: 10 }, { text: "불안해 미치겠는데 핸드폰만 만지작거리며 회피한다.", score: 5 }] },
+                { q: "지갑을 집에 두고 버스에 탔다. '잔액이 부족합니다' 소리가 울려 퍼진다.", answers: [{ text: "수치심에 얼굴을 붉히며 기사님께 연신 죄송하다 하고 당장 내린다.", score: 0 }, { text: "'아차' 하며 기사님께 계좌이체 되냐고 당당하게 묻는다.", score: 10 }, { text: "주변 승객에게 혹시 대신 내주실 수 있는지 조심스레 부탁한다.", score: 5 }] },
+                { q: "집에서 혼자 쉬고 있는데 갑자기 정전이 되었다.", answers: [{ text: "어둠에 대한 공포로 비명을 지르며 이불을 뒤집어쓴다.", score: 0 }, { text: "핸드폰 플래시를 켜고 차단기부터 침착하게 확인한다.", score: 10 }, { text: "무섭진 않지만 불편해서 관리사무소에 바로 전화를 건다.", score: 5 }] },
+                { q: "길을 걷다가 갑자기 소나기가 미친 듯이 쏟아진다. (우산 없음)", answers: [{ text: "비를 맞는 게 끔찍해서 비가 그칠 때까지 처마 밑에 갇혀 있는다.", score: 0 }, { text: "'이참에 비 좀 맞지 뭐' 영화 주인공처럼 당당하게 뚫고 간다.", score: 10 }, { text: "제일 가까운 편의점으로 전력 질주해서 우산을 산다.", score: 5 }] },
+                { q: "주식이나 코인이 하루아침에 반토막 났다.", answers: [{ text: "밥도 안 넘어가고 며칠 동안 시름시름 앓아눕는다.", score: 0 }, { text: "쌍욕을 내뱉고 앱을 삭제한 뒤 '없는 돈' 치고 강제 장투한다.", score: 10 }, { text: "패닉셀(손절)을 하고 남은 돈이라도 건지려 발버둥 친다.", score: 5 }] },
+                { q: "친한 친구가 술 먹고 내 차(또는 비싼 물건)에 토를 했다.", answers: [{ text: "극대노하여 친구의 멱살을 잡고 절교를 선언한다.", score: 10 }, { text: "어차피 일어난 일. 친구가 깨면 세탁비 청구해야지 하고 일단 치운다.", score: 5 }, { text: "너무 충격받아서 화도 못 내고 멍하니 쳐다만 본다.", score: 0 }] },
+                { q: "처음 가는 식당에서 맛없는 음식이 나왔다.", answers: [{ text: "내 돈 날렸다는 생각에 하루 종일 분노하며 기분이 다운된다.", score: 0 }, { text: "'다신 안 오면 되지' 젓가락을 내려놓고 미련 없이 나간다.", score: 10 }, { text: "돈 아까워서 억지로 코 막고 끝까지 꾸역꾸역 먹는다.", score: 5 }] },
+                { q: "엘리베이터에 갇혔다!", answers: [{ text: "폐소공포증과 공황이 와서 살려달라고 문을 두드린다.", score: 0 }, { text: "비상벨을 누르고 구조대가 올 때까지 핸드폰 게임을 한다.", score: 10 }, { text: "불안해하며 같이 탄 사람과 눈치를 보며 언제 열리나 초조해한다.", score: 5 }] },
+                { q: "약속 시간 정각에 알람을 듣고 눈을 떴다. (지각 확정)", answers: [{ text: "너무 미안해서 핑계를 대고 약속을 파투 낸다.", score: 0 }, { text: "친구에게 석고대죄 카톡을 보내고 머리도 안 감고 5분 만에 튀어나간다.", score: 10 }, { text: "'어차피 늦은 거' 씻고 화장할 거 다 하고 여유롭게 간다.", score: 5 }] },
+                { q: "산속에서 길을 잃어 해가 져버렸다.", answers: [{ text: "절망감에 주저앉아 귀신 나올까 봐 엉엉 운다.", score: 0 }, { text: "침착하게 119에 신고하고 구조대가 오기 좋은 곳을 찾는다.", score: 10 }, { text: "살기 위해 핸드폰 후레쉬를 켜고 무작정 밑으로 뛰어 내려간다.", score: 5 }] },
+                { q: "자전거를 타다가 넘어졌는데, 모르는 사람들이 다 쳐다본다.", answers: [{ text: "너무 쪽팔려서 아픈 티도 안 내고 쿨하게 자전거를 타고 도망친다.", score: 10 }, { text: "아프고 부끄러워 얼굴을 감싸고 그 자리에서 일어나질 못한다.", score: 0 }, { text: "멋쩍게 웃으며 '아 괜찮습니다' 하고 툭툭 털고 일어난다.", score: 5 }] },
+                { q: "잘 만나고 있던 연인이 문자로 이별을 통보했다.", answers: [{ text: "눈물 콧물 다 빼며 왜 그러냐고 수십 통의 전화를 건다.", score: 0 }, { text: "문자 이별 예의 없는 거 보소. 'ㅇㅋ 꺼져' 하고 번호 차단한다.", score: 10 }, { text: "당황스럽지만 만나서 얘기하자고 이성적으로 차분하게 답장한다.", score: 5 }] },
+                { q: "혼자 밤길을 걷는데 뒤에서 발소리가 계속 따라온다.", answers: [{ text: "심장이 입 밖으로 튀어나올 것 같고 얼어붙어서 발걸음이 안 떨어진다.", score: 0 }, { text: "뒤를 확 돌아서 누구냐고 매섭게 노려본다.", score: 10 }, { text: "애써 태연한 척 걸음을 빨리하며 누군가와 통화하는 척한다.", score: 5 }] },
+                { q: "중고거래 직거래에 나갔는데, 상대방이 사진과 다르게 험악한 조폭 같다.", answers: [{ text: "너무 무서워서 물건의 하자도 못 따지고 묻지 마 쿨거래를 한다.", score: 0 }, { text: "조폭이든 뭐든 '이거 기스 났네요 안 삽니다' 할 말은 다 한다.", score: 10 }, { text: "속으론 쫄았지만 티 안 내고 적당히 거래를 서둘러 끝낸다.", score: 5 }] },
+                { q: "열심히 쓴 자소서를 실수로 '저장 안 함'을 눌러 날려먹었다.", answers: [{ text: "소리를 꽥 지르고 모니터를 부수고 싶다. 오늘은 더 이상 못 한다.", score: 0 }, { text: "허탈하게 웃으며 '내가 쓴 게 쓰레기였나 보지' 하고 백지부터 다시 쓴다.", score: 10 }, { text: "멘붕이지만 욕을 하며 방금 썼던 기억을 짜내 미친 듯이 타자를 친다.", score: 5 }] },
+                { q: "화장실 변기가 막혀서 물이 넘치기 일보 직전이다.", answers: [{ text: "당황해서 어쩔 줄 모르고 엄마나 룸메이트에게 소리쳐 도움을 청한다.", score: 0 }, { text: "침착하게 뚫어뻥을 들고 와서 전문가처럼 펌프질을 시작한다.", score: 10 }, { text: "일단 화장실 문을 닫고 물이 빠질 때까지 한참을 기다려 본다.", score: 5 }] },
+                { q: "갑자기 하늘에서 새똥이 떨어져 내 머리에 맞았다.", answers: [{ text: "재수 옴 붙었다며 하루 종일 기분이 더럽고 우울하다.", score: 0 }, { text: "'복권 살 각이다!' 로또 명당을 찾아 기분 좋게 뛰어간다.", score: 10 }, { text: "짜증 나지만 황급히 물티슈를 찾아 닦고 잊어버리려 애쓴다.", score: 5 }] }
+            ]
+        };
+
+        let selectedQuestions = []; // 20문제
+        let currentIdx = 0;
+        let totalScore = 0;
+
+        const quizSec = document.getElementById('quiz-section');
+        const resSec = document.getElementById('result-section');
+        const qText = document.getElementById('question-text');
+        const ansBtns = document.getElementById('answer-buttons');
+        const pBar = document.getElementById('progress');
+
+        // 배열 셔플 (피셔-예이츠)
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+
+        function buildQuestions() {
+            const categories = ['WORK', 'PEOPLE', 'SELF', 'CRISIS'];
+            let temp = [];
+            
+            // 4개 영역에서 무작위로 5문제씩 정확히 추출 (총 20문제)
+            categories.forEach(cat => {
+                let pool = [...mentalPool[cat]];
+                shuffle(pool);
+                
+                let picked = pool.slice(0, 5).map(qObj => {
+                    let ansArr = [...qObj.answers];
+                    shuffle(ansArr); // 선택지 순서 랜덤 (위치 고정 방지)
+                    return { q: qObj.q, answers: ansArr };
+                });
+                temp.push(...picked);
+            });
+            
+            // 20문제 전체 순서 섞기
+            shuffle(temp);
+            selectedQuestions = temp;
+        }
+
+        function startTest() {
+            totalScore = 0;
+            currentIdx = 0;
+            buildQuestions();
+            
+            quizSec.style.display = 'block';
+            resSec.style.display = 'none';
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const pct = (currentIdx / selectedQuestions.length) * 100;
+            pBar.style.width = pct + '%';
+
+            const current = selectedQuestions[currentIdx];
+            qText.innerText = `Q${currentIdx + 1}. ${current.q}`;
+            
+            ansBtns.innerHTML = '';
+            current.answers.forEach(ans => {
+                const btn = document.createElement('button');
+                btn.innerText = ans.text;
+                btn.classList.add('btn-answer');
+                btn.onclick = () => {
+                    totalScore += ans.score;
+                    currentIdx++;
+                    if (currentIdx < selectedQuestions.length) {
+                        renderQuestion();
+                    } else {
+                        pBar.style.width = '100%';
+                        setTimeout(calcResult, 300);
+                    }
+                };
+                ansBtns.appendChild(btn);
+            });
+        }
+
+        function calcResult() {
+            quizSec.style.display = 'none';
+            resSec.style.display = 'block';
+
+            const gradeEl = document.getElementById('result-grade');
+            const titleEl = document.getElementById('result-title');
+            const descEl = document.getElementById('result-desc');
+
+            // 점수 구간 (20문제 * 10점 = 총 200점 만점)
+            if (totalScore >= 160) {
+                gradeEl.innerText = "S";
+                gradeEl.className = "grade grade-S";
+                titleEl.innerText = "🤖 무적의 티타늄 멘탈";
+                descEl.innerHTML = "당신은 감정이 없는 사이보그입니까?<br>남들이 상처받고 멘붕에 빠질 상황에서도 '어쩌라고' 마인드로 튕겨내는 엄청난 회복 탄력성을 지녔습니다.<br>타인의 시선이나 실패에 연연하지 않는 진정한 강자!<br>다만 가끔은 피도 눈물도 없다는 오해를 받을 수 있으니 기계가 아님을 증명해 주세요.";
+            } else if (totalScore >= 110) {
+                gradeEl.innerText = "A";
+                gradeEl.className = "grade grade-A";
+                titleEl.innerText = "🛡️ 든든한 강철 멘탈";
+                descEl.innerHTML = "이 험난한 사회생활을 버티기에 아주 최적화된 건강한 멘탈입니다.<br>상처를 안 받는 건 아니지만, 자고 일어나면 훌훌 털고 일어나는 건강한 마인드의 소유자입니다.<br>위기 상황에서도 이성적으로 판단할 줄 아는 당신, 주변 사람들이 당신에게 많이 의지하고 있을 겁니다.";
+            } else if (totalScore >= 60) {
+                gradeEl.innerText = "C";
+                gradeEl.className = "grade grade-C";
+                titleEl.innerText = "🍪 바사삭 쿠쿠다스 멘탈";
+                descEl.innerHTML = "겉으로는 멀쩡해 보이지만 툭 치면 부서지는 쿠쿠다스 멘탈입니다.<br>남의 말 한마디에 며칠 밤을 설레발치고 이불킥을 하며, 작은 실수에도 자책을 심하게 하는 편이네요.<br>상처받기 싫어서 억지로 쿨한 척 방어기제를 치기도 합니다.<br>조금 더 뻔뻔해져도 괜찮아요! 세상은 생각보다 나에게 관심이 없습니다.";
+            } else {
+                gradeEl.innerText = "F";
+                gradeEl.className = "grade grade-F";
+                titleEl.innerText = "🍮 호록 순두부 멘탈";
+                descEl.innerHTML = "멘탈이 순두부처럼 연약해서 젓가락으로 집기만 해도 으스러집니다.<br>스트레스 내성이 0에 수렴하여 돌발상황이 생기면 뇌 정지가 오고, 눈물부터 앞을 가리네요.<br>타인의 시선에 내 인생이 휘둘리지 않도록 자존감을 꽉 잡아줄 '마이웨이' 연습이 시급합니다.<br>당신은 세상에서 가장 소중한 사람이라는 걸 잊지 마세요!";
+            }
+        }
+
+        function shareResult() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                alert("링크가 복사되었습니다! 친구들에게 멘탈 등급을 공유해보세요.");
+            });
+        }
+
+        startTest();
+    </script>
+</body>
+</html>
