@@ -251,9 +251,16 @@
         }
 
         function shareResult() {
-            const dummyUrl = window.location.href;
-            navigator.clipboard.writeText(dummyUrl).then(() => {
-                alert("링크가 복사되었습니다! 예비 배우자나 단톡방에 결과를 공유해 현실을 알려주세요.");
+            const grade = document.getElementById('result-grade').innerText;
+            const title = document.getElementById('result-title').innerText;
+            const cleanUrl = window.location.href.split('?')[0]; 
+
+            const shareText = `[예비 부부 결혼 준비도 테스트]\n\n💍 나의 결혼 멘탈 등급: ${grade} (${title})\n\n우리는 진짜 결혼해도 될까?\n팩폭 200% 현실 결혼 진단기 해보기!\n👉 ${cleanUrl}`;
+
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert("결과가 복사되었습니다!\n배우자나 단톡방에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
+            }).catch(err => {
+                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
             });
         }
 

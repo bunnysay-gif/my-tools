@@ -332,19 +332,14 @@
 
         // ✨ 새로 추가된 완벽한 결과 공유 기능 ✨
         function shareResult() {
-            // 결과 화면에 뜬 MBTI와 타이틀을 가져옴
-            const mbti = document.getElementById('result-mbti').innerText;
+            const grade = document.getElementById('result-grade').innerText;
             const title = document.getElementById('result-title').innerText;
-            
-            // 깔끔한 원본 주소만 추출 (? 뒤의 쓸데없는 파라미터 방지)
             const cleanUrl = window.location.href.split('?')[0]; 
 
-            // 카톡방에 복붙하기 좋게 텍스트 포맷팅
-            const shareText = `[진짜 나의 숨겨진 MBTI 찾기]\n\n🧠 내 팩폭 결과: ${mbti} (${title})\n\n사회생활용 가짜 성격은 벗어라!\n너의 진짜 본성도 지금 테스트해봐 ㅋㅋㅋ\n👉 ${cleanUrl}`;
+            const shareText = `[내 연애 세포 진단기]\n\n💘 내 연애 세포 등급: ${grade} (${title})\n\n나는 왜 연애를 못할까? 뼈 때리는 연애 모의고사!\n너의 연애 세포도 살아있는지 확인해봐 ㅋㅋㅋ\n👉 ${cleanUrl}`;
 
-            // 클립보드에 복사
             navigator.clipboard.writeText(shareText).then(() => {
-                alert("결과가 복사되었습니다!\n단톡방 입력창에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
+                alert("결과가 복사되었습니다!\n단톡방에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
             }).catch(err => {
                 alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
             });

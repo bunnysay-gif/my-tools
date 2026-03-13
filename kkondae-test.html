@@ -273,9 +273,16 @@
         }
 
         function shareResult() {
-            const dummyUrl = window.location.href;
-            navigator.clipboard.writeText(dummyUrl).then(() => {
-                alert("링크가 복사되었습니다! 직장 단톡방이나 친구들에게 공유하고 팩폭을 날려보세요.");
+            const grade = document.getElementById('result-grade').innerText;
+            const title = document.getElementById('result-title').innerText;
+            const cleanUrl = window.location.href.split('?')[0]; 
+
+            const shareText = `[내 안의 꼰대력 테스트]\n\n☕ 나의 꼰대 레벨: ${grade} (${title})\n\n혹시 나도 꼰대인가? 팩폭 진단 모의고사!\n진짜 꼰대인지 아닌지 지금 바로 확인해봐 ㅋㅋㅋ\n👉 ${cleanUrl}`;
+
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert("결과가 복사되었습니다!\n단톡방에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
+            }).catch(err => {
+                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
             });
         }
 

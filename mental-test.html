@@ -336,9 +336,16 @@
         }
 
         function shareResult() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                alert("링크가 복사되었습니다! 친구들에게 멘탈 등급을 공유해보세요.");
+            const grade = document.getElementById('result-grade').innerText;
+            const title = document.getElementById('result-title').innerText;
+            const cleanUrl = window.location.href.split('?')[0]; 
+
+            const shareText = `[유리 멘탈 vs 강철 멘탈 진단기]\n\n🛡️ 내 멘탈 등급: ${grade} (${title})\n\n사회생활과 상사의 팩폭에 내 멘탈은 얼마나 버틸까?\n너의 멘탈 수준도 진단해봐!\n👉 ${cleanUrl}`;
+
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert("결과가 복사되었습니다!\n단톡방에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
+            }).catch(err => {
+                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
             });
         }
 

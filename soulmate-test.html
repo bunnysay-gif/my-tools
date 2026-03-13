@@ -274,9 +274,16 @@
         }
 
         function shareResult() {
-            const dummyUrl = window.location.href;
-            navigator.clipboard.writeText(dummyUrl).then(() => {
-                alert("링크가 복사되었습니다!\n단톡방에 공유하고 내 소울메이트(퍼즐, 도플갱어 등)를 찾아보세요!");
+            const grade = document.getElementById('result-grade').innerText;
+            const title = document.getElementById('result-title').innerText;
+            const cleanUrl = window.location.href.split('?')[0]; 
+
+            const shareText = `[찰떡 소울메이트 찾기]\n\n👯‍♀️ 나의 소울메이트 유형: ${grade} (${title})\n\n나랑 영혼까지 통하는 100% 짝꿍은 누굴까?\n너도 해보고 나랑 맞는지 확인해봐!\n👉 ${cleanUrl}`;
+
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert("결과가 복사되었습니다!\n단톡방에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
+            }).catch(err => {
+                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
             });
         }
 
