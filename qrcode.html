@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="icon" href="og-image.png" type="image/png">
+    <link rel="apple-touch-icon" href="og-image.png">
+    
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR 코드 자동 생성기 - 링크, 와이파이 무료 만들기 | PANDORA TOOLS</title>
+    <meta name="description" content="블로그 링크, 명함, 와이파이 자동 접속까지! 1초 만에 나만의 QR 코드를 만들고 고화질로 다운로드하세요.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandoratools.kr/qrcode.html">
+    <meta property="og:title" content="스마트 QR 코드 생성기 - PANDORA TOOLS">
+    <meta property="og:description" content="링크, 텍스트, 와이파이 비번을 QR 코드로 1초 만에 만들어보세요!">
+    <meta property="og:image" content="https://pandoratools.kr/og-image.png"> 
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        body { background: linear-gradient(135deg, #1e1b4b, #2e1065); color: white; font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+        .page-header { text-align: center; margin-bottom: 30px; }
+        .page-header h1 { color: #d8b4fe; margin-bottom: 10px; font-size: 28px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .page-header p { color: #cbd5e1; font-size: 15px; margin-top: 0; }
+        .badge { background-color: rgba(168, 85, 247, 0.2); color: #c084fc; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #a855f7; }
+
+        .calculator-card { background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-left: 5px solid #a855f7; }
+
+        /* 탭 버튼 스타일 */
+        .toggle-group { display: flex; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 5px; margin-bottom: 25px; }
+        .toggle-btn { flex: 1; text-align: center; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; color: #94a3b8; transition: 0.3s; font-size: 15px; }
+        .toggle-btn.active { background-color: #a855f7; color: white; box-shadow: 0 4px 10px rgba(168, 85, 247, 0.4); }
+
+        .input-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .input-group label { font-weight: bold; width: 35%; color: #94a3b8; font-size: 16px; }
+        
+        .input-wrapper { width: 65%; position: relative; }
+        .input-wrapper input, .input-wrapper select { width: 100%; padding: 14px; font-size: 15px; background-color: rgba(15, 23, 42, 0.6); color: white; border: 1px solid #475569; border-radius: 8px; box-sizing: border-box; font-family: inherit; transition: 0.2s; outline: none; }
+        .input-wrapper input:focus, .input-wrapper select:focus { border-color: #a855f7; box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.3); background-color: rgba(255,255,255,0.1); }
+        
+        /* ✨ 드롭다운 글자 오류 완벽 해결 */
+        .input-wrapper select option { background-color: #1e293b; color: #ffffff; }
+
+        /* 와이파이 입력폼 숨김 처리용 */
+        #wifiInputGroup { display: none; }
+
+        .calc-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #9333ea, #7e22ce); color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4); transition: 0.2s; }
+        .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(147, 51, 234, 0.6); }
+
+        /* QR 결과 영역 */
+        #resultArea { display: none; margin-top: 30px; animation: fadeIn 0.4s; text-align: center; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .qr-container { 
+            background-color: white; padding: 20px; border-radius: 12px; display: inline-block; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); margin-bottom: 20px; border: 4px solid #d8b4fe;
+        }
+        
+        /* qrcode.js가 생성하는 이미지 가운데 정렬 */
+        #qrcode { display: flex; justify-content: center; align-items: center; }
+        #qrcode img { display: block; margin: 0 auto; }
+
+        .download-btn { display: inline-block; background-color: #fde047; color: #1e1b4b; padding: 12px 30px; border-radius: 30px; font-weight: bold; text-decoration: none; transition: 0.2s; box-shadow: 0 4px 10px rgba(253, 224, 71, 0.3); border: none; cursor: pointer; font-size: 16px;}
+        .download-btn:hover { background-color: #facc15; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(253, 224, 71, 0.5); }
+
+        .seo-section { background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); border-top: 4px solid #a855f7; backdrop-filter: blur(10px); }
+        .seo-section h2 { color: #fde047; font-size: 22px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-top: 0; }
+        .seo-section h3 { color: #d8b4fe; font-size: 18px; margin-top: 25px; }
+        .seo-section p, .seo-section ul { color: #cbd5e1; font-size: 15px; line-height: 1.7; }
+        .seo-section li { margin-bottom: 8px; }
+
+        .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
+        .link-card { flex: 1; background-color: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s; }
+        .link-card:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-3px); border-color: #a855f7; }
+        .link-card span { display: block; font-size: 13px; color: #94a3b8; font-weight: normal; margin-top: 5px; }
+
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s;}
+        .back-btn:hover { background-color: rgba(255,255,255,0.2); }
+
+        @media (max-width: 600px) { .input-group { flex-direction: column; align-items: flex-start; gap: 8px; } .input-group label, .input-wrapper { width: 100%; } .internal-links { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="page-header">
+        <h1>📱 스마트 QR 코드 생성기</h1>
+        <p><span class="badge">와이파이 자동연결 지원</span> 복잡한 링크를 네모난 마법 상자에 담아보세요.</p>
+    </div>
+
+    <div class="calculator-card">
+        <div class="toggle-group">
+            <div class="toggle-btn active" id="btnLink" onclick="setQRType('link')">일반 텍스트 / URL 링크</div>
+            <div class="toggle-btn" id="btnWifi" onclick="setQRType('wifi')">공유기 와이파이(Wi-Fi) 자동접속</div>
+        </div>
+
+        <div id="linkInputGroup">
+            <div class="input-group">
+                <label>내용 입력</label>
+                <div class="input-wrapper">
+                    <input type="text" id="qrText" placeholder="예: https://pandoratools.kr">
+                </div>
+            </div>
+        </div>
+
+        <div id="wifiInputGroup">
+            <div class="input-group">
+                <label>네트워크 이름 (SSID)</label>
+                <div class="input-wrapper">
+                    <input type="text" id="wifiSsid" placeholder="예: U+Net_5G">
+                </div>
+            </div>
+            <div class="input-group">
+                <label>와이파이 비밀번호</label>
+                <div class="input-wrapper">
+                    <input type="text" id="wifiPw" placeholder="비밀번호를 정확히 입력하세요">
+                </div>
+            </div>
+            <p style="font-size: 13px; color: #a855f7; text-align: right; margin-top: -10px; margin-bottom: 20px;">* 암호화 방식은 기본 WPA/WPA2로 자동 설정됩니다.</p>
+        </div>
+
+        <div class="input-group">
+            <label>QR 코드 사이즈</label>
+            <div class="input-wrapper">
+                <select id="qrSize">
+                    <option value="150">작게 (150x150)</option>
+                    <option value="200" selected>보통 (200x200)</option>
+                    <option value="300">크게 (300x300)</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="generateQR()">마법의 QR 코드 생성하기 ✨</button>
+
+        <div id="resultArea">
+            <div class="qr-container">
+                <div id="qrcode"></div>
+            </div>
+            <br>
+            <button class="download-btn" onclick="downloadQR()">📥 QR 코드 이미지 다운로드</button>
+            <p style="color: #94a3b8; font-size: 13px; margin-top: 15px;">* 스마트폰 카메라로 비춰서 정상 작동하는지 확인해 보세요!</p>
+        </div>
+    </div>
+
+    <div class="internal-links">
+        <a href="bookmark.html" class="link-card">🔖 필수 사이트 허브<span>나만의 즐겨찾기 모음집</span></a>
+        <a href="wordcount.html" class="link-card">📝 글자수 세기<span>블로그/자소서 작성 필수템</span></a>
+    </div>
+
+    <div class="seo-section">
+        <h2>💡 QR 코드 200% 활용 꿀팁</h2>
+        
+        <h3>1. 와이파이(Wi-Fi) 자동 접속 QR의 마법</h3>
+        <p>카페, 식당, 미용실 사장님들 주목! 매번 손님들에게 와이파이 비밀번호를 알려주기 귀찮으셨죠? 이 툴에서 <strong>'공유기 와이파이 자동접속'</strong> 탭을 눌러 QR 코드를 생성한 뒤, 프린트해서 매장 테이블이나 카운터에 붙여두세요. 손님들이 기본 카메라로 스캔만 하면 비밀번호 입력 없이 스르륵 와이파이에 연결됩니다.</p>
+
+        <h3>2. 마케팅과 명함에 날개를 달아주세요.</h3>
+        <p>인스타그램 주소, 블로그 주소, 오픈채팅방 링크, 혹은 유튜브 영상 링크를 QR 코드로 만들어보세요. 개인 명함 뒷면에 넣거나, 전단지에 인쇄해 두면 고객들이 긴 주소를 칠 필요 없이 1초 만에 사장님의 채널로 이동합니다.</p>
+
+        <h3>3. 큐싱(Qshing) 스미싱 주의!</h3>
+        <p>QR코드(QR)와 피싱(Phishing)의 합성어인 <strong>'큐싱'</strong>을 조심하세요. 출처가 불분명한 길거리의 QR 코드나, 누군가 보낸 알 수 없는 QR 코드는 악성 앱을 설치하게 만들 수 있으니 카메라로 스캔 후 연결되는 주소가 안전한지 꼭 확인하고 누르셔야 합니다.</p>
+    </div>
+
+    <footer style="text-align: center; margin-top: 100px; padding: 60px 20px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); border-radius: 0 0 20px 20px;">
+        <a href="index.html" style="display: inline-block; margin-bottom: 20px; opacity: 0.8; transition: 0.3s;">
+            <img src="og-image.png" alt="PANDORA TOOLS Footer Logo" style="width: 120px; filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.4));">
+        </a>
+        <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px;">&copy; 2026 <strong>PANDORA TOOLS</strong>. All Rights Reserved.</div>
+        <div style="color: #64748b; font-size: 0.85rem;">문의: <a href="mailto:support@pandoratools.kr" style="color: #a855f7; text-decoration: none; border-bottom: 1px solid rgba(168, 85, 247, 0.3);">support@pandoratools.kr</a></div>
+    </footer>
+
+    <script>
+        let currentType = 'link';
+        let qrcodeObject = null;
+
+        function setQRType(type) {
+            currentType = type;
+            document.getElementById('btnLink').className = type === 'link' ? 'toggle-btn active' : 'toggle-btn';
+            document.getElementById('btnWifi').className = type === 'wifi' ? 'toggle-btn active' : 'toggle-btn';
+
+            if (type === 'link') {
+                document.getElementById('linkInputGroup').style.display = 'block';
+                document.getElementById('wifiInputGroup').style.display = 'none';
+            } else {
+                document.getElementById('linkInputGroup').style.display = 'none';
+                document.getElementById('wifiInputGroup').style.display = 'block';
+            }
+        }
+
+        function generateQR() {
+            let finalString = "";
+
+            if (currentType === 'link') {
+                const text = document.getElementById('qrText').value.trim();
+                if (!text) { alert("변환할 텍스트나 링크를 입력해주세요."); return; }
+                finalString = text;
+            } else {
+                const ssid = document.getElementById('wifiSsid').value.trim();
+                const pw = document.getElementById('wifiPw').value.trim();
+                if (!ssid) { alert("와이파이 네트워크 이름(SSID)을 입력해주세요."); return; }
+                // 와이파이 자동 연결을 위한 국제 표준 규격 포맷
+                finalString = `WIFI:T:WPA;S:${ssid};P:${pw};;`;
+            }
+
+            const size = parseInt(document.getElementById('qrSize').value);
+
+            // 기존 QR 삭제
+            document.getElementById("qrcode").innerHTML = "";
+
+            // 새 QR 생성 (배경은 흰색 고정이어야 카메라가 잘 인식합니다)
+            qrcodeObject = new QRCode(document.getElementById("qrcode"), {
+                text: finalString,
+                width: size,
+                height: size,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H // 오류 복원력 최고단계
+            });
+
+            document.getElementById('resultArea').style.display = 'block';
+            
+            // 스마트폰 환경 등에서 스크롤을 살짝 내려줌
+            setTimeout(() => {
+                document.getElementById('resultArea').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function downloadQR() {
+            // qrcode.js는 내부적으로 img 태그나 canvas 태그를 생성합니다.
+            const qrContainer = document.getElementById("qrcode");
+            const img = qrContainer.querySelector("img");
+            const canvas = qrContainer.querySelector("canvas");
+
+            let url = "";
+
+            if (img && img.src && img.src.length > 100) {
+                // img 태그에 데이터가 생성된 경우
+                url = img.src;
+            } else if (canvas) {
+                // canvas만 생성된 경우
+                url = canvas.toDataURL("image/png");
+            } else {
+                alert("QR 코드가 아직 생성되지 않았습니다.");
+                return;
+            }
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "PandoraTools_QRCode.png";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>

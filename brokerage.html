@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="icon" href="og-image.png" type="image/png">
+    <link rel="apple-touch-icon" href="og-image.png">
+    
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부동산 중개수수료(복비) 계산기 - 2026 최신 개정 요율 | PANDORA TOOLS</title>
+    <meta name="description" content="주택, 오피스텔, 상가 등 매매 및 전/월세 거래 시 발생하는 법정 최고 부동산 중개수수료(복비)를 1초 만에 정확히 계산해 드립니다.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandoratools.kr/brokerage.html">
+    <meta property="og:title" content="부동산 복비 계산기 - PANDORA TOOLS">
+    <meta property="og:description" content="내 복비, 호구 당하지 말자! 거래금액만 넣으면 법정 최고 수수료를 계산해 줍니다.">
+    <meta property="og:image" content="https://pandoratools.kr/og-image.png"> 
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+
+    <style>
+        body { background: linear-gradient(135deg, #1e1b4b, #2e1065); color: white; font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+        .page-header { text-align: center; margin-bottom: 30px; }
+        .page-header h1 { color: #67e8f9; margin-bottom: 10px; font-size: 28px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .page-header p { color: #cbd5e1; font-size: 15px; margin-top: 0; }
+        .badge { background-color: rgba(6, 182, 212, 0.2); color: #22d3ee; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #06b6d4; }
+
+        .calculator-card { background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-left: 5px solid #06b6d4; }
+
+        .toggle-group { display: flex; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 5px; margin-bottom: 20px; }
+        .toggle-btn { flex: 1; text-align: center; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; color: #94a3b8; transition: 0.3s; font-size: 14.5px; }
+        .toggle-btn.active { background-color: #06b6d4; color: white; box-shadow: 0 4px 10px rgba(6, 182, 212, 0.4); }
+
+        .input-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .input-group label { font-weight: bold; width: 40%; color: #94a3b8; font-size: 16px; }
+        
+        .input-wrapper { width: 60%; position: relative; }
+        .input-wrapper input, .input-wrapper select { width: 100%; padding: 12px; font-size: 16px; background-color: rgba(15, 23, 42, 0.6); color: white; border: 1px solid #475569; border-radius: 8px; box-sizing: border-box; font-family: inherit; transition: 0.2s; outline: none; }
+        .input-wrapper input:focus, .input-wrapper select:focus { border-color: #06b6d4; box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.3); background-color: rgba(255,255,255,0.1); }
+        .input-wrapper input[type="number"] { text-align: right; padding-right: 50px; }
+        .unit-label { position: absolute; right: 15px; top: 12px; color: #cbd5e1; font-weight: bold; }
+
+        /* ✨ 드롭다운 옵션 글자 안 보이는 현상 완벽 해결 */
+        .input-wrapper select option {
+            background-color: #1e293b;
+            color: #ffffff;
+        }
+
+        .monthly-input { display: none; }
+
+        .calc-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #0891b2, #0e7490); color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(8, 145, 178, 0.4); transition: 0.2s; }
+        .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(8, 145, 178, 0.6); }
+
+        #resultArea { display: none; margin-top: 25px; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .summary-box { background-color: rgba(6, 182, 212, 0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(6, 182, 212, 0.3); margin-bottom: 20px; text-align: center; }
+        .result-title { color: #67e8f9; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+        .result-amount { font-size: 40px; color: #22d3ee; font-weight: 900; margin: 0; text-shadow: 1px 1px 10px rgba(34, 211, 238, 0.4); letter-spacing: -1px; }
+        
+        .alert-box { display: inline-block; background-color: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 5px 12px; border-radius: 20px; font-size: 13px; font-weight: bold; margin-bottom: 15px; border: 1px solid #f59e0b; }
+
+        .detail-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        .detail-item { display: flex; justify-content: space-between; font-size: 15px; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 12px 20px; border-radius: 6px; }
+        .detail-item span:last-child { font-weight: bold; color: #e2e8f0; }
+        .detail-item.highlight span:last-child { color: #fde047; }
+
+        .seo-section { background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); border-top: 4px solid #06b6d4; backdrop-filter: blur(10px); }
+        .seo-section h2 { color: #fde047; font-size: 22px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-top: 0; }
+        .seo-section h3 { color: #67e8f9; font-size: 18px; margin-top: 25px; }
+        .seo-section p, .seo-section ul { color: #cbd5e1; font-size: 15px; line-height: 1.7; }
+        .seo-section li { margin-bottom: 8px; }
+
+        .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
+        .link-card { flex: 1; background-color: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s; }
+        .link-card:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-3px); border-color: #06b6d4; }
+        .link-card span { display: block; font-size: 13px; color: #94a3b8; font-weight: normal; margin-top: 5px; }
+
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s;}
+        .back-btn:hover { background-color: rgba(255,255,255,0.2); }
+
+        @media (max-width: 600px) { .input-group { flex-direction: column; align-items: flex-start; gap: 8px; } .input-group label, .input-wrapper { width: 100%; } .internal-links { flex-direction: column; } .toggle-group { flex-direction: column; } }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="page-header">
+        <h1>🏠 부동산 중개수수료 계산기</h1>
+        <p><span class="badge">법정 최고 요율 자동 적용</span> 내 복비, 호구 당하지 말고 정확히 내자!</p>
+    </div>
+
+    <div class="calculator-card">
+        <label style="color: #94a3b8; font-weight: bold; font-size: 14px; margin-bottom: 8px; display: block;">1. 부동산 종류</label>
+        <div class="toggle-group" id="propTypeGroup">
+            <div class="toggle-btn active" onclick="setPropType('house', this)">주택 (아파트/빌라)</div>
+            <div class="toggle-btn" onclick="setPropType('officetel', this)">오피스텔</div>
+            <div class="toggle-btn" onclick="setPropType('other', this)">그 외 (상가/토지)</div>
+        </div>
+
+        <label style="color: #94a3b8; font-weight: bold; font-size: 14px; margin-bottom: 8px; display: block;">2. 거래 종류</label>
+        <div class="toggle-group" id="txTypeGroup">
+            <div class="toggle-btn active" onclick="setTxType('sale', this)">매매 / 교환</div>
+            <div class="toggle-btn" onclick="setTxType('jeonse', this)">전세 임대차</div>
+            <div class="toggle-btn" onclick="setTxType('monthly', this)">월세 임대차</div>
+        </div>
+
+        <div class="input-group" id="normalInput">
+            <label id="normalLabel">거래 금액</label>
+            <div class="input-wrapper">
+                <input type="number" id="normalAmount" placeholder="예: 50000">
+                <span class="unit-label">만원</span>
+            </div>
+        </div>
+
+        <div class="monthly-input" id="monthlyInputGroup">
+            <div class="input-group">
+                <label>보증금</label>
+                <div class="input-wrapper">
+                    <input type="number" id="depositAmount" placeholder="예: 1000">
+                    <span class="unit-label">만원</span>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>월세 (차임)</label>
+                <div class="input-wrapper">
+                    <input type="number" id="rentAmount" placeholder="예: 50">
+                    <span class="unit-label">만원</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group" style="margin-top: 25px;">
+            <label>부가가치세 (VAT)</label>
+            <div class="input-wrapper">
+                <select id="vatType">
+                    <option value="10">일반과세자 (10% 별도 추가)</option>
+                    <option value="4">간이과세자 (4% 별도 추가)</option>
+                    <option value="0" selected>부가세 미포함 (계산 안 함)</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="calculateFee()">부동산 복비 계산하기 🔍</button>
+
+        <div id="resultArea">
+            <div class="summary-box">
+                <div id="limitAlert" class="alert-box" style="display: none;">법정 상한액이 적용되었습니다!</div>
+                <div class="result-title">최대 중개수수료 (부가세 포함)</div>
+                <div class="result-amount" id="totalFee">0원</div>
+                <p style="color: #94a3b8; font-size: 13px; margin-top: 10px;">* 부동산과 협의하여 이 금액 **이내**에서 결정하시면 됩니다.</p>
+                
+                <div class="detail-grid">
+                    <div class="detail-item"><span>적용 거래금액</span> <span id="resAmount">0원</span></div>
+                    <div class="detail-item"><span>상한 요율 (법정)</span> <span id="resRate">0%</span></div>
+                    <div class="detail-item highlight"><span>중개보수 상한액</span> <span id="resBaseFee">0원</span></div>
+                    <div class="detail-item"><span>부가가치세 (VAT)</span> <span id="resVat">+ 0원</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="internal-links">
+        <a href="loan.html" class="link-card">🏦 대출 이자 계산기<span>이사 갈 집 대출금리는 얼마일까?</span></a>
+        <a href="law-hub.html" class="link-card">⚖️ 필수 법령 허브<span>주택임대차보호법 확인하기</span></a>
+    </div>
+
+    <div class="seo-section">
+        <h2>💡 복비 내기 전, 사장님이 꼭 알아야 할 지식</h2>
+        
+        <h3>1. 복비는 '최대 상한선'일 뿐입니다.</h3>
+        <p>계산기에서 나온 금액은 중개사가 법적으로 받을 수 있는 <strong>'최대 금액'</strong>입니다. 무조건 이 금액을 다 줘야 하는 것이 아니라, 계약 전에 중개사와 원만하게 <strong>협의하여 깎을 수 있습니다.</strong> (계약 전 미리 수수료율을 협의하는 것이 가장 좋습니다.)</p>
+
+        <h3>2. 월세 거래금액 계산법 (환산보증금)</h3>
+        <p>월세의 복비를 계산할 때는 월세에 100을 곱한 후 보증금을 더하여 거래금액을 환산합니다. <br>
+        <strong>예) 보증금 1천만 원 + 월세 50만 원 = 6,000만 원.</strong> <br>
+        단, 이렇게 계산된 금액이 5,000만 원 미만일 경우에는 월세에 100 대신 70을 곱하여 부담을 줄여줍니다.</p>
+
+        <h3>3. 부가가치세 (VAT)의 진실</h3>
+        <p>중개사가 부가세(10%)를 별도로 요구하는 경우가 많습니다. 이는 불법이 아닙니다. 하지만 해당 중개사무소가 일반과세자가 아닌 <strong>'간이과세자'</strong>라면 부가세 명목으로 최대 4%만 요구할 수 있습니다. 중개사무소 벽에 걸린 사업자등록증을 통해 과세 유형을 꼭 확인하세요!</p>
+    </div>
+
+    <footer style="text-align: center; margin-top: 100px; padding: 60px 20px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); border-radius: 0 0 20px 20px;">
+        <a href="index.html" style="display: inline-block; margin-bottom: 20px; opacity: 0.8; transition: 0.3s;">
+            <img src="og-image.png" alt="PANDORA TOOLS Footer Logo" style="width: 120px; filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.4));">
+        </a>
+        <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px;">&copy; 2026 <strong>PANDORA TOOLS</strong>. All Rights Reserved.</div>
+        <div style="color: #64748b; font-size: 0.85rem;">문의: <a href="mailto:support@pandoratools.kr" style="color: #06b6d4; text-decoration: none; border-bottom: 1px solid rgba(6, 182, 212, 0.3);">support@pandoratools.kr</a></div>
+    </footer>
+
+    <script>
+        let propType = 'house';
+        let txType = 'sale';
+
+        function setPropType(type, element) {
+            propType = type;
+            document.querySelectorAll('#propTypeGroup .toggle-btn').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function setTxType(type, element) {
+            txType = type;
+            document.querySelectorAll('#txTypeGroup .toggle-btn').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+
+            if (txType === 'monthly') {
+                document.getElementById('normalInput').style.display = 'none';
+                document.getElementById('monthlyInputGroup').style.display = 'block';
+            } else {
+                document.getElementById('normalInput').style.display = 'flex';
+                document.getElementById('monthlyInputGroup').style.display = 'none';
+                document.getElementById('normalLabel').innerText = (txType === 'sale') ? '매매 거래 금액' : '전세 보증금';
+            }
+        }
+
+        function formatMoney(num) {
+            return Math.floor(num).toLocaleString('ko-KR') + '원';
+        }
+
+        function calculateFee() {
+            let amount = 0; 
+
+            if (txType === 'monthly') {
+                const depositInput = parseFloat(document.getElementById('depositAmount').value) || 0;
+                const rentInput = parseFloat(document.getElementById('rentAmount').value) || 0;
+                
+                if (depositInput === 0 && rentInput === 0) { alert("보증금이나 월세를 입력해주세요."); return; }
+                
+                let calcValue = depositInput + (rentInput * 100);
+                if (calcValue < 5000) {
+                    calcValue = depositInput + (rentInput * 70);
+                }
+                amount = calcValue * 10000;
+            } else {
+                const normalInput = parseFloat(document.getElementById('normalAmount').value) || 0;
+                if (normalInput === 0) { alert("거래 금액을 입력해주세요."); return; }
+                amount = normalInput * 10000;
+            }
+
+            let rate = 0; 
+            let limit = 0; 
+
+            if (propType === 'house') {
+                if (txType === 'sale') {
+                    if (amount < 50000000) { rate = 0.6; limit = 250000; }
+                    else if (amount < 200000000) { rate = 0.5; limit = 800000; }
+                    else if (amount < 900000000) { rate = 0.4; limit = 0; }
+                    else if (amount < 1200000000) { rate = 0.5; limit = 0; }
+                    else if (amount < 1500000000) { rate = 0.6; limit = 0; }
+                    else { rate = 0.7; limit = 0; }
+                } else { 
+                    if (amount < 50000000) { rate = 0.5; limit = 200000; }
+                    else if (amount < 100000000) { rate = 0.4; limit = 300000; }
+                    else if (amount < 600000000) { rate = 0.3; limit = 0; }
+                    else if (amount < 1200000000) { rate = 0.4; limit = 0; }
+                    else if (amount < 1500000000) { rate = 0.5; limit = 0; }
+                    else { rate = 0.6; limit = 0; }
+                }
+            } else if (propType === 'officetel') {
+                if (txType === 'sale') { rate = 0.5; } 
+                else { rate = 0.4; }
+            } else { 
+                rate = 0.9;
+            }
+
+            let baseFee = Math.floor(amount * (rate / 100));
+            const limitAlert = document.getElementById('limitAlert');
+            
+            if (limit > 0 && baseFee > limit) {
+                baseFee = limit;
+                limitAlert.style.display = 'inline-block';
+            } else {
+                limitAlert.style.display = 'none';
+            }
+
+            const vatRate = parseFloat(document.getElementById('vatType').value) / 100;
+            const vatAmount = Math.floor(baseFee * vatRate);
+            const totalFee = baseFee + vatAmount;
+
+            document.getElementById('resAmount').innerText = formatMoney(amount);
+            document.getElementById('resRate').innerText = rate + "%";
+            document.getElementById('resBaseFee').innerText = formatMoney(baseFee);
+            document.getElementById('resVat').innerText = "+ " + formatMoney(vatAmount);
+            document.getElementById('totalFee').innerText = formatMoney(totalFee);
+
+            document.getElementById('resultArea').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

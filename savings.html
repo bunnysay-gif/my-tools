@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="icon" href="og-image.png" type="image/png">
+    <link rel="apple-touch-icon" href="og-image.png">
+    
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예금/적금 이자 계산기 - 단리/복리 완벽 비교 | PANDORA TOOLS</title>
+    <meta name="description" content="매월 얼마씩 모으면 이자가 얼마나 붙을까? 예적금, 단리/복리, 비과세까지 한 번에 계산하고 차이를 비교해 줍니다.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandoratools.kr/savings.html">
+    <meta property="og:title" content="예금/적금 이자 계산기 - PANDORA TOOLS">
+    <meta property="og:description" content="단리 vs 복리, 얼마나 차이 날까? 내 목돈과 이자, 세금까지 한눈에 계산해 보세요.">
+    <meta property="og:image" content="https://pandoratools.kr/og-image.png"> 
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { background: linear-gradient(135deg, #1e1b4b, #2e1065); color: white; font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+        .page-header { text-align: center; margin-bottom: 30px; }
+        .page-header h1 { color: #fde047; margin-bottom: 10px; font-size: 28px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .page-header p { color: #cbd5e1; font-size: 15px; margin-top: 0; }
+        .badge { background-color: rgba(14, 165, 233, 0.2); color: #7dd3fc; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #0ea5e9; }
+
+        .calculator-card { background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-left: 5px solid #0ea5e9; }
+
+        .type-toggle { display: flex; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 5px; margin-bottom: 20px; }
+        .type-btn { flex: 1; text-align: center; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; color: #94a3b8; transition: 0.3s; font-size: 15px; }
+        .type-btn.active { background-color: #0ea5e9; color: white; box-shadow: 0 4px 10px rgba(14, 165, 233, 0.4); }
+        .type-btn.active-green { background-color: #10b981; color: white; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.4); }
+
+        .input-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .input-group label { font-weight: bold; width: 40%; color: #94a3b8; font-size: 16px; }
+        
+        .input-wrapper { width: 60%; position: relative; }
+        .input-wrapper input, .input-wrapper select { width: 100%; padding: 12px; font-size: 16px; background-color: rgba(15, 23, 42, 0.6); color: white; border: 1px solid #475569; border-radius: 8px; box-sizing: border-box; font-family: inherit; transition: 0.2s; outline: none; }
+        .input-wrapper input:focus, .input-wrapper select:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.3); background-color: rgba(255,255,255,0.1); }
+        .input-wrapper input[type="number"] { text-align: right; padding-right: 50px; }
+        .unit-label { position: absolute; right: 15px; top: 12px; color: #cbd5e1; font-weight: bold; }
+
+        .calc-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #0284c7, #0369a1); color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(2, 132, 199, 0.4); transition: 0.2s; }
+        .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(2, 132, 199, 0.6); }
+
+        #resultArea { display: none; margin-top: 30px; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .summary-box { background-color: rgba(14, 165, 233, 0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); margin-bottom: 20px; text-align: center; }
+        .result-title { color: #7dd3fc; font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+        .result-amount { font-size: 38px; color: #38bdf8; font-weight: 900; margin: 0; text-shadow: 1px 1px 10px rgba(56, 189, 248, 0.4); letter-spacing: -1px; }
+        
+        .detail-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        .detail-item { display: flex; justify-content: space-between; font-size: 15px; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 12px 20px; border-radius: 6px; }
+        .detail-item span:last-child { font-weight: bold; }
+        .detail-item.minus span:last-child { color: #f87171; }
+        .detail-item.plus span:last-child { color: #34d399; }
+
+        .compare-alert { background: linear-gradient(to right, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.2)); border: 1px dashed #34d399; padding: 15px; border-radius: 8px; text-align: center; margin-bottom: 30px; font-size: 15px; color: #a7f3d0; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); } 100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); } }
+
+        .chart-container { background-color: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; position: relative; height: 300px; display: flex; justify-content: center; align-items: center; }
+
+        .seo-section { background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); border-top: 4px solid #0ea5e9; backdrop-filter: blur(10px); }
+        .seo-section h2 { color: #fde047; font-size: 22px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-top: 0; }
+        .seo-section h3 { color: #7dd3fc; font-size: 18px; margin-top: 25px; }
+        .seo-section p, .seo-section ul { color: #cbd5e1; font-size: 15px; line-height: 1.7; }
+        
+        /* 팩트체크 박스 디자인 */
+        .fact-box { background-color: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; padding: 15px 20px; border-radius: 8px; margin-top: 20px; }
+        .fact-box h4 { margin: 0 0 10px 0; color: #fcd34d; font-size: 16px; }
+        .fact-box p { margin: 0; font-size: 14.5px; color: #fde68a; }
+
+        .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
+        .link-card { flex: 1; background-color: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s; }
+        .link-card:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-3px); border-color: #0ea5e9; }
+        .link-card span { display: block; font-size: 13px; color: #94a3b8; font-weight: normal; margin-top: 5px; }
+
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s;}
+        .back-btn:hover { background-color: rgba(255,255,255,0.2); }
+
+        @media (max-width: 600px) { .input-group { flex-direction: column; align-items: flex-start; gap: 8px; } .input-group label, .input-wrapper { width: 100%; } .internal-links { flex-direction: column; } .chart-container { height: 250px; } }
+        /* ✨ 드롭다운 옵션 글자 안 보이는 현상 해결 */
+        .input-wrapper select option {
+            background-color: #1e293b; /* 어두운 배경색 강제 지정 */
+            color: #ffffff; /* 흰색 글자 강제 지정 */
+        }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="page-header">
+        <h1>🏦 예금/적금 이자 계산기</h1>
+        <p><span class="badge">단리/복리 자동 비교</span> 내 목돈은 만기 때 얼마가 될까?</p>
+    </div>
+
+    <div class="calculator-card">
+        <div class="type-toggle">
+            <div class="type-btn active" id="btnSaving" onclick="setCalcType('saving')">적립식 (적금)</div>
+            <div class="type-btn" id="btnDeposit" onclick="setCalcType('deposit')">거치식 (예금)</div>
+        </div>
+
+        <div class="input-group">
+            <label id="amountLabel">월 납입액</label>
+            <div class="input-wrapper">
+                <input type="number" id="amount" placeholder="예: 100">
+                <span class="unit-label">만원</span>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label>가입 기간</label>
+            <div class="input-wrapper">
+                <input type="number" id="period" placeholder="예: 12">
+                <span class="unit-label">개월</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>연 이자율 (금리)</label>
+            <div class="input-wrapper">
+                <input type="number" id="rate" value="3.5" step="0.1">
+                <span class="unit-label">%</span>
+            </div>
+        </div>
+
+        <div class="input-group" style="flex-direction: column; align-items: stretch; margin-top: 10px;">
+            <label style="margin-bottom: 10px; width: 100%;">이자 계산 방식 선택</label>
+            <div class="type-toggle" style="margin-bottom: 0;">
+                <div class="type-btn active-green" id="btnSimple" onclick="setInterestType('simple')">기본 단리</div>
+                <div class="type-btn" id="btnCompound" onclick="setInterestType('compound')">눈덩이 월복리</div>
+            </div>
+        </div>
+
+        <div class="input-group" style="margin-top: 25px;">
+            <label>세금 우대 (과세)</label>
+            <div class="input-wrapper">
+                <select id="taxType">
+                    <option value="15.4">일반과세 (15.4%)</option>
+                    <option value="0">비과세 (0%)</option>
+                    <option value="9.5">세금우대 (9.5%)</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="calculateInterest()">만기 수령액 계산하기 💰</button>
+
+        <div id="resultArea">
+            <div class="summary-box">
+                <div class="result-title">만기 예상 실수령액 (세후)</div>
+                <div class="result-amount" id="netTotal">0원</div>
+                
+                <div class="detail-grid">
+                    <div class="detail-item"><span>원금 총액</span> <span id="principalAmount">0원</span></div>
+                    <div class="detail-item plus"><span>세전 이자</span> <span id="grossInterest">+0원</span></div>
+                    <div class="detail-item minus"><span>이자 과세 (세금)</span> <span id="taxAmount">-0원</span></div>
+                </div>
+            </div>
+
+            <div class="compare-alert" id="compareMsg"></div>
+
+            <h2 style="color: #fde047; font-size: 18px; text-align: center; margin-bottom: 15px;">📊 원금 및 이자 비율</h2>
+            <div class="chart-container">
+                <canvas id="interestChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="internal-links">
+        <a href="salary.html" class="link-card">💸 연봉 실수령액 계산기<span>내 진짜 월급은 얼마일까?</span></a>
+        <a href="dividend.html" class="link-card">📈 배당투자 시뮬레이터<span>예적금보다 배당금이 나을까?</span></a>
+    </div>
+
+    <div class="seo-section">
+        <h2>💡 똑똑하게 돈 모으는 필수 지식</h2>
+        
+        <h3>1. 예금(거치식) vs 적금(적립식)</h3>
+        <p><strong>예금</strong>은 목돈을 한 번에 은행에 맡기고 만기에 이자를 받는 방식이며, <strong>적금</strong>은 매월 일정한 금액을 납입하여 목돈을 만들어가는 방식입니다. 같은 금리(%)라도, 예금은 전체 금액에 이자가 1년 내내 붙기 때문에 이자가 훨씬 많습니다.</p>
+        
+        <h3>2. 단리 vs 복리</h3>
+        <ul>
+            <li><strong>단리:</strong> 원금에 대해서만 이자가 붙는 가장 일반적인 방식입니다.</li>
+            <li><strong>복리:</strong> 원금에 이자가 붙고, 그 '이자에도 이자가 또 붙는' 눈덩이 방식입니다.</li>
+        </ul>
+
+        <div class="fact-box">
+            <h4>🤔 팩트체크: 복리인데 왜 생각보다 차이가 적을까?</h4>
+            <p>은행 금리(3~5%) 수준으로 3~5년 짧게 적금을 넣으면 단리와 복리의 차이가 생각보다 크지 않습니다. 적금은 원금이 천천히 쌓이기 때문에 '이자에 이자가 붙을' 덩어리 자체가 늦게 커지기 때문입니다. 복리의 마법이 진가를 발휘하려면 <strong>'높은 수익률(배당/주식 등)'</strong>과 <strong>'10년 이상의 긴 시간'</strong>이 필요합니다!</p>
+        </div>
+
+        <h3>3. 이자 과세 (세금)</h3>
+        <p>은행에서 이자를 받을 때는 국가에 세금을 내야 합니다. 일반적으로 <strong>15.4% (이자소득세 14% + 지방소득세 1.4%)</strong>를 떼고 받으며, 특수한 상품에 가입하면 세금을 아예 안 내는 <strong>비과세 (0%)</strong> 혜택을 받을 수 있습니다.</p>
+    </div>
+
+    <a href="index.html" class="back-btn">🏠 홈으로 돌아가기</a>
+
+    <script>
+        let myChart = null;
+        let currentCalcType = 'saving';
+        let currentInterestType = 'simple';
+
+        function setCalcType(type) {
+            currentCalcType = type;
+            document.getElementById('btnSaving').className = type === 'saving' ? 'type-btn active' : 'type-btn';
+            document.getElementById('btnDeposit').className = type === 'deposit' ? 'type-btn active' : 'type-btn';
+            document.getElementById('amountLabel').innerText = type === 'saving' ? '월 납입액' : '예치 금액 (목돈)';
+        }
+
+        function setInterestType(type) {
+            currentInterestType = type;
+            document.getElementById('btnSimple').className = type === 'simple' ? 'type-btn active-green' : 'type-btn';
+            document.getElementById('btnCompound').className = type === 'compound' ? 'type-btn active-green' : 'type-btn';
+        }
+
+        function formatMoney(num) { return Math.floor(num).toLocaleString('ko-KR') + '원'; }
+
+        function calcMath(amount, period, r, type, intType) {
+            let principal = 0;
+            let grossInterest = 0;
+            const monthlyRate = r / 12;
+
+            if (type === 'saving') {
+                principal = amount * period;
+                if (intType === 'simple') {
+                    grossInterest = amount * monthlyRate * (period * (period + 1) / 2);
+                } else {
+                    const compoundFactor = ((1 + monthlyRate) * (Math.pow(1 + monthlyRate, period) - 1)) / monthlyRate;
+                    grossInterest = (amount * compoundFactor) - principal;
+                }
+            } else {
+                principal = amount;
+                if (intType === 'simple') {
+                    grossInterest = principal * r * (period / 12);
+                } else {
+                    grossInterest = principal * Math.pow(1 + monthlyRate, period) - principal;
+                }
+            }
+            return { principal, grossInterest };
+        }
+
+        function calculateInterest() {
+            const amountInput = parseFloat(document.getElementById('amount').value);
+            const period = parseInt(document.getElementById('period').value);
+            const rateInput = parseFloat(document.getElementById('rate').value);
+            const taxRate = parseFloat(document.getElementById('taxType').value) / 100;
+
+            if (!amountInput || amountInput <= 0 || !period || period <= 0 || !rateInput || rateInput <= 0) {
+                alert("금액, 기간, 이자율을 정확히 입력해주세요.");
+                return;
+            }
+
+            const amount = amountInput * 10000;
+            const r = (rateInput / 100);
+
+            const currentRes = calcMath(amount, period, r, currentCalcType, currentInterestType);
+            const taxAmount = Math.floor(currentRes.grossInterest * taxRate);
+            const netInterest = currentRes.grossInterest - taxAmount;
+            const netTotal = currentRes.principal + netInterest;
+
+            const otherInterestType = currentInterestType === 'simple' ? 'compound' : 'simple';
+            const otherRes = calcMath(amount, period, r, currentCalcType, otherInterestType);
+            const otherTax = Math.floor(otherRes.grossInterest * taxRate);
+            const otherNetInterest = otherRes.grossInterest - otherTax;
+
+            const diff = Math.abs(netInterest - otherNetInterest);
+            const compareMsgDiv = document.getElementById('compareMsg');
+            
+            if (currentInterestType === 'simple') {
+                compareMsgDiv.innerHTML = `💡 같은 조건으로 <strong>'복리'</strong> 가입 시, 이자를 세후 <strong><span style="color:#fff;">+${formatMoney(diff)}</span></strong> 더 받을 수 있습니다!`;
+            } else {
+                compareMsgDiv.innerHTML = `💡 같은 조건의 <strong>'단리'</strong> 상품보다 이자를 세후 <strong><span style="color:#fff;">+${formatMoney(diff)}</span></strong> 더 이득 보셨습니다!`;
+            }
+
+            document.getElementById('principalAmount').innerText = formatMoney(currentRes.principal);
+            document.getElementById('grossInterest').innerText = "+" + formatMoney(currentRes.grossInterest);
+            document.getElementById('taxAmount').innerText = "-" + formatMoney(taxAmount);
+            document.getElementById('netTotal').innerText = formatMoney(netTotal);
+
+            document.getElementById('resultArea').style.display = 'block';
+            drawDoughnutChart(currentRes.principal, netInterest, taxAmount);
+        }
+
+        function drawDoughnutChart(principal, netInterest, taxAmount) {
+            const ctx = document.getElementById('interestChart').getContext('2d');
+            if (myChart) { myChart.destroy(); }
+
+            myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['원금', '세후 이자', '납부 세금'],
+                    datasets: [{
+                        data: [principal, netInterest, taxAmount],
+                        backgroundColor: ['#0ea5e9', '#34d399', '#f87171'],
+                        borderWidth: 0, hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { family: "'맑은 고딕', sans-serif" } } },
+                        tooltip: { callbacks: { label: function(context) { return context.label + ': ' + formatMoney(context.raw); } } }
+                    },
+                    cutout: '70%'
+                }
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="icon" href="og-image.png" type="image/png">
+    <link rel="apple-touch-icon" href="og-image.png">
+    
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자동차 유류비 & 더치페이 계산기 - 여행 갈 때 필수! | PANDORA TOOLS</title>
+    <meta name="description" content="주행 거리, 연비, 유가를 입력하여 총 기름값과 톨게이트 비용을 계산하고, 동승자들과의 1인당 더치페이 금액까지 한 번에 확인하세요.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandoratools.kr/fuel.html">
+    <meta property="og:title" content="자동차 유류비 & 더치페이 계산기 - PANDORA TOOLS">
+    <meta property="og:description" content="이번 여행 기름값 얼마 나올까? 톨비 포함 1인당 정산 금액 1초 만에 확인하기!">
+    <meta property="og:image" content="https://pandoratools.kr/og-image.png"> 
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+
+    <style>
+        body { background: linear-gradient(135deg, #1e1b4b, #2e1065); color: white; font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; }
+        .page-header { text-align: center; margin-bottom: 30px; }
+        .page-header h1 { color: #5eead4; margin-bottom: 10px; font-size: 28px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+        .page-header p { color: #cbd5e1; font-size: 15px; margin-top: 0; }
+        .badge { background-color: rgba(20, 184, 166, 0.2); color: #2dd4bf; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #14b8a6; }
+
+        .calculator-card { background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-left: 5px solid #14b8a6; }
+
+        .input-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .input-group label { font-weight: bold; width: 40%; color: #94a3b8; font-size: 16px; }
+        
+        .input-wrapper { width: 60%; position: relative; }
+        .input-wrapper input, .input-wrapper select { width: 100%; padding: 14px; font-size: 16px; background-color: rgba(15, 23, 42, 0.6); color: white; border: 1px solid #475569; border-radius: 8px; box-sizing: border-box; font-family: inherit; transition: 0.2s; outline: none; }
+        .input-wrapper input:focus, .input-wrapper select:focus { border-color: #14b8a6; box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.3); background-color: rgba(255,255,255,0.1); }
+        
+        .input-wrapper select option { background-color: #1e293b; color: #ffffff; }
+        .input-wrapper input[type="number"] { text-align: right; padding-right: 50px; }
+        .unit-label { position: absolute; right: 15px; top: 14px; color: #cbd5e1; font-weight: bold; }
+
+        /* 팁 텍스트 */
+        .input-tip { display: block; font-size: 12px; color: #64748b; margin-top: 5px; text-align: right; }
+
+        .calc-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #0d9488, #0f766e); color: white; font-size: 18px; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 15px rgba(13, 148, 136, 0.4); transition: 0.2s; }
+        .calc-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(13, 148, 136, 0.6); }
+
+        /* 결과 영역 */
+        #resultArea { display: none; margin-top: 25px; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .summary-box { background-color: rgba(20, 184, 166, 0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(20, 184, 166, 0.3); margin-bottom: 20px; text-align: center; }
+        
+        .total-cost-title { color: #94a3b8; font-size: 15px; font-weight: bold; margin-bottom: 5px; }
+        .total-cost-amount { font-size: 26px; color: #cbd5e1; font-weight: bold; margin: 0 0 20px 0; text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.2); }
+        
+        .dutch-pay-title { color: #5eead4; font-size: 18px; font-weight: bold; margin-bottom: 10px; border-top: 1px dashed rgba(20, 184, 166, 0.3); padding-top: 20px;}
+        .dutch-pay-amount { font-size: 42px; color: #2dd4bf; font-weight: 900; margin: 0; text-shadow: 1px 1px 10px rgba(45, 212, 191, 0.4); letter-spacing: -1px; }
+
+        .detail-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
+        .detail-item { display: flex; justify-content: space-between; font-size: 15px; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 12px 20px; border-radius: 6px; }
+        .detail-item span:last-child { font-weight: bold; }
+        .detail-item.highlight span:last-child { color: #fde047; }
+
+        .seo-section { background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); border-top: 4px solid #14b8a6; backdrop-filter: blur(10px); }
+        .seo-section h2 { color: #fde047; font-size: 22px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-top: 0; }
+        .seo-section h3 { color: #5eead4; font-size: 18px; margin-top: 25px; }
+        .seo-section p, .seo-section ul { color: #cbd5e1; font-size: 15px; line-height: 1.7; }
+        .seo-section li { margin-bottom: 8px; }
+
+        .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
+        .link-card { flex: 1; background-color: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px; text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: 0.2s; }
+        .link-card:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-3px); border-color: #14b8a6; }
+        .link-card span { display: block; font-size: 13px; color: #94a3b8; font-weight: normal; margin-top: 5px; }
+
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s;}
+        .back-btn:hover { background-color: rgba(255,255,255,0.2); }
+
+        @media (max-width: 600px) { .input-group { flex-direction: column; align-items: flex-start; gap: 8px; } .input-group label, .input-wrapper { width: 100%; } .internal-links { flex-direction: column; } .unit-label { top: 14px; } }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="page-header">
+        <h1>🚗 유류비 정산 계산기</h1>
+        <p><span class="badge">기름값 + 톨비 1/N 정산</span> 친구들과 여행 갈 때 깔끔하게 더치페이 하세요!</p>
+    </div>
+
+    <div class="calculator-card">
+        <div class="input-group">
+            <label>총 주행 거리 (왕복)</label>
+            <div class="input-wrapper">
+                <input type="number" id="distance" placeholder="예: 300">
+                <span class="unit-label">km</span>
+                <span class="input-tip">네이버/카카오 지도에서 확인한 왕복 거리를 입력하세요.</span>
+            </div>
+        </div>
+        
+        <div class="input-group">
+            <label>내 차의 연비</label>
+            <div class="input-wrapper">
+                <input type="number" id="efficiency" placeholder="예: 12.5" step="0.1">
+                <span class="unit-label">km/L</span>
+                <span class="input-tip">차량 계기판에 표시된 평균 연비를 입력하세요.</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>현재 유가 (1리터당)</label>
+            <div class="input-wrapper">
+                <input type="number" id="gasPrice" placeholder="예: 1650">
+                <span class="unit-label">원</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>왕복 톨게이트 비용 <br><span style="font-size: 13px; font-weight: normal;">(선택 사항)</span></label>
+            <div class="input-wrapper">
+                <input type="number" id="tollFee" value="0">
+                <span class="unit-label">원</span>
+            </div>
+        </div>
+
+        <div class="input-group" style="margin-top: 30px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.1);">
+            <label style="color: #5eead4;">👥 더치페이 인원</label>
+            <div class="input-wrapper">
+                <select id="peopleCount">
+                    <option value="1">나 혼자 부담 (1명)</option>
+                    <option value="2">2명 (반반)</option>
+                    <option value="3">3명</option>
+                    <option value="4" selected>4명</option>
+                    <option value="5">5명</option>
+                    <option value="6">6명</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="calc-btn" onclick="calculateFuelCost()">유류비 & 더치페이 계산 💸</button>
+
+        <div id="resultArea">
+            <div class="summary-box">
+                <div class="total-cost-title">발생한 총비용 (기름값+톨비)</div>
+                <div class="total-cost-amount" id="resTotalCost">0원</div>
+                
+                <div class="dutch-pay-title">🙋‍♂️ 1인당 보내줄 금액</div>
+                <div class="dutch-pay-amount" id="resDutchPay">0원</div>
+                
+                <div class="detail-grid">
+                    <div class="detail-item"><span>예상 소모 연료량</span> <span id="resFuelAmount">0 L</span></div>
+                    <div class="detail-item"><span>순수 기름값</span> <span id="resGasCost">0원</span></div>
+                    <div class="detail-item highlight"><span>톨게이트 비용</span> <span id="resTollCost">+ 0원</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="internal-links">
+        <a href="delivery.html" class="link-card">🛵 배달비 더치페이<span>여행지에서 야식 시켜 먹을 때!</span></a>
+        <a href="vacation.html" class="link-card">✈️ 황금 연차 달력<span>다음 여행은 언제로 잡을까?</span></a>
+    </div>
+
+    <div class="seo-section">
+        <h2>💡 슬기로운 운전자를 위한 연비 상식</h2>
+        
+        <h3>1. 공인 연비 vs 실연비</h3>
+        <p>자동차 카탈로그에 적혀있는 '공인 연비'는 최적의 환경에서 측정한 값입니다. 에어컨을 틀거나, 막히는 시내 주행을 하거나, 급가속/급제동을 자주 하면 계기판에 찍히는 '실제 연비(실연비)'는 공인 연비보다 훨씬 낮게 나옵니다. 계산기에는 <strong>차량 계기판에 찍힌 실연비</strong>를 넣어야 정확합니다.</p>
+
+        <h3>2. 운전자 배려 더치페이 매너</h3>
+        <p>보통 친구들끼리 차를 타고 여행을 가면, 기름값과 톨게이트 비용만 1/N로 나누는 경우가 많습니다. 하지만 장거리 운전을 하는 <strong>차주의 피로도, 엔진오일/타이어 등 차량 소모품 마모 비용</strong>은 계산되지 않죠. 센스 있는 친구라면 휴게소에서 커피나 간식을 쏘거나, 더치페이 시 운전자의 몫을 조금 빼주는 것도 좋은 매너입니다!</p>
+
+        <h3>3. 연비 올리는 꿀팁</h3>
+        <ul>
+            <li>트렁크에 불필요한 무거운 짐 빼기 (무게 10kg 증가 시 연비 1% 하락)</li>
+            <li>타이어 공기압 적정 수준으로 유지하기</li>
+            <li>출발 시 부드럽게 엑셀 밟기 (급출발 금지)</li>
+        </ul>
+    </div>
+
+    <footer style="text-align: center; margin-top: 100px; padding: 60px 20px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); border-radius: 0 0 20px 20px;">
+        <a href="index.html" style="display: inline-block; margin-bottom: 20px; opacity: 0.8; transition: 0.3s;">
+            <img src="og-image.png" alt="PANDORA TOOLS Footer Logo" style="width: 120px; filter: drop-shadow(0 0 8px rgba(20, 184, 166, 0.4));">
+        </a>
+        <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px;">&copy; 2026 <strong>PANDORA TOOLS</strong>. All Rights Reserved.</div>
+        <div style="color: #64748b; font-size: 0.85rem;">문의: <a href="mailto:support@pandoratools.kr" style="color: #14b8a6; text-decoration: none; border-bottom: 1px solid rgba(20, 184, 166, 0.3);">support@pandoratools.kr</a></div>
+    </footer>
+
+    <script>
+        function formatMoney(num) {
+            return Math.floor(num).toLocaleString('ko-KR') + '원';
+        }
+
+        function calculateFuelCost() {
+            const distance = parseFloat(document.getElementById('distance').value);
+            const efficiency = parseFloat(document.getElementById('efficiency').value);
+            const gasPrice = parseFloat(document.getElementById('gasPrice').value);
+            const tollFee = parseFloat(document.getElementById('tollFee').value) || 0;
+            const peopleCount = parseInt(document.getElementById('peopleCount').value);
+
+            if (!distance || !efficiency || !gasPrice) {
+                alert("주행 거리, 연비, 현재 유가를 모두 입력해주세요.");
+                return;
+            }
+            if (efficiency <= 0) {
+                alert("연비는 0보다 커야 합니다.");
+                return;
+            }
+
+            // 1. 필요 연료량 계산 (거리 / 연비)
+            const fuelNeeded = distance / efficiency;
+            
+            // 2. 순수 기름값 계산
+            const gasCost = Math.floor(fuelNeeded * gasPrice);
+            
+            // 3. 총 비용 (기름값 + 톨비)
+            const totalCost = gasCost + tollFee;
+            
+            // 4. 더치페이 비용 (1원 단위 절사 혹은 올림 - 여기서는 올림 적용으로 덜 받는 일 없게 함)
+            // 10원 단위로 올림 처리 (예: 12341원 -> 12350원)
+            let dutchPay = Math.ceil(totalCost / peopleCount / 10) * 10;
+
+            // 화면 출력
+            document.getElementById('resFuelAmount').innerText = fuelNeeded.toFixed(1) + " L";
+            document.getElementById('resGasCost').innerText = formatMoney(gasCost);
+            document.getElementById('resTollCost').innerText = "+ " + formatMoney(tollFee);
+            
+            document.getElementById('resTotalCost').innerText = formatMoney(totalCost);
+            
+            // 만약 혼자 부담이라면 취소선을 긋지 않고 깔끔하게 표현
+            const totalCostEl = document.getElementById('resTotalCost');
+            if(peopleCount === 1) {
+                totalCostEl.style.textDecoration = 'none';
+                totalCostEl.style.color = '#5eead4';
+            } else {
+                totalCostEl.style.textDecoration = 'line-through';
+                totalCostEl.style.textDecorationColor = 'rgba(255,255,255,0.2)';
+                totalCostEl.style.color = '#cbd5e1';
+            }
+
+            document.getElementById('resDutchPay').innerText = formatMoney(dutchPay);
+
+            document.getElementById('resultArea').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
