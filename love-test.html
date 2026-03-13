@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 연애 세포 진단기 - PANDORA TOOLS</title>
+    <style>
+        /* 기본 테마 (index.html과 통일) */
+        body { 
+            background: linear-gradient(135deg, #1e1b4b, #2e1065);
+            color: white; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; margin: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        .container {
+            max-width: 600px; width: 100%;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 40px 30px; border-radius: 20px;
+            text-align: center; box-sizing: border-box;
+            margin-top: 40px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 1.8rem; color: #f43f5e; margin-bottom: 10px; }
+        .subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 30px; word-break: keep-all; }
+
+        /* 진행률 바 */
+        .progress-bar {
+            width: 100%; height: 10px; background-color: rgba(255,255,255,0.1);
+            border-radius: 5px; margin-bottom: 30px; overflow: hidden;
+        }
+        .progress {
+            height: 100%; background-color: #f43f5e; width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* 퀴즈 영역 */
+        #quiz-section { display: block; }
+        .question { font-size: 1.3rem; font-weight: bold; margin-bottom: 30px; color: #fff; word-break: keep-all; line-height: 1.5; }
+        
+        .btn-answer {
+            display: block; width: 100%; padding: 15px 20px; margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px; color: white; font-size: 1rem; cursor: pointer;
+            transition: 0.2s; word-break: keep-all;
+        }
+        .btn-answer:hover {
+            background-color: rgba(244, 63, 94, 0.2);
+            border-color: #f43f5e; transform: translateY(-2px);
+        }
+
+        /* 결과 영역 */
+        #result-section { display: none; animation: fadeIn 0.8s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .grade { font-size: 5rem; font-weight: bold; margin: 20px 0; text-shadow: 0 0 20px rgba(244, 63, 94, 0.8); }
+        .grade-S { color: #facc15; }
+        .grade-A { color: #4ade80; }
+        .grade-C { color: #fb923c; }
+        .grade-F { color: #94a3b8; }
+
+        .result-title { font-size: 1.5rem; margin-bottom: 15px; font-weight: bold; }
+        .result-desc { color: #cbd5e1; line-height: 1.6; margin-bottom: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; }
+
+        /* 하단 버튼 */
+        .action-btns { display: flex; gap: 10px; justify-content: center; }
+        .btn-share {
+            background: linear-gradient(135deg, #f43f5e, #e11d48); border: none;
+            padding: 12px 25px; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-share:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(225, 29, 72, 0.5); }
+        
+        .btn-home {
+            background: transparent; border: 1px solid rgba(255,255,255,0.3);
+            padding: 12px 25px; border-radius: 25px; color: white; text-decoration: none; font-weight: bold;
+            transition: 0.3s; display: inline-block;
+        }
+        .btn-home:hover { background: rgba(255,255,255,0.1); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>💘 내 연애 세포 진단기</h1>
+        <p class="subtitle">"나는 왜 연애를 못할까?" 뼈 때리는 연애 모의고사</p>
+
+        <div id="quiz-section">
+            <div class="progress-bar"><div class="progress" id="progress"></div></div>
+            <div class="question" id="question-text">질문이 여기에 표시됩니다.</div>
+            <div id="answer-buttons">
+                </div>
+        </div>
+
+        <div id="result-section">
+            <div class="grade" id="result-grade">F</div>
+            <div class="result-title" id="result-title">연애 세포 사망</div>
+            <div class="result-desc" id="result-desc">설명이 여기에 표시됩니다.</div>
+            
+            <div class="action-btns">
+                <button class="btn-share" onclick="shareResult()">친구에게 팩폭 날리기</button>
+                <a href="index.html" class="btn-home">홈으로</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 뼈 때리는 현실 고증 연애 문제은행 (총 60문제 대기)
+const allQuestions = [
+    // [연락 & 카톡 패턴]
+    { q: "금요일 밤 10시, 관심 있는 사람에게 '뭐해?'라고 카톡이 왔다.", answers: [{ text: "바로 칼답! '나 집이지~ 넌 뭐해?'", score: 10 }, { text: "미리보기로 읽고 10분 뒤에 여유롭게 답장한다.", score: 5 }, { text: "귀찮아서 다음 날 아침에 '이제 봤네 ㅋㅋ' 한다.", score: 0 }] },
+    { q: "썸남/썸녀가 내 카톡을 3시간째 안 읽고 있다.", answers: [{ text: "바쁜가 보다~ 하고 내 할 일 하며 쿨하게 기다린다.", score: 10 }, { text: "'뭐지? 밀당하나?' 온갖 상상의 나래를 펼친다.", score: 5 }, { text: "정 떨어짐. 알림 끄고 나도 카톡방 나가버린다.", score: 0 }] },
+    { q: "연락 중 'ㅋㅋㅋ'의 의미는?", answers: [{ text: "진짜 웃겨서 쓰는 ㅋㅋㅋ (티키타카 최고)", score: 10 }, { text: "할 말 없을 때 습관적으로 붙이는 ㅋㅋㅋ", score: 5 }, { text: "대화를 끝내고 싶을 때 쓰는 마침표 대용 ㅋㅋㅋ", score: 0 }] },
+    { q: "밤늦게 갑자기 전화가 온다면?", answers: [{ text: "설레는 마음으로 바로 받아서 통화한다.", score: 10 }, { text: "전화는 좀 부담스러워서 안 받고 카톡으로 '왜?' 한다.", score: 5 }, { text: "모르는 척 무음으로 돌리고 다음날 변명한다.", score: 0 }] },
+    { q: "썸 타는 사이, 굿나잇 인사는?", answers: [{ text: "'잘 자구 내일 또 연락해~❤️' 달달하게 마무리", score: 10 }, { text: "'ㅇㅇ 굿밤' 쿨하게 마무리", score: 5 }, { text: "안 읽고 자버림. (자연스러운 내일 연락을 위해?)", score: 0 }] },
+    { q: "카톡 프사(프로필 사진) 관리 스타일은?", answers: [{ text: "잘 나온 인생샷, 감성 사진으로 주기적 업데이트", score: 10 }, { text: "몇 달째 방치, 귀찮아서 잘 안 바꿈", score: 5 }, { text: "기본 프로필 (회색 인간) 유지", score: 0 }] },
+    { q: "관심 있는 사람의 인스타 스토리를 볼 때", answers: [{ text: "하트도 누르고 디엠으로 자연스럽게 말도 건다.", score: 10 }, { text: "몰래 염탐만 하고 아무 흔적도 남기지 않는다.", score: 5 }, { text: "SNS 자체를 잘 안 함. 관심 없음.", score: 0 }] },
+    { q: "카톡 답장 속도는?", answers: [{ text: "폰을 항상 쥐고 있어서 거의 1분 컷 칼답", score: 10 }, { text: "상황에 따라 다름 (알람 보면 바로 하긴 함)", score: 5 }, { text: "카톡 쌓아두고 한 번에 몰아서 답장함", score: 0 }] },
+    { q: "상대가 '나 오늘 우울해서 앞머리 잘랐어'라고 한다면?", answers: [{ text: "'무슨 일 있어? 왜 우울해 ㅠㅠ' (감정 폭풍 공감)", score: 10 }, { text: "'앞머리 자른 거 사진 보여줘!' (일단 상황 확인)", score: 5 }, { text: "'우울한데 머리를 왜 잘라?' (이성적 팩트 폭격)", score: 0 }] },
+    { q: "내가 선톡을 보내는 빈도는?", answers: [{ text: "궁금하면 내가 먼저! 선톡을 자주 하는 편이다.", score: 10 }, { text: "상대가 먼저 보내면 답장만 잘하는 편이다.", score: 5 }, { text: "진짜 급한 용건 없으면 절대 먼저 안 보냄.", score: 0 }] },
+
+    // [소개팅 & 썸 & 데이트]
+    { q: "소개팅 첫 만남! 어색한 침묵이 흐를 때 당신은?", answers: [{ text: "상대방의 취미나 관심사를 물어보며 대화를 리드한다.", score: 10 }, { text: "MBTI, 날씨 등 아무말 대잔치로 공백을 채운다.", score: 5 }, { text: "상대가 말 걸 때까지 눈치 보며 물만 마신다.", score: 0 }] },
+    { q: "데이트 장소를 정할 때 나는?", answers: [{ text: "맛집, 카페, 동선까지 완벽하게 리스트업 해간다.", score: 10 }, { text: "'어디 갈까?' 같이 찾아보며 정하는 걸 선호한다.", score: 5 }, { text: "'아무데나 난 다 좋아~' (결정장애 떠넘기기)", score: 0 }] },
+    { q: "썸남/썸녀가 '나 오늘 뭐 바뀐 거 없어?'라고 묻는다면?", answers: [{ text: "(스캔 후) '머리/옷 스타일 바꿨네! 예쁘다/멋있다'", score: 10 }, { text: "동공 지진... '음... 기분 좋아 보이네?' 둘러댄다.", score: 5 }, { text: "'전혀 모르겠는데? 똑같은데?' 팩트 폭격", score: 0 }] },
+    { q: "밥을 먹고 계산할 때 나의 행동은?", answers: [{ text: "'내가 살게! 다음엔 네가 맛있는 거 사줘~' (애프터 유도)", score: 10 }, { text: "'반반씩 낼까?' (깔끔한 더치페이 선호)", score: 5 }, { text: "상대가 계산할 때까지 신발끈을 묶는다.", score: 0 }] },
+    { q: "상대가 데이트에 15분 지각했다. 나의 반응은?", answers: [{ text: "'오는 길 안 막혔어? 괜찮아~' 웃으며 맞이함", score: 10 }, { text: "'얼마나 늦어?' 재촉하며 속으로 살짝 짜증냄", score: 5 }, { text: "집에 가버린다. 시간 개념 없는 사람은 아웃.", score: 0 }] },
+    { q: "영화를 보는데 상대방이 은근슬쩍 손을 잡으려 한다면?", answers: [{ text: "자연스럽게 손을 깍지 껴서 꽉 잡아준다.", score: 10 }, { text: "순간 흠칫하지만 쑥스러워하며 가만히 있는다.", score: 5 }, { text: "팝콘 먹는 척하며 손을 스윽 빼버린다.", score: 0 }] },
+    { q: "데이트가 끝나고 헤어질 때", answers: [{ text: "'집에 조심히 가구 도착하면 톡해!' 아쉬움을 티 낸다.", score: 10 }, { text: "'오늘 재밌었어~ 안녕!' 깔끔하게 인사하고 뒤돈다.", score: 5 }, { text: "집 도착하자마자 씻고 기절, 연락 까먹음.", score: 0 }] },
+    { q: "상대방의 옷에 먼지가 묻어 있다.", answers: [{ text: "'여기 먼지 묻었어' 하며 자연스럽게 떼어준다.", score: 10 }, { text: "말로만 '옷에 뭐 묻었어 털어~'라고 알려준다.", score: 5 }, { text: "내 일 아니니 신경 안 쓰고 그냥 둔다.", score: 0 }] },
+    { q: "길을 걷다 분위기 좋은 네컷 사진관을 발견했다.", answers: [{ text: "'우리도 이거 찍자!' 하며 팔을 이끈다.", score: 10 }, { text: "'이런 거 찍는 거 좋아해?' 물어보고 맞춘다.", score: 5 }, { text: "사진 찍는 거 딱 질색이라며 모른 척 지나간다.", score: 0 }] },
+    { q: "친구가 '내 지인 만나볼래?'라며 소개팅을 제안한다면?", answers: [{ text: "콜! 사진부터 보여줘! 바로 날짜를 잡는다.", score: 10 }, { text: "어떤 사람인데? (스펙과 성향을 깐깐하게 묻는다)", score: 5 }, { text: "아... 나 요즘 바빠서 (귀찮아서 거절)", score: 0 }] },
+
+    // [마인드 & 솔로 라이프]
+    { q: "주말에 아무런 약속이 없다. 당신의 진짜 속마음은?", answers: [{ text: "누구라도 만나서 놀고 싶다! 카톡 목록을 뒤진다.", score: 10 }, { text: "나가고는 싶은데 씻기 귀찮아서 갈등한다.", score: 5 }, { text: "혼자만의 시간 너무 좋다. 침대와 한 몸이 된다.", score: 0 }] },
+    { q: "크리스마스가 한 달 앞으로 다가왔다!", answers: [{ text: "올해는 무조건 커플로 보낸다! 소개팅을 적극 알아본다.", score: 10 }, { text: "'벌써 연말이네...' 하며 쓸쓸해하지만 행동은 안 한다.", score: 5 }, { text: "크리스마스는 그냥 빨간 날, 특선 영화나 봐야지.", score: 0 }] },
+    { q: "거울을 보며 외출 준비를 할 때 내 생각은?", answers: [{ text: "'오늘 나 좀 괜찮은데? 누가 번호 따가면 어쩌지?'", score: 10 }, { text: "'이 정도면 깔끔하지 뭐. 평타는 친다.'", score: 5 }, { text: "'어차피 만날 사람도 없는데 대충 입자.'", score: 0 }] },
+    { q: "친구들이 연애 상담을 해올 때 내 포지션은?", answers: [{ text: "적극적으로 공감하고 찰떡같은 해결책을 제시함", score: 10 }, { text: "일단 들어주긴 하는데 속으로는 '피곤하다' 생각함", score: 5 }, { text: "이론만 빠삭한 연애 훈수충 (정작 본인 연애는 못함)", score: 0 }] },
+    { q: "로맨스 드라마나 영화를 볼 때 내 반응은?", answers: [{ text: "'나도 저런 연애 하고 싶다 ㅠㅠ' 과몰입 대리 만족", score: 10 }, { text: "'저게 현실에 어딨어~' 하면서도 은근히 챙겨봄", score: 5 }, { text: "오글거려서 채널 돌림. 피 튀기는 스릴러가 최고.", score: 0 }] },
+    { q: "내 폰에 있는 '남사친/여사친'의 비율은?", answers: [{ text: "언제든 밥 먹자고 편하게 부를 이성 친구가 꽤 있다.", score: 10 }, { text: "한두 명 있긴 한데, 먼저 연락은 잘 안 함.", score: 5 }, { text: "동성 친구만 바글바글함. 이성 친구 0명.", score: 0 }] },
+    { q: "길을 가다가 완벽한 내 이상형과 눈이 마주쳤다!", answers: [{ text: "이건 운명이다! 용기 내어 다가가 번호를 묻는다.", score: 10 }, { text: "속으로만 '대박' 외치고 친구한테 카톡으로 호들갑 떰.", score: 5 }, { text: "나랑은 딴 세상 사람이지... 하고 바로 시선 회피.", score: 0 }] },
+    { q: "나의 이상형 기준은?", answers: [{ text: "외모, 성격, 티키타카! 나랑 잘 맞는 사람이면 오케이.", score: 10 }, { text: "그래도 어느 정도 현실적인 조건(직업 등)은 맞아야지.", score: 5 }, { text: "흠잡을 데 없이 완벽 그 자체를 원함. (그래서 혼자임)", score: 0 }] },
+    { q: "외로움을 느끼는 주기는?", answers: [{ text: "매일 밤... 당장 꽁냥꽁냥 연애하고 싶다.", score: 10 }, { text: "계절 바뀔 때나 친구들 커플 사진 볼 때 가끔?", score: 5 }, { text: "외로움이 뭐죠? 혼자 노는 게 제일 바쁘고 재밌다.", score: 0 }] },
+    { q: "나를 엄청 좋아해 주는 사람 vs 내가 엄청 좋아하는 사람", answers: [{ text: "나를 사랑해 주는 사람! 사랑받는 연애가 최고지.", score: 10 }, { text: "내가 미치도록 좋아하는 사람! 쟁취하는 맛이지.", score: 5 }, { text: "아무나 제발 나 좀 좋아해 줘라...", score: 0 }] },
+
+    // [연애 중 갈등 & 위기 대처 (깻잎 논쟁 등)]
+    { q: "연인이 주말에 하루 종일 게임/취미만 한다면?", answers: [{ text: "'나도 같이 해보자!' 취미를 공유하려 노력한다.", score: 10 }, { text: "'주말인데 나랑 안 놀아?' 서운함을 표출한다.", score: 5 }, { text: "'오히려 좋아' 나도 내 할 일 하며 철저히 각개전투.", score: 0 }] },
+    { q: "사소한 일로 크게 다퉜을 때 나의 해결 방식은?", answers: [{ text: "화가 나도 먼저 다가가서 대화로 조곤조곤 푼다.", score: 10 }, { text: "일단 동굴로 들어감. 감정을 식힐 시간이 필요하다.", score: 5 }, { text: "누가 이기나 끝장 토론을 벌여 논리로 압살한다.", score: 0 }] },
+    { q: "연인이 이성 친구와 단둘이 밥을 먹는다면?", answers: [{ text: "미리 허락받고 떳떳하게 먹는 거면 쿨하게 오케이.", score: 10 }, { text: "신경 쓰이지만 쪼잔해 보일까 봐 속으로 삭힌다.", score: 5 }, { text: "절대 불가. 남녀 사이에 친구가 어딨음?", score: 0 }] },
+    { q: "기념일(100일)이 다가온다! 나의 계획은?", answers: [{ text: "선물부터 식당 예약까지 한 달 전부터 세팅 완료.", score: 10 }, { text: "며칠 전에 부랴부랴 알아보고 적당히 챙긴다.", score: 5 }, { text: "'우리 나이에 무슨 100일이야~' 밥이나 먹고 넘김.", score: 0 }] },
+    { q: "상대방의 과거(전 연애)가 궁금할 때", answers: [{ text: "과거는 과거일 뿐! 굳이 캐묻지 않는다.", score: 10 }, { text: "궁금하지만 꾹 참고 상대가 먼저 말할 때까지 기다린다.", score: 5 }, { text: "은근슬쩍 유도신문해서 끝까지 다 캐내야 직성이 풀림.", score: 0 }] },
+    { q: "연인이 내 스타일이 아닌 충격적인 옷을 입고 나왔다.", answers: [{ text: "'귀엽네~' 하며 상대의 취향을 일단 존중해 준다.", score: 10 }, { text: "'오늘은 좀 특이하네?' 돌려서 조심스레 말한다.", score: 5 }, { text: "'그 옷 당장 갖다 버려' 지적부터 매섭게 한다.", score: 0 }] },
+    { q: "애정 표현 빈도는?", answers: [{ text: "'사랑해, 보고 싶어' 하루에도 수십 번 표현한다.", score: 10 }, { text: "마음은 굴뚝같지만 쑥스러워서 가끔씩만 한다.", score: 5 }, { text: "말 안 해도 알겠지. 굳이 입 밖으로 안 꺼냄.", score: 0 }] },
+    { q: "연인이 너무 아프다고 톡을 보냈을 때 나의 반응은?", answers: [{ text: "'약은 먹었어? 죽 사갈까?' 걱정과 행동 동시 출격", score: 10 }, { text: "'헐 어떡해 ㅠㅠ 많이 아파?' 폭풍 리액션", score: 5 }, { text: "'그러게 겉옷 챙기라니까. 병원 빨리 가봐.' (T 발동)", score: 0 }] },
+    { q: "상대의 깻잎을 내 절친이 떼어준다면? (깻잎 논쟁)", answers: [{ text: "'둘이 매너 좋네~' 쿨하게 신경 안 쓰고 밥 먹는다.", score: 10 }, { text: "순간 꽁하지만 속으로 삭히고 나중에 서운함을 말한다.", score: 5 }, { text: "밥상 엎음. 절대 용납 불가, 눈앞에서 젓가락을 부러뜨림.", score: 0 }] },
+    { q: "서로의 스마트폰 비번 공유에 대해", answers: [{ text: "원한다면 언제든 오픈 가능! 숨길 거 전혀 없음.", score: 10 }, { text: "굳이? 서로의 프라이버시는 지켜주는 게 맞지.", score: 5 }, { text: "내 폰 보는 건 절대 안 됨. (거센 방어기제 발동)", score: 0 }] },
+
+    // [기타 꿀잼 돌발 상황]
+    { q: "전애인에게 '자니?' 하고 새벽에 문자가 온다면?", answers: [{ text: "다음 날 아침 '누구세요' 라며 철벽 차단.", score: 10 }, { text: "아무 대답 없이 조용히 읽씹(또는 안읽씹) 한다.", score: 5 }, { text: "'왜? 무슨 일 있어?' 미련 남은 듯 여지를 준다.", score: 0 }] },
+    { q: "바빠서 2주째 데이트를 못 하고 있다.", answers: [{ text: "잠깐 짬을 내서라도 얼굴 보러 집 앞까지 찾아간다.", score: 10 }, { text: "영상 통화나 잦은 연락으로 아쉬움을 꾹꾹 달랜다.", score: 5 }, { text: "어쩔 수 없지 뭐. 각자 바쁜 일에 집중한다.", score: 0 }] },
+    { q: "결혼에 대한 나의 현재 생각은?", answers: [{ text: "좋은 사람 만나면 언제든 바로 하고 싶다. (준비 완)", score: 10 }, { text: "아직은 연애만 하고 싶다. 결혼은 먼 미래의 일.", score: 5 }, { text: "비혼주의. 내 몸 하나 건사하기도 벅찬 세상이다.", score: 0 }] },
+    { q: "연인이 피곤해 보여서 데이트를 미루자고 한다.", answers: [{ text: "'푹 쉬어! 밥 잘 챙겨 먹구' 배려하며 쿨하게 미룸", score: 10 }, { text: "조금 서운하지만 어쩔 수 없다며 알겠다고 함", score: 5 }, { text: "'나와 약속보다 잠이 더 중요해?' 서운함 대폭발", score: 0 }] },
+    { q: "길에서 우연히 연인의 친구 무리를 만났을 때", answers: [{ text: "밝게 웃으며 자연스럽게 인사하고 넉살 좋게 대화함", score: 10 }, { text: "수줍게 인사만 하고 연인 뒤로 살짝 숨음", score: 5 }, { text: "불편해서 빨리 이 자리를 벗어나고 싶어 눈치 줌", score: 0 }] },
+    { q: "데이트 중 옛 연인과 갔던 맛집을 무심코 지나가게 되었다.", answers: [{ text: "아무렇지 않게 '여기 맛있어~'라며 지금에 집중한다.", score: 10 }, { text: "속으로 흠칫하지만 티 내지 않고 조용히 지나간다.", score: 5 }, { text: "'여기 전여친/남친이랑 왔던 곳인데...' 눈치 없이 TMI 대방출", score: 0 }] },
+    { q: "둘의 데이트 통장, 어떻게 관리할까?", answers: [{ text: "깔끔하게 반반씩 입금해서 같이 투명하게 관리한다.", score: 10 }, { text: "그때그때 형편 좋은 사람이 알아서 번갈아 낸다.", score: 5 }, { text: "데이트 통장 자체를 정 없고 쪼잔하다고 생각함.", score: 0 }] },
+    { q: "썸남/썸녀의 친구들이 나를 평가한다면?", answers: [{ text: "'완전 진국이네, 꽉 잡아!'라는 말을 듣고 싶다.", score: 10 }, { text: "'착하고 괜찮은 사람 같아' 정도면 만족한다.", score: 5 }, { text: "남들 시선은 1도 신경 안 쓴다. 우리 둘만 좋으면 됨.", score: 0 }] },
+    { q: "연애를 시작하면 나는 어떻게 변할까?", answers: [{ text: "서로에게 긍정적인 에너지를 주는 시너지 효과 발휘", score: 10 }, { text: "내 모든 삶의 1순위가 연인으로 바뀌는 초강력 해바라기", score: 5 }, { text: "혼자일 때랑 똑같음. 연애가 내 삶을 지배하게 안 둠", score: 0 }] },
+    { q: "결론적으로, 지금 당장 당신에게 연애란?", answers: [{ text: "삶의 활력소! 얼른 꽁냥거릴 사람을 만나고 싶다.", score: 10 }, { text: "있으면 좋고, 없으면 말고. 자연스럽게 흘러가는 대로~", score: 5 }, { text: "감정 소모, 돈 낭비, 시간 낭비. 당분간 혼자 쉴래.", score: 0 }] }
+];
+
+let questions = []; // 이번 게임에서 출제될 10문제
+let currentQuestionIndex = 0;
+let totalScore = 0;
+
+const quizSection = document.getElementById('quiz-section');
+const resultSection = document.getElementById('result-section');
+const questionText = document.getElementById('question-text');
+const answerButtons = document.getElementById('answer-buttons');
+const progressBar = document.getElementById('progress');
+
+// 🎲 배열 섞기 알고리즘 (문제 랜덤 추출용)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function startQuiz() {
+    // 60문제 중 무작위 10문제만 뽑기
+    shuffleArray(allQuestions);
+    questions = allQuestions.slice(0, 10); 
+    
+    currentQuestionIndex = 0;
+    totalScore = 0;
+    quizSection.style.display = 'block';
+    resultSection.style.display = 'none';
+    showQuestion();
+}
+
+function showQuestion() {
+    // 진행률 업데이트 (10문제 기준)
+    const progressPercent = (currentQuestionIndex / questions.length) * 100;
+    progressBar.style.width = progressPercent + '%';
+
+    // 질문 세팅
+    const currentQuestion = questions[currentQuestionIndex];
+    questionText.innerText = `Q${currentQuestionIndex + 1}. ${currentQuestion.q}`;
+    
+    // 버튼 초기화 및 생성
+    answerButtons.innerHTML = '';
+    currentQuestion.answers.forEach(answer => {
+        const button = document.createElement('button');
+        button.innerText = answer.text;
+        button.classList.add('btn-answer');
+        button.addEventListener('click', () => selectAnswer(answer.score));
+        answerButtons.appendChild(button);
+    });
+}
+
+function selectAnswer(score) {
+    totalScore += score;
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < questions.length) {
+        showQuestion();
+    } else {
+        // 마지막 문제 응답 시 프로그레스 바 100% 채우기
+        progressBar.style.width = '100%';
+        setTimeout(showResult, 300); // 0.3초 대기 후 결과 보여주기
+    }
+}
+
+function showResult() {
+    quizSection.style.display = 'none';
+    resultSection.style.display = 'block';
+    
+    const gradeEl = document.getElementById('result-grade');
+    const titleEl = document.getElementById('result-title');
+    const descEl = document.getElementById('result-desc');
+
+    // 점수 구간 (10문제 * 최대 10점 = 총 100점 만점)
+    if (totalScore >= 85) {
+        gradeEl.innerText = "S";
+        gradeEl.className = "grade grade-S";
+        titleEl.innerText = "🌟 연애의 신! 마성의 플러팅 장인";
+        descEl.innerHTML = "당신의 연애 세포는 활화산처럼 타오르고 있습니다.<br>맘만 먹으면 언제든 연애할 수 있는 능력자네요!<br>눈빛만으로도 상대를 홀릴 수 있는 완벽한 연애 지능을 가졌습니다.";
+    } else if (totalScore >= 60) {
+        gradeEl.innerText = "A";
+        gradeEl.className = "grade grade-A";
+        titleEl.innerText = "🔥 연애 세포 건강함! 준비 완료";
+        descEl.innerHTML = "건강한 연애 세포를 가지고 있습니다.<br>상황 파악도 빠르고 센스도 좋아서 좋은 사람만 나타난다면<br>언제든 예쁘고 안정적인 연애를 시작할 준비가 되어 있네요!";
+    } else if (totalScore >= 35) {
+        gradeEl.innerText = "C";
+        gradeEl.className = "grade grade-C";
+        titleEl.innerText = "💤 연애 세포 장기 동면 중";
+        descEl.innerHTML = "연애... 그게 뭐더라? 먹는 건가?<br>현재 당신의 연애 세포는 이불 밖으로 나오길 거부하고 있습니다.<br>귀차니즘과 철벽이 연애 욕구를 이겨버린 상태네요.<br>조금만 더 마음을 열어보는 건 어떨까요?";
+    } else {
+        gradeEl.innerText = "F";
+        gradeEl.className = "grade grade-F";
+        titleEl.innerText = "💀 연애 세포 완전 소멸 (심정지)";
+        descEl.innerHTML = "삐빅- 사망입니다.<br>연애 세포가 미라 상태로 발견되었습니다.<br>이성적이다 못해 팩트 폭격기가 되어버린 당신!<br>철벽 방어가 너무 완벽해서 다가오던 인연도 튕겨져 나가는 중입니다.<br>세포 심폐소생술이 시급합니다!";
+    }
+}
+
+function shareResult() {
+    const dummyUrl = window.location.href;
+    navigator.clipboard.writeText(dummyUrl).then(() => {
+        alert("링크가 복사되었습니다! 친구들은 어떤 문제가 나오는지 단톡방에 공유해보세요.");
+    });
+}
+
+// 스크립트 로드 시 퀴즈 자동 시작
+startQuiz();
+    </script>
+</body>
+</html>
