@@ -93,8 +93,8 @@
         </div>
 
         <div id="result-section">
-            <div class="grade" id="result-mbti">ESTJ</div>
-            <div class="result-title" id="result-title">유형 수식어</div>
+            <div class="grade" id="result-mbti">ESFP</div>
+            <div class="result-title" id="result-title">시끄러운 오지라퍼 관종</div>
             <div class="result-desc" id="result-desc">설명이 여기에 표시됩니다.</div>
             
             <div class="action-btns">
@@ -238,7 +238,6 @@
             "ENTJ": { t: "피도 눈물도 없는 야망가", d: "목표를 위해서는 수단과 방법을 가리지 않는 인간 불도저. 효율 떨어지거나 능력 없는 사람은 가차 없이 쳐냅니다. 본인 말이 법이고 타인의 감정 따위는 지배력 강화를 위한 도구일 뿐. 무서운 독재자 냄새가 남." }
         };
 
-        // 랜덤 추출된 20문제가 담길 배열
         let selectedQuestions = []; 
         let currentIdx = 0;
         let scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
@@ -262,22 +261,18 @@
             const types = ['EI', 'SN', 'TF', 'JP'];
             let temp = [];
             
-            // 각 지표 풀에서 무작위로 5문제씩 정확히 추출
             types.forEach(type => {
                 let pool = [...mbtiPool[type]];
                 shuffle(pool);
-                // 💡 5개씩 슬라이스 (동점 원천 차단)
                 let picked = pool.slice(0, 5).map(qObj => {
-                    // 선택지 배열로 변환
                     let keys = Object.keys(qObj).filter(k => k !== 'q');
                     let ansArr = keys.map(k => ({ text: qObj[k], val: k }));
-                    shuffle(ansArr); // 선택지 순서도 랜덤 (왼쪽 오른쪽 고정 방지)
+                    shuffle(ansArr);
                     return { q: qObj.q, answers: ansArr };
                 });
                 temp.push(...picked);
             });
             
-            // 20문제를 전체적으로 다시 섞어서 유저가 패턴을 못 읽게 함
             shuffle(temp);
             selectedQuestions = temp;
         }
@@ -293,7 +288,6 @@
         }
 
         function renderQuestion() {
-            // 진행률 표시 (20문제 기준)
             const pct = (currentIdx / selectedQuestions.length) * 100;
             pBar.style.width = pct + '%';
 
@@ -324,7 +318,6 @@
             resSec.style.display = 'block';
 
             let mbti = "";
-            // 무조건 홀수(5개)이므로 동점이 절대 나오지 않음
             mbti += scores.E > scores.I ? "E" : "I";
             mbti += scores.S > scores.N ? "S" : "N";
             mbti += scores.T > scores.F ? "T" : "F";
@@ -337,10 +330,23 @@
             document.getElementById('result-desc').innerText = resultData.d;
         }
 
+        // ✨ 새로 추가된 완벽한 결과 공유 기능 ✨
         function shareResult() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                alert("링크가 복사되었습니다! 단톡방에 진짜 MBTI 본성을 공유해보세요.");
+            // 결과 화면에 뜬 MBTI와 타이틀을 가져옴
+            const mbti = document.getElementById('result-mbti').innerText;
+            const title = document.getElementById('result-title').innerText;
+            
+            // 깔끔한 원본 주소만 추출 (? 뒤의 쓸데없는 파라미터 방지)
+            const cleanUrl = window.location.href.split('?')[0]; 
+
+            // 카톡방에 복붙하기 좋게 텍스트 포맷팅
+            const shareText = `[진짜 나의 숨겨진 MBTI 찾기]\n\n🧠 내 팩폭 결과: ${mbti} (${title})\n\n사회생활용 가짜 성격은 벗어라!\n너의 진짜 본성도 지금 테스트해봐 ㅋㅋㅋ\n👉 ${cleanUrl}`;
+
+            // 클립보드에 복사
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert("결과가 복사되었습니다!\n단톡방 입력창에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
+            }).catch(err => {
+                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
             });
         }
 
