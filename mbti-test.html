@@ -76,9 +76,13 @@
             transition: 0.3s; display: inline-block;
         }
         .btn-home:hover { background: rgba(255,255,255,0.1); }
-
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCmbV0Xo506mxyMInxZ8f3eAeq8p1t8v6r/TeyDq3/L2xVqDcvRz/Qn3eM+0b3O" crossorigin="anonymous"></script>
+    <script>
+        // 대표님의 카카오 앱 키 적용 완료
+        Kakao.init('b5119648754c9fe3af835f47f5bae700'); 
+    </script>
 </head>
 <body>
 
@@ -344,86 +348,48 @@
             document.getElementById('result-desc').innerText = resultData.d;
         }
 
-        // ✨ 먹물 현상(어두워짐) 100% 차단 및 텍스트 자동 복사 ✨
-        async function shareResult() {
-            const actionBtns = document.getElementById('action-buttons');
-            const article = document.querySelector('article');
-            const container = document.getElementById('capture-area');
-            const descBox = document.getElementById('result-desc'); // 설명 박스
-
-            // 1. 버튼 및 하단 글 숨기기
-            actionBtns.style.display = 'none';
-            if(article) article.style.display = 'none';
-
-            // 2. ★ 먹물 현상 원인 제거 (기존 스타일 임시 저장)
-            const origContainerBg = container.style.backgroundColor;
-            const origContainerFilter = container.style.backdropFilter;
-            const origColor = container.style.color;
-            const origDescBg = descBox.style.backgroundColor;
-
-            // 3. ★ 캡처 순간에만 투명도(rgba)를 모두 없애고 완전한 '단색'으로 덮어버림
-            container.style.backgroundColor = '#1e293b'; // 반투명이 아닌 완전한 남색
-            container.style.backdropFilter = 'none';     // 블러 효과 제거
-            container.style.color = '#ffffff';           // 글자색 완전 흰색 강제 고정
-            descBox.style.backgroundColor = '#0f172a';   // 설명 박스도 완전한 짙은 남색으로 변경
-
-            try {
-                // 4. 단색 상태에서 안전하게 찰칵!
-                const canvas = await html2canvas(container, {
-                    scale: 2,
-                    backgroundColor: '#1e1b4b', // 테두리 바깥쪽 캔버스 배경색도 단색
-                    useCORS: true
-                });
-
-                // 5. 캡처 끝나자마자 원래 투명도 있는 예쁜 디자인으로 복구
-                container.style.backgroundColor = origContainerBg;
-                container.style.backdropFilter = origContainerFilter;
-                container.style.color = origColor;
-                descBox.style.backgroundColor = origDescBg;
-                
-                actionBtns.style.display = 'flex';
-                if(article) article.style.display = 'block';
-
-                // 6. 이미지 파일로 저장
-                canvas.toBlob((blob) => {
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = 'mbti_result.png';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-
-                    // 7. 요청하신 완벽한 텍스트 포맷팅 적용
-                    const mbti = document.getElementById('result-mbti').innerText;
-                    const title = document.getElementById('result-title').innerText;
-                    const desc = document.getElementById('result-desc').innerText;
-                    const cleanUrl = window.location.href.split('?')[0]; 
-
-                    const shareText = `나의 MBTI :\n${mbti}\n${title}\n-${desc}\n\n👉 테스트 해보기: ${cleanUrl}`;
-
-                    // 8. 텍스트 복사 및 알림창
-                    navigator.clipboard.writeText(shareText).then(() => {
-                        alert("📸 갤러리에 사진이 선명하게 저장되었습니다!\n\n텍스트도 복사되었으니, 카톡방에 [사진 첨부] 후 [붙여넣기] 하시면 됩니다.");
-                    }).catch(() => {
-                        alert("📸 갤러리에 사진이 저장되었습니다!\n카톡에 첨부해서 공유해보세요.");
-                    });
-                }, 'image/png');
-
-            } catch (err) {
-                // 에러 발생 시에도 무조건 원상 복구
-                container.style.backgroundColor = origContainerBg;
-                container.style.backdropFilter = origContainerFilter;
-                container.style.color = origColor;
-                descBox.style.backgroundColor = origDescBg;
-                actionBtns.style.display = 'flex';
-                if(article) article.style.display = 'block';
-                
-                alert('이미지 캡처에 실패했습니다.');
+        // ✨ 카카오 공식 API 전송 + 텍스트 자동 복사 ✨
+        function shareResult() {
+            if (!Kakao.isInitialized()) {
+                alert('카카오톡 공유를 준비 중입니다. 잠시 후 다시 시도해주세요.');
+                return;
             }
+
+            const mbti = document.getElementById('result-mbti').innerText;
+            const title = document.getElementById('result-title').innerText;
+            const desc = document.getElementById('result-desc').innerText;
+            const cleanUrl = window.location.href.split('?')[0]; 
+
+            // 1. 대표님이 원하신 양식대로 텍스트 자동 복사
+            const shareText = `나의 MBTI :\n${mbti}\n${title}\n-${desc}\n\n👉 테스트 해보기: ${cleanUrl}`;
+            
+            // 에러창 없이 조용히 복사만 실행
+            navigator.clipboard.writeText(shareText).catch(() => {}); 
+
+            // 2. 카카오톡 창 즉시 띄우기 (버튼 달린 카드 형태)
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `[나의 진짜 MBTI] ${mbti}`,
+                    description: `나의 팩폭 결과는: ${title}\n가짜 사회생활 성격은 벗고 진짜 본성을 확인해봐!`,
+                    imageUrl: 'https://pandoratools.kr/og-image.png', 
+                    link: {
+                        mobileWebUrl: cleanUrl,
+                        webUrl: cleanUrl,
+                    },
+                },
+                buttons: [
+                    {
+                        title: '나도 팩폭 당하러 가기',
+                        link: {
+                            mobileWebUrl: cleanUrl,
+                            webUrl: cleanUrl,
+                        },
+                    },
+                ],
+            });
         }
+
         startTest();
     </script>
 </body>
