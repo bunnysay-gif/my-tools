@@ -76,11 +76,10 @@
             transition: 0.3s; display: inline-block;
         }
         .btn-home:hover { background: rgba(255,255,255,0.1); }
-    </style>
 
+    </style>
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCmbV0Xo506mxyMInxZ8f3eAeq8p1t8v6r/TeyDq3/L2xVqDcvRz/Qn3eM+0b3O" crossorigin="anonymous"></script>
     <script>
-        // 대표님의 카카오 앱 키 적용 완료
         Kakao.init('b5119648754c9fe3af835f47f5bae700'); 
     </script>
 </head>
@@ -102,7 +101,7 @@
             <div class="result-desc" id="result-desc">설명이 여기에 표시됩니다.</div>
             
             <div class="action-btns" id="action-buttons">
-                <button class="btn-share" onclick="shareResult()">친구에게 팩폭 결과 공유하기</button>
+                <button class="btn-share" onclick="shareResult()">결과 공유하기</button>
                 <button class="btn-home" style="background: rgba(255,255,255,0.1);" onclick="location.reload()">다시 테스트하기</button>
                 <a href="index.html" class="btn-home">홈으로</a>
             </div>
@@ -193,7 +192,7 @@
                 { q: "칭찬을 할 때 나의 스타일은?", T: "결과물에 대한 객관적이고 구체적인 사실을 칭찬한다.", F: "그 사람의 노력과 성품, 긍정적인 에너지를 칭찬한다." },
                 { q: "누군가 울고 있다면?", T: "'왜 울지? 무슨 문제지?' 해결책을 먼저 생각한다.", F: "나도 모르게 눈물이 날 것 같고 마음이 무거워진다." },
                 { q: "거절해야 하는 상황에서 나는?", T: "명확한 이유를 대며 깔끔하게 거절한다.", F: "상처받을까 봐 미안해서 돌려 말하거나 거절을 잘 못한다." },
-                { q: "규칙을 위반한 사람을 처벌해야 한다면?", T: "예외 없이 정해진 원칙과 규정대로 처벌해야 한다.", F: "그 사람이 그럴 수밖에 없었던 안타까운 사정을 참작해 줘야 한다." },
+                { q: "규칙을 위반한 사람을 처벌해야 한다면?", T: "예외 없이 정해진 원칙과 규정대로 처벌해야 단다.", F: "그 사람이 그럴 수밖에 없었던 안타까운 사정을 참작해 줘야 한다." },
                 { q: "영화를 보며 눈물을 흘리는 이유는?", T: "스토리가 너무 완벽하고 개연성이 엄청나서 감탄할 때", F: "주인공의 슬프고 억울한 감정에 나도 모르게 이입될 때" },
                 { q: "나의 팩트 폭격 성향은?", T: "상대방을 위해 뼈 때리는 조언도 서슴지 않는 편이다.", F: "상대방이 상처받을까 봐 차마 입 밖으로 내지 못한다." },
                 { q: "대화의 목적은 무엇인가?", T: "정보를 교환하고 문제를 해결하기 위한 수단", F: "서로의 감정을 교류하고 관계를 돈독히 하기 위한 목적" },
@@ -348,45 +347,49 @@
             document.getElementById('result-desc').innerText = resultData.d;
         }
 
-        // ✨ 카카오 공식 API 전송 + 텍스트 자동 복사 ✨
+        // ✨ 텍스트 자동 복사 + 카카오톡 링크 공유 (완벽 버전) ✨
         function shareResult() {
-            if (!Kakao.isInitialized()) {
-                alert('카카오톡 공유를 준비 중입니다. 잠시 후 다시 시도해주세요.');
-                return;
-            }
-
             const mbti = document.getElementById('result-mbti').innerText;
             const title = document.getElementById('result-title').innerText;
             const desc = document.getElementById('result-desc').innerText;
             const cleanUrl = window.location.href.split('?')[0]; 
 
-            // 1. 대표님이 원하신 양식대로 텍스트 자동 복사
+            // 1. 대표님이 요청하신 양식 100% 반영
             const shareText = `나의 MBTI :\n${mbti}\n${title}\n-${desc}\n\n👉 테스트 해보기: ${cleanUrl}`;
-            
-            // 에러창 없이 조용히 복사만 실행
-            navigator.clipboard.writeText(shareText).catch(() => {}); 
 
-            // 2. 카카오톡 창 즉시 띄우기 (버튼 달린 카드 형태)
-            Kakao.Share.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: `[나의 진짜 MBTI] ${mbti}`,
-                    description: `나의 팩폭 결과는: ${title}\n가짜 사회생활 성격은 벗고 진짜 본성을 확인해봐!`,
-                    imageUrl: 'https://pandoratools.kr/og-image.png', 
-                    link: {
-                        mobileWebUrl: cleanUrl,
-                        webUrl: cleanUrl,
-                    },
-                },
-                buttons: [
-                    {
-                        title: '나도 팩폭 당하러 가기',
-                        link: {
-                            mobileWebUrl: cleanUrl,
-                            webUrl: cleanUrl,
+            // 2. 텍스트를 클립보드에 자동 복사
+            navigator.clipboard.writeText(shareText).then(() => {
+                
+                // 3. 카카오톡이 세팅되어 있으면 카카오 공유 창을 슝 띄웁니다
+                if (window.Kakao && Kakao.isInitialized()) {
+                    Kakao.Share.sendDefault({
+                        objectType: 'feed',
+                        content: {
+                            title: `[나의 진짜 MBTI] ${mbti}`,
+                            description: `나의 팩폭 결과는: ${title}`,
+                            imageUrl: 'https://pandoratools.kr/og-image.png',
+                            link: {
+                                mobileWebUrl: cleanUrl,
+                                webUrl: cleanUrl,
+                            },
                         },
-                    },
-                ],
+                        buttons: [
+                            {
+                                title: '나도 팩폭 당하러 가기',
+                                link: {
+                                    mobileWebUrl: cleanUrl,
+                                    webUrl: cleanUrl,
+                                },
+                            },
+                        ],
+                    });
+                } else {
+                    // 카카오가 안 열리는 환경이라도 텍스트는 복사되었음을 알려줍니다.
+                    alert("✅ 결과 텍스트가 복사되었습니다!\n원하시는 곳에 [붙여넣기] 해주세요.");
+                }
+
+            }).catch(() => {
+                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
             });
         }
 
