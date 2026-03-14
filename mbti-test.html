@@ -344,49 +344,47 @@
             document.getElementById('result-desc').innerText = resultData.d;
         }
 
-        // ✨ 화면 캡처(어두워짐 버그 완벽 수정) + 텍스트 자동 복사 ✨
+        // ✨ 먹물 현상(어두워짐) 100% 차단 및 텍스트 자동 복사 ✨
         async function shareResult() {
-            // 1. 캡처에 안 찍혀야 할 요소 숨기기
             const actionBtns = document.getElementById('action-buttons');
             const article = document.querySelector('article');
+            const container = document.getElementById('capture-area');
+            const descBox = document.getElementById('result-desc'); // 설명 박스
+
+            // 1. 버튼 및 하단 글 숨기기
             actionBtns.style.display = 'none';
             if(article) article.style.display = 'none';
 
-            const captureTarget = document.getElementById('capture-area');
+            // 2. ★ 먹물 현상 원인 제거 (기존 스타일 임시 저장)
+            const origContainerBg = container.style.backgroundColor;
+            const origContainerFilter = container.style.backdropFilter;
+            const origColor = container.style.color;
+            const origDescBg = descBox.style.backgroundColor;
 
-            // 2. ★ 핵심: 캡처 전 스타일 강제 변경 (어두워짐 방지)
-            const originalStyle = {
-                backgroundColor: captureTarget.style.backgroundColor,
-                backdropFilter: captureTarget.style.backdropFilter,
-                border: captureTarget.style.border,
-                boxShadow: captureTarget.style.boxShadow
-            };
-
-            // 캡처하는 0.1초 동안만 투명도와 블러를 완전히 없애고 단색 배경으로 만듦
-            captureTarget.style.backgroundColor = '#1e293b'; // 블러 없는 솔리드 컬러
-            captureTarget.style.backdropFilter = 'none';
-            captureTarget.style.border = 'none';
-            captureTarget.style.boxShadow = 'none';
+            // 3. ★ 캡처 순간에만 투명도(rgba)를 모두 없애고 완전한 '단색'으로 덮어버림
+            container.style.backgroundColor = '#1e293b'; // 반투명이 아닌 완전한 남색
+            container.style.backdropFilter = 'none';     // 블러 효과 제거
+            container.style.color = '#ffffff';           // 글자색 완전 흰색 강제 고정
+            descBox.style.backgroundColor = '#0f172a';   // 설명 박스도 완전한 짙은 남색으로 변경
 
             try {
-                // 3. 사진 찰칵!
-                const canvas = await html2canvas(captureTarget, {
+                // 4. 단색 상태에서 안전하게 찰칵!
+                const canvas = await html2canvas(container, {
                     scale: 2,
-                    backgroundColor: '#1e1b4b', // 바깥 여백 배경색
-                    logging: false,
-                    useCORS: true // 폰트나 이미지 깨짐 방지
+                    backgroundColor: '#1e1b4b', // 테두리 바깥쪽 캔버스 배경색도 단색
+                    useCORS: true
                 });
 
-                // 4. 원래 스타일과 숨겼던 버튼 복구
-                captureTarget.style.backgroundColor = originalStyle.backgroundColor;
-                captureTarget.style.backdropFilter = originalStyle.backdropFilter;
-                captureTarget.style.border = originalStyle.border;
-                captureTarget.style.boxShadow = originalStyle.boxShadow;
+                // 5. 캡처 끝나자마자 원래 투명도 있는 예쁜 디자인으로 복구
+                container.style.backgroundColor = origContainerBg;
+                container.style.backdropFilter = origContainerFilter;
+                container.style.color = origColor;
+                descBox.style.backgroundColor = origDescBg;
                 
                 actionBtns.style.display = 'flex';
                 if(article) article.style.display = 'block';
 
-                // 5. 갤러리(PC)에 사진 자동 저장
+                // 6. 이미지 파일로 저장
                 canvas.toBlob((blob) => {
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
@@ -398,7 +396,7 @@
                     document.body.removeChild(a);
                     window.URL.revokeObjectURL(url);
 
-                    // 6. 요청하신 양식대로 텍스트 포맷팅
+                    // 7. 요청하신 완벽한 텍스트 포맷팅 적용
                     const mbti = document.getElementById('result-mbti').innerText;
                     const title = document.getElementById('result-title').innerText;
                     const desc = document.getElementById('result-desc').innerText;
@@ -406,7 +404,7 @@
 
                     const shareText = `나의 MBTI :\n${mbti}\n${title}\n-${desc}\n\n👉 테스트 해보기: ${cleanUrl}`;
 
-                    // 7. 텍스트 복사 및 안내창 띄우기
+                    // 8. 텍스트 복사 및 알림창
                     navigator.clipboard.writeText(shareText).then(() => {
                         alert("📸 갤러리에 사진이 선명하게 저장되었습니다!\n\n텍스트도 복사되었으니, 카톡방에 [사진 첨부] 후 [붙여넣기] 하시면 됩니다.");
                     }).catch(() => {
@@ -415,14 +413,14 @@
                 }, 'image/png');
 
             } catch (err) {
-                // 에러 발생 시 원래대로 복구
-                captureTarget.style.backgroundColor = originalStyle.backgroundColor;
-                captureTarget.style.backdropFilter = originalStyle.backdropFilter;
-                captureTarget.style.border = originalStyle.border;
-                captureTarget.style.boxShadow = originalStyle.boxShadow;
-                
+                // 에러 발생 시에도 무조건 원상 복구
+                container.style.backgroundColor = origContainerBg;
+                container.style.backdropFilter = origContainerFilter;
+                container.style.color = origColor;
+                descBox.style.backgroundColor = origDescBg;
                 actionBtns.style.display = 'flex';
                 if(article) article.style.display = 'block';
+                
                 alert('이미지 캡처에 실패했습니다.');
             }
         }
