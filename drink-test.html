@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 술자리 유형(주사) 테스트 - PANDORA TOOLS</title>
+    <style>
+        /* 기본 테마 (네온 사인, 밤 거리 느낌의 퍼플/오렌지 톤) */
+        body { 
+            background: linear-gradient(135deg, #2d0b3b, #1a1a2e);
+            color: white; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; margin: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        .container {
+            max-width: 600px; width: 100%;
+            background-color: rgba(26, 26, 46, 0.85);
+            border: 2px solid #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+            padding: 40px 30px; border-radius: 20px;
+            text-align: center; box-sizing: border-box;
+            margin-top: 40px;
+        }
+
+        h1 { font-size: 1.8rem; color: #00ffff; text-shadow: 0 0 10px #00ffff; margin-bottom: 10px; }
+        .subtitle { color: #cbd5e1; font-size: 1rem; margin-bottom: 30px; word-break: keep-all; }
+
+        /* 진행률 바 */
+        .progress-bar {
+            width: 100%; height: 10px; background-color: rgba(255,255,255,0.1);
+            border-radius: 5px; margin-bottom: 30px; overflow: hidden;
+        }
+        .progress {
+            height: 100%; background: linear-gradient(90deg, #ff00ff, #00ffff); width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* 퀴즈 영역 */
+        #quiz-section { display: block; }
+        .question { font-size: 1.25rem; font-weight: bold; margin-bottom: 30px; color: #fff; word-break: keep-all; line-height: 1.5; }
+        
+        .btn-answer {
+            display: block; width: 100%; padding: 15px 20px; margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px; color: white; font-size: 1rem; cursor: pointer;
+            transition: 0.2s; word-break: keep-all; text-align: left;
+        }
+        .btn-answer:hover {
+            background-color: rgba(0, 255, 255, 0.1);
+            border-color: #00ffff; transform: scale(1.02);
+        }
+
+        /* 결과 영역 */
+        #result-section { display: none; animation: fadeIn 0.8s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .grade { font-size: 3rem; font-weight: bold; margin: 15px 0; color: #ff00ff; text-shadow: 0 0 15px #ff00ff; word-break: keep-all; }
+        .result-title { font-size: 1.3rem; margin-bottom: 15px; color: #00ffff; font-weight: bold; }
+        .result-desc { color: #e2e8f0; line-height: 1.6; margin-bottom: 30px; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; text-align: left; }
+
+        /* 하단 버튼 */
+        .action-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .btn-share {
+            background: linear-gradient(135deg, #ff00ff, #8a2be2); border: none;
+            padding: 12px 25px; border-radius: 25px; color: white; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-share:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(255, 0, 255, 0.5); }
+        
+        .btn-home {
+            background: transparent; border: 1px solid #00ffff;
+            padding: 12px 25px; border-radius: 25px; color: #00ffff; text-decoration: none; font-weight: bold;
+            transition: 0.3s; display: inline-block;
+        }
+        .btn-home:hover { background: rgba(0, 255, 255, 0.1); }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🍺 나의 술자리 주사 테스트</h1>
+        <p class="subtitle">알코올이 뇌를 지배했을 때... 당신의 진짜 본모습은?</p>
+
+        <div id="quiz-section">
+            <div class="progress-bar"><div class="progress" id="progress"></div></div>
+            <div class="question" id="question-text">질문이 여기에 표시됩니다.</div>
+            <div id="answer-buttons">
+                </div>
+        </div>
+
+        <div id="result-section">
+            <div class="result-title" id="result-title">나의 술버릇 등급은...</div>
+            <div class="grade" id="result-grade">만취 좀비</div>
+            <div class="result-desc" id="result-desc">설명이 여기에 표시됩니다.</div>
+            
+            <div class="action-btns">
+                <button class="btn-share" onclick="shareResult()">단톡방에 내 술버릇 박제하기</button>
+                <button class="btn-home" onclick="location.reload()">새로운 질문으로 다시 하기</button>
+                <a href="index.html" class="btn-home" style="border-color: #fff; color: #fff;">홈으로</a>
+            </div>
+        </div>
+        <article style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; text-align: left; line-height: 1.8;">
+            <h2 style="color: #00ffff; font-size: 1.4rem; margin-bottom: 20px;">알코올이 뇌를 지배할 때 나타나는 나의 진짜 주사(술버릇)는?</h2>
+            <p>술자리는 팍팍한 일상의 스트레스를 풀고 인간관계를 돈독하게 해주는 좋은 매개체입니다. 하지만 알코올이 이성을 지배하는 순간, 사람들은 저마다 숨겨둔 진짜 본성을 드러내곤 합니다. 갑자기 울음바다를 만드는 감성충부터, 했던 말을 무한 반복하는 앵무새, 심지어 기억이 끊긴 채 거리를 배회하는 블랙아웃(필름 끊김) 현상까지 주사의 유형은 참으로 다양합니다.</p>
+            <p><strong>나의 술자리 유형 테스트</strong>는 회식이나 모임에서 보여주는 당신의 텐션과 돌발 행동을 분석하여, 다음 날 이불킥을 유발하는 흑역사 지수를 측정해 줍니다. 친구들과 함께 술자리에서 해보면 가장 즐거운 꿀잼 안줏거리가 될 것입니다.</p>
+            
+            <h3 style="color: #67e8f9; font-size: 1.2rem; margin-top: 30px; margin-bottom: 15px;">다음 날 흑역사와 숙취를 예방하는 안전 음주 가이드</h3>
+            <ul style="padding-left: 20px; list-style-type: square;">
+                <li style="margin-bottom: 10px;"><strong>물 마시기 신공:</strong> 술 한 잔을 마실 때마다 물 한 잔을 꼭 챙겨 드세요. 체내 알코올 농도를 희석시키고 다음 날 두통을 확실하게 줄여줍니다.</li>
+                <li style="margin-bottom: 10px;"><strong>내 주량의 한계선 인정하기:</strong> 분위기에 휩쓸려 남들과 속도를 맞추려 하지 마세요. 내가 취해간다는 신호(어지러움, 언어 반복)가 오면 단호하게 잔을 내려놓아야 합니다.</li>
+                <li style="margin-bottom: 10px;"><strong>위험한 물건은 가방 깊숙이:</strong> 핸드폰을 만지작거리다 전 연인에게 연락하거나 알 수 없는 사진을 올리는 대참사를 막기 위해, 취기가 오르면 폰은 무조건 가방에 넣고 잠그세요.</li>
+            </ul>
+        </article>
+    </div>
+
+    <script>
+        // 빅데이터 기반 100문제 풀 (각 지표별 25문제)
+        const drinkPool = {
+            // [1. 술자리 텐션/태도 - 25문제]
+            TENSION: [
+                { q: "술자리가 잡혔을 때 나의 마인드는?", answers: [{ text: "오늘 마시고 죽자! 내일은 없다 무조건 달린다.", score: 10 }, { text: "적당히 기분 좋게 마시고 빨리 집에 가야지.", score: 0 }, { text: "맛있는 안주나 실컷 먹고 와야겠다.", score: 5 }] },
+                { q: "술이 한두 잔 들어가면 나의 텐션은?", answers: [{ text: "갑자기 목소리가 커지고 세상 모든 게 재밌어진다.", score: 10 }, { text: "평소랑 똑같다. 크게 달라지는 게 없다.", score: 0 }, { text: "말수가 줄어들고 알 수 없는 감성에 젖는다.", score: 5 }] },
+                { q: "건배사를 해야 하는 타이밍이 왔다!", answers: [{ text: "자리에서 일어나서 제일 시끄럽게 주도한다.", score: 10 }, { text: "누가 시킬까 봐 눈을 피하고 조용히 잔만 든다.", score: 0 }, { text: "시키는 사람만 따라 하며 영혼 없이 '위하여'를 외친다.", score: 5 }] },
+                { q: "술자리 게임(병뚜껑 치기, 딸기 게임 등)을 시작하면?", answers: [{ text: "내가 제일 신나서 새로운 게임을 계속 알려주고 벌칙을 준다.", score: 10 }, { text: "극혐한다. 대화나 할 것이지 웬 게임이야 속으로 욕한다.", score: 0 }, { text: "안 걸리기 위해 눈에 불을 켜고 초집중한다.", score: 5 }] },
+                { q: "친구가 '한 잔 더 하자'며 2차, 3차를 제안한다면?", answers: [{ text: "'당연하지! 아침 해 뜰 때까지 마셔!' 앞장선다.", score: 10 }, { text: "'난 내일 출근(등교)해야 해' 칼같이 거절하고 도망간다.", score: 0 }, { text: "가기 싫지만 분위기를 망칠까 봐 질질 끌려간다.", score: 5 }] },
+                { q: "첫 잔은 무조건 소맥(소주+맥주)?", answers: [{ text: "당연하지! 황금 비율로 내가 직접 다 말아준다.", score: 10 }, { text: "난 섞어 마시면 머리 아파서 내 주종만 마신다.", score: 0 }, { text: "남이 타주는 대로 불평 없이 마신다.", score: 5 }] },
+                { q: "옆 테이블에서 우리 테이블로 합석을 제안한다면?", answers: [{ text: "완전 환영! 오늘부터 우리는 모두 친구다.", score: 10 }, { text: "우리끼리 놀러 온 건데 왜? 정색하고 철벽 친다.", score: 0 }, { text: "친구들 의견에 따르지만 속으론 좀 부담스럽다.", score: 5 }] },
+                { q: "노래방이 달린 술집이나 클럽/헌포를 간다면?", answers: [{ text: "스테이지나 테이블 위로 올라가서 무대를 장악한다.", score: 10 }, { text: "구석에서 폰만 보거나 남들 노는 것만 구경한다.", score: 0 }, { text: "앉은 자리에서 탬버린만 열심히 흔들어준다.", score: 5 }] },
+                { q: "술자리에서 내 목소리의 데시벨은?", answers: [{ text: "가게 전체가 쩌렁쩌렁 울릴 정도로 웃고 떠든다.", score: 10 }, { text: "앞 사람에게만 들릴 정도로 조곤조곤 말한다.", score: 0 }, { text: "주변 소음에 묻혀서 내 말이 잘 안 들릴 때가 많다.", score: 5 }] },
+                { q: "누군가 늦게 술자리에 도착했다면?", answers: [{ text: "지각비라며 후래자 삼배(3잔 연속 마시기)를 강요한다.", score: 10 }, { text: "'왔어? 고생했네' 하고 빈 잔만 하나 채워준다.", score: 0 }, { text: "어차피 나랑 멀리 앉으면 신경 안 쓴다.", score: 5 }] },
+                { q: "술집에서 흘러나오는 브금(BGM)이 내 취향이라면?", answers: [{ text: "냅다 떼창을 부르며 춤을 추기 시작한다.", score: 10 }, { text: "속으로 리듬만 타며 안주를 먹는다.", score: 0 }, { text: "같이 온 친구에게 이 노래 좋지 않냐며 계속 말한다.", score: 5 }] },
+                { q: "술을 억지로 권하는 상사나 선배가 있다면?", answers: [{ text: "밑장 빼기, 물 타기 등 온갖 현란한 기술로 위기를 모면한다.", score: 10 }, { text: "'저 진짜 못 마십니다' 단호하게 거절한다.", score: 0 }, { text: "주는 대로 다 받아먹다가 결국 변기통을 부여잡는다.", score: 5 }] },
+                { q: "안주가 떨어졌을 때 나의 행동은?", answers: [{ text: "메뉴판을 가져와 제일 비싸고 화려한 안주를 추가한다.", score: 10 }, { text: "기본 안주(뻥튀기 등)나 남은 국물로 버틴다.", score: 0 }, { text: "가성비 좋은 사이드 메뉴 하나만 시키자고 제안한다.", score: 5 }] },
+                { q: "내가 취했다는 걸 인정하는가?", answers: [{ text: "'나 하나도 안 취했어! 더 마셔!'라며 끝까지 부정한다.", score: 10 }, { text: "'나 이제 취한 거 같아' 쿨하게 인정하고 물을 마신다.", score: 0 }, { text: "내가 취한 줄도 모르고 있다가 다음 날 알게 된다.", score: 5 }] },
+                { q: "술자리 중간에 화장실을 가는 빈도는?", answers: [{ text: "화장실에서 다른 테이블 사람이랑 친해져서 늦게 온다.", score: 10 }, { text: "정말 급할 때만 최소한으로 다녀온다.", score: 0 }, { text: "술 깨려고 계속 왔다 갔다 하며 바람을 쐰다.", score: 5 }] },
+                { q: "건배할 때 나의 잔 높이는?", answers: [{ text: "신나서 잔을 높게 부딪히며 소리를 크게 낸다.", score: 10 }, { text: "상대방보다 무조건 낮게 부딪히는 예의를 차린다.", score: 0 }, { text: "그냥 허공에 대충 부딪히는 시늉만 한다.", score: 5 }] },
+                { q: "회식이 파할 무렵, 계산할 때 나는?", answers: [{ text: "'이모 얼마예요! 오늘은 내가 쏜다!' 골든벨을 울린다.", score: 10 }, { text: "조용히 뒤에 빠져있다가 나중에 N빵 카톡만 기다린다.", score: 0 }, { text: "계산대 앞에서 서로 자기가 내겠다며 실랑이를 벌인다.", score: 5 }] },
+                { q: "술자리에서 누군가 울기 시작한다면?", answers: [{ text: "나도 같이 안고 엉엉 울며 오열 파티를 연다.", score: 10 }, { text: "갑자기 분위기 왜 이래? 당황해서 폰만 본다.", score: 0 }, { text: "어깨를 토닥여주며 휴지를 가져다준다.", score: 5 }] },
+                { q: "사진 찍자고 제안이 나오면?", answers: [{ text: "제일 이상하고 엽기적인 표정을 지으며 분위기를 띄운다.", score: 10 }, { text: "얼굴을 반쯤 가리거나 뒤로 숨는다.", score: 0 }, { text: "브이(V)만 하고 평범하게 찍힌다.", score: 5 }] },
+                { q: "막차가 끊길 시간이 다가온다면?", answers: [{ text: "막차가 무슨 소용이야! 아침 첫차 타고 갈 거다.", score: 10 }, { text: "칼같이 시계 보고 막차 시간에 맞춰서 정색하고 나간다.", score: 0 }, { text: "눈치 보다가 '택시 타고 갈게' 하고 조금 더 남는다.", score: 5 }] },
+                { q: "내가 생각하는 나의 주량은?", answers: [{ text: "소주 2병 이상! 끝까지 살아남는 강철 간이다.", score: 10 }, { text: "반 병만 마셔도 취하는 알쓰(알콜 쓰레기)다.", score: 0 }, { text: "컨디션에 따라 기복이 너무 심하다.", score: 5 }] },
+                { q: "술자리에서 이성을 대할 때 텐션은?", answers: [{ text: "플러팅 장인! 술기운을 빌려 엄청난 끼를 부린다.", score: 10 }, { text: "술 취해도 이성 앞에선 철벽 치고 조심한다.", score: 0 }, { text: "동성 친구 대하듯 편하고 털털하게 대한다.", score: 5 }] },
+                { q: "내일 아침 중요한 일정이 있는데 술자리가 길어진다면?", answers: [{ text: "'미래의 내가 알아서 하겠지'라며 끝까지 남는다.", score: 10 }, { text: "알람을 10개 맞춰두고 12시 땡 치면 일어난다.", score: 0 }, { text: "마음이 불안해서 마시는 둥 마는 둥 하다 도망친다.", score: 5 }] },
+                { q: "친구가 취해서 나에게 헛소리를 한다면?", answers: [{ text: "나도 같이 헛소리로 받아치며 만담을 펼친다.", score: 10 }, { text: "'너 많이 취했다 물 마셔' 하고 무시한다.", score: 0 }, { text: "다음 날 놀리기 위해 조용히 동영상을 켠다.", score: 5 }] },
+                { q: "내가 가장 좋아하는 술자리 분위기는?", answers: [{ text: "여러 명이서 게임하고 소리 지르는 왁자지껄한 분위기.", score: 10 }, { text: "단둘이 오붓하게 깊은 대화를 나누는 조용한 분위기.", score: 0 }, { text: "혼자 방에서 넷플릭스 보며 마시는 혼술.", score: 5 }] }
+            ],
+            // [2. 주사/행동 변화 지표 - 25문제]
+            HABIT: [
+                { q: "취했을 때 가장 먼저 나타나는 나의 신체 변화는?", answers: [{ text: "목소리가 커지고 웃음이 멈추지 않는다.", score: 10 }, { text: "얼굴이 새빨개지고 심장이 빨리 뛴다.", score: 0 }, { text: "눈이 풀리고 혀가 꼬이기 시작한다.", score: 5 }] },
+                { q: "술에 취하면 나도 모르게 반복하는 행동은?", answers: [{ text: "방금 했던 말을 상대에게 또 하고 또 한다. (무한 반복)", score: 10 }, { text: "테이블을 치거나 박수를 치며 과도하게 리액션한다.", score: 5 }, { text: "눈을 감고 가만히 명상을 한다.", score: 0 }] },
+                { q: "평소엔 조용하다가 술만 마시면 어떻게 변하나?", answers: [{ text: "속에 담아둔 불만을 다 터트리는 팩트 폭격기가 된다.", score: 10 }, { text: "세상 모든 사람을 칭찬하고 사랑을 고백하는 천사가 된다.", score: 5 }, { text: "평소랑 똑같다. 끝까지 이성을 유지한다.", score: 0 }] },
+                { q: "술자리에서 누군가와 시비가 붙을 뻔한 적이 있나?", answers: [{ text: "술기운에 욱해서 목소리를 높이고 싸울 뻔한 적이 있다.", score: 10 }, { text: "억울해도 그냥 참고 속으로 삭힌다.", score: 0 }, { text: "친구들이 말려줘서 겨우 위기를 모면했다.", score: 5 }] },
+                { q: "취하면 핸드폰으로 무슨 짓을 하나?", answers: [{ text: "전 애인이나 안 친한 사람에게 전화를 걸거나 카톡을 보낸다.", score: 10 }, { text: "인스타 스토리에 알 수 없는 감성 글이나 흔들린 사진을 올린다.", score: 5 }, { text: "핸드폰을 절대 안 꺼내거나 아예 꺼버린다.", score: 0 }] },
+                { q: "술에 취하면 스킨십이 어떻게 변하나?", answers: [{ text: "아무나 껴안고 팔짱 끼고 스킨십이 폭발한다.", score: 10 }, { text: "가벼운 어깨동무나 하이파이브 정도만 한다.", score: 5 }, { text: "누가 건드리는 것조차 끔찍하게 싫어한다.", score: 0 }] },
+                { q: "나의 잠버릇(수면 주사)은 어떤가?", answers: [{ text: "아무 길바닥, 벤치, 남의 집에서 그냥 기절해 버린다.", score: 10 }, { text: "술집 테이블에 엎드려서 조용히 잔다.", score: 5 }, { text: "취해도 무조건 내 침대에 도착해서 씻고 자야 한다.", score: 0 }] },
+                { q: "취했을 때 식욕은 어떻게 변하나?", answers: [{ text: "갑자기 허기가 져서 편의점을 털거나 해장국을 미친 듯이 먹는다.", score: 10 }, { text: "아이스크림이나 초코우유 같은 단 것만 계속 찾는다.", score: 5 }, { text: "토할 것 같아서 물 말고는 아무것도 못 먹는다.", score: 0 }] },
+                { q: "술자리에서 내 물건(지갑, 에어팟 등)을 잘 챙기는 편인가?", answers: [{ text: "어디다 뒀는지 다 잃어버리고 다음 날 찾으러 다닌다.", score: 10 }, { text: "가끔 하나씩 흘리고 오지만 친구들이 챙겨준다.", score: 5 }, { text: "취해도 내 물건은 귀신같이 챙겨서 집에 온다.", score: 0 }] },
+                { q: "취하면 눈물이 많아지는 편인가?", answers: [{ text: "갑자기 옛날 서러웠던 일이 생각나서 오열한다.", score: 10 }, { text: "남이 우는 거 보면 전염돼서 같이 훌쩍인다.", score: 5 }, { text: "술 마시고 운 적은 내 인생에 단 한 번도 없다.", score: 0 }] },
+                { q: "술집 밖으로 나왔을 때 나의 행동은?", answers: [{ text: "갑자기 뜀박질을 하거나 전봇대를 발로 차는 등 돌발 행동을 한다.", score: 10 }, { text: "길에 주저앉아 안 가겠다고 버틴다.", score: 5 }, { text: "얌전하게 택시/지하철을 기다린다.", score: 0 }] },
+                { q: "취했을 때 외국어를 하거나 사투리를 쓴 적이 있나?", answers: [{ text: "갑자기 말도 안 되는 영어를 쓰거나 억양이 이상해진다.", score: 10 }, { text: "목소리가 아기처럼 변하거나 애교를 부린다.", score: 5 }, { text: "정확한 표준어로 똑박똑박 말한다.", score: 0 }] },
+                { q: "노상 방뇨를 하거나 길에서 토한 경험이 있는가?", answers: [{ text: "인정하기 싫지만 흑역사가 몇 번 있다.", score: 10 }, { text: "토는 해봤지만 무조건 화장실 변기통에서만 한다.", score: 5 }, { text: "내 사전에 그런 더러운 짓은 없다.", score: 0 }] },
+                { q: "취하면 돈을 펑펑 쓰는 버릇이 있나?", answers: [{ text: "'야 다 골라 내가 사줄게' 편의점이나 밥값을 냅다 결제한다.", score: 10 }, { text: "술기운에 사고 싶었던 물건을 무지성 온라인 결제한다.", score: 5 }, { text: "취해도 10원 단위까지 계산 철저하게 확인한다.", score: 0 }] },
+                { q: "다음 날 아침, 내 몸엔 어떤 흔적이 있나?", answers: [{ text: "어디서 부딪혔는지 모를 시퍼런 멍이 들어있다.", score: 10 }, { text: "옷에 김치 국물이나 알 수 없는 얼룩이 묻어있다.", score: 5 }, { text: "멀쩡하고 깔끔하다.", score: 0 }] },
+                { q: "취하면 했던 약속을 남발하는가?", answers: [{ text: "'다음 주에 내가 밥 살게 무조건 만나!' 지키지도 못할 약속을 한다.", score: 10 }, { text: "지킬 수 있는 약속만 한다.", score: 5 }, { text: "기억 못 할까 봐 아예 약속 자체를 안 잡는다.", score: 0 }] },
+                { q: "술에 취하면 귀가 본능은 어떻게 되나?", answers: [{ text: "집에 절대 안 가겠다고 버티며 4차 5차를 외친다.", score: 10 }, { text: "인사도 안 하고 갑자기 닌자처럼 사라져서 집에 가버린다.", score: 5 }, { text: "사람들 다 배웅하고 안전하게 집에 들어간다.", score: 0 }] },
+                { q: "길거리의 동식물(강아지, 고양이, 나무)에게 말을 건 적이 있나?", answers: [{ text: "길고양이랑 진지하게 10분 넘게 대화한 적 있다.", score: 10 }, { text: "만지려다 물릴 뻔한 적은 있다.", score: 5 }, { text: "아무리 취해도 미친 짓은 안 한다.", score: 0 }] },
+                { q: "취하면 다른 사람의 비밀을 폭로해 버린 적이 있나?", answers: [{ text: "'야 사실 쟤가 너 좋아한대' 필터링 없이 다 말해버린다.", score: 10 }, { text: "내 비밀만 주구장창 털어놓고 후회한다.", score: 5 }, { text: "술자리에서 들은 이야기는 무덤까지 가져간다.", score: 0 }] },
+                { q: "술자리에서 노래를 부르거나 춤을 강요하나?", answers: [{ text: "친구들 멱살을 잡고 억지로 노래방으로 끌고 간다.", score: 10 }, { text: "내가 부르고 싶어서 혼자 신나서 예약한다.", score: 5 }, { text: "제발 그만 좀 나댔으면 좋겠다고 생각하며 앉아있다.", score: 0 }] },
+                { q: "취하면 부모님께 연락을 하는 편인가?", answers: [{ text: "갑자기 엄마 아빠 사랑한다며 눈물의 전화를 건다.", score: 10 }, { text: "어디쯤 오냐고 전화 올 때만 혀 안 꼬인 척 받는다.", score: 5 }, { text: "혼날까 봐 절대 연락 안 하고 무음으로 해둔다.", score: 0 }] },
+                { q: "지하철/버스에서 취해서 한 행동 중 최악은?", answers: [{ text: "모르는 사람 어깨에 기대서 자거나 크게 코를 골았다.", score: 10 }, { text: "종점까지 가서 다음날 아침 낯선 역에서 깬 적이 있다.", score: 5 }, { text: "대중교통에선 정신 똑바로 차리고 내릴 곳에서 잘 내린다.", score: 0 }] },
+                { q: "술에 취하면 남의 물건을 훔쳐(?) 온 적이 있나?", answers: [{ text: "아침에 주머니를 보니 가게 숟가락이나 소주잔이 들어있었다.", score: 10 }, { text: "친구 우산을 내 것인 줄 알고 쓰고 온 적은 있다.", score: 5 }, { text: "내 물건 챙기기도 바쁘다. 절대 없다.", score: 0 }] },
+                { q: "다음 날 술버릇에 대한 주변의 평가는?", answers: [{ text: "'너 어제 진짜 개진상이었어'라는 말을 자주 듣는다.", score: 10 }, { text: "'너 어제 완전 재밌었어 ㅋㅋ' 긍정적인 편이다.", score: 5 }, { text: "'너 취하긴 했었냐?' 멀쩡했다는 소리를 듣는다.", score: 0 }] },
+                { q: "결론적으로 나의 술버릇은 남에게 피해를 주는가?", answers: [{ text: "솔직히 친구들이 나 데리고 다니느라 많이 고생한다.", score: 10 }, { text: "나 스스로만 망가질 뿐 남한테는 피해 안 준다.", score: 5 }, { text: "아주 깔끔하고 완벽한 매너를 자랑한다.", score: 0 }] }
+            ],
+            // [3. 통제력/블랙아웃 지표 - 25문제]
+            BLACKOUT: [
+                { q: "필름이 끊겨본 적(블랙아웃)이 있는가?", answers: [{ text: "술 마실 때마다 끝 기억이 없다. 일상이다.", score: 10 }, { text: "1년에 한두 번, 진짜 심하게 마신 날만 끊긴다.", score: 5 }, { text: "인생에서 단 한 번도 필름이 끊긴 적이 없다.", score: 0 }] },
+                { q: "기억이 끊겼을 때 내 몸은 어떻게 행동하나?", answers: [{ text: "기억은 없는데 2차도 가고 결제도 하고 알아서 다 했다.", score: 10 }, { text: "기억이 끊기면 그 자리에 쓰러져서 친구들이 끌고 간다.", score: 5 }, { text: "끊길 때까지 안 마셔서 모른다.", score: 0 }] },
+                { q: "술 마신 다음 날 아침, 카톡방을 보는 심정은?", answers: [{ text: "내가 무슨 말을 했을까 두려워서 카톡을 열기가 무섭다.", score: 10 }, { text: "'어제 언제 들어갔냐ㅋㅋ' 생존 확인만 한다.", score: 5 }, { text: "별생각 없다. 떳떳하다.", score: 0 }] },
+                { q: "내 주량을 내가 완벽히 통제할 수 있나?", answers: [{ text: "항상 조절 실패. 한 잔이 들어가면 끝을 봐야 한다.", score: 10 }, { text: "어느 정도 마시면 취기가 올라와 스스로 멈추려 노력한다.", score: 5 }, { text: "완벽하게 통제한다. 주량 넘으면 단 한 방울도 안 마신다.", score: 0 }] },
+                { q: "아침에 깼는데 낯선 방, 낯선 천장이라면?", answers: [{ text: "'아 또야...' 익숙하게 친구 집인지 모텔인지 확인한다.", score: 10 }, { text: "기겁을 하며 옷매무새를 확인하고 몰래 빠져나온다.", score: 5 }, { text: "나는 항상 우리 집 내 침대에서만 눈을 뜬다.", score: 0 }] },
+                { q: "지갑이나 카드를 술집에 두고 온 적이 얼마나 잦나?", answers: [{ text: "카드 분실 신고와 재발급이 내 연례행사다.", score: 10 }, { text: "한두 번 정도 정신없을 때 두고 온 적 있다.", score: 5 }, { text: "내 소지품은 귀신같이 챙겨서 단 한 번도 없다.", score: 0 }] },
+                { q: "어제 무슨 일이 있었는지 친구에게 물어본 적이 있나?", answers: [{ text: "'야 나 어제 실수한 거 없지?' 맨날 묻는 게 일상이다.", score: 10 }, { text: "일부분만 기억 안 나서 '어제 우리 뭐 먹고 헤어졌지?' 묻는다.", score: 5 }, { text: "내가 오히려 취한 친구들의 어제 행적을 브리핑해 준다.", score: 0 }] },
+                { q: "통제력을 잃고 길바닥에서 넘어져 다친 적이 있나?", answers: [{ text: "얼굴이 갈리거나 무릎이 깨져서 병원 간 적이 있다.", score: 10 }, { text: "다리에 살짝 멍든 정도는 가끔 있다.", score: 5 }, { text: "술 마시고 몸을 다쳐본 적은 없다.", score: 0 }] },
+                { q: "만취 상태로 택시를 탔을 때", answers: [{ text: "목적지를 이상한 곳으로 부르거나 택시 안에서 토할 뻔했다.", score: 10 }, { text: "기사님이랑 엄청난 수다를 떨며 온다.", score: 5 }, { text: "조용히 창밖만 보거나 안전하게 결제하고 내린다.", score: 0 }] },
+                { q: "내가 취한 걸 알리는 가장 확실한 신호는?", answers: [{ text: "같은 질문을 반복하거나 촛점이 풀릴 때", score: 10 }, { text: "고개가 꺾이며 꾸벅꾸벅 졸기 시작할 때", score: 5 }, { text: "말이 많아지고 목소리가 커질 때", score: 0 }] },
+                { q: "술김에 용기를 내어 저지른 일이 있나?", answers: [{ text: "안 친한 직장 상사나 썸남썸녀에게 급발진 고백/욕설을 했다.", score: 10 }, { text: "평소엔 못 할 약간의 애교나 농담을 던졌다.", score: 5 }, { text: "술김에 하는 용기는 비겁하다. 이성적으로만 행동한다.", score: 0 }] },
+                { q: "술을 끊겠다고 다짐해 본 적이 있나?", answers: [{ text: "매주 일요일 아침마다 '다신 술 마시면 개다'라고 맹세한다.", score: 10 }, { text: "건강검진 결과 보고 며칠 정도 금주해 본 적 있다.", score: 5 }, { text: "애초에 많이 안 마셔서 끊을 필요를 못 느낀다.", score: 0 }] },
+                { q: "블랙아웃(필름 끊김) 상태의 내 인격은 어떤가?", answers: [{ text: "평소의 나와 180도 다른 제2의 미친 자아가 튀어나온다.", score: 10 }, { text: "평소보다 조금 더 기분 좋은 정도의 상태를 유지한다.", score: 5 }, { text: "끊겨본 적이 없어서 내 제2의 자아를 모른다.", score: 0 }] },
+                { q: "술자리에서 누가 나를 빡치게 한다면?", answers: [{ text: "참지 못하고 테이블을 엎거나 심한 쌍욕이 나간다.", score: 10 }, { text: "표정이 굳어지고 정색하며 갑분싸를 만든다.", score: 5 }, { text: "이성적으로 생각하며 조용히 그 자리를 피한다.", score: 0 }] },
+                { q: "술자리를 빠져나오기 위한 나의 핑계는?", answers: [{ text: "핑계 안 댄다. 취해서 뇌 정지 오기 전에 아무 말 없이 사라진다.", score: 10 }, { text: "'나 화장실 좀 다녀올게' 하고 튄다.", score: 5 }, { text: "'나 먼저 갈게 놀아~' 당당하게 말하고 나간다.", score: 0 }] },
+                { q: "친구가 취해서 나에게 토를 했다면?", answers: [{ text: "나도 취해서 같이 길바닥에서 뒹굴고 난리가 난다.", score: 10 }, { text: "쌍욕을 하며 대충 닦아주고 택시에 쑤셔 넣는다.", score: 5 }, { text: "침착하게 옷을 닦아주고 물을 먹이며 케어해 준다.", score: 0 }] },
+                { q: "내 주량의 한계는 어떻게 결정되나?", answers: [{ text: "그날의 텐션과 분위기에 따라 무한대로 들어간다.", score: 10 }, { text: "마시다가 속이 안 좋아지는 딱 그 시점까지다.", score: 5 }, { text: "딱 소주 n병. 그 이상은 누가 줘도 안 마신다.", score: 0 }] },
+                { q: "알코올이 나의 이성을 지배하는 비율은?", answers: [{ text: "이성 0%, 본능 100%. 짐승과 다를 바 없다.", score: 10 }, { text: "이성 50%, 본능 50%. 적당히 즐기고 통제한다.", score: 5 }, { text: "이성 100%. 아무리 마셔도 내 정신은 멀쩡하다.", score: 0 }] },
+                { q: "취했을 때 가장 위험한 물건은?", answers: [{ text: "핸드폰. 누구한테 무슨 짓을 할지 모른다.", score: 10 }, { text: "신용카드. 내일 파산할지도 모른다.", score: 5 }, { text: "위험한 물건은 없다. 내가 통제하니까.", score: 0 }] },
+                { q: "술이 깨고 나서 가장 먼저 드는 감정은?", answers: [{ text: "후회, 수치심, 죄책감, 이불킥", score: 10 }, { text: "두통, 메스꺼움 등 신체적 고통", score: 5 }, { text: "상쾌함, 어제 참 재밌었다는 만족감", score: 0 }] },
+                { q: "다음 날 카드 결제 내역을 확인했을 때", answers: [{ text: "'내가 미쳤지, 편의점에서 5만 원을 긁었어?' 경악한다.", score: 10 }, { text: "'어제 술값이 좀 많이 나왔네' 아쉬워한다.", score: 5 }, { text: "내가 예상한 딱 그 금액만 결제되어 있다.", score: 0 }] },
+                { q: "경찰서나 파출소에 술 때문에 가본 적이 있나?", answers: [{ text: "가본 적 있다. (기억은 안 나지만)", score: 10 }, { text: "친구 데리러 가본 적은 있다.", score: 5 }, { text: "경찰서는 내 인생에 없는 곳이다.", score: 0 }] },
+                { q: "취해서 비밀번호(현관문 등)를 까먹은 적이 있나?", answers: [{ text: "비번 여러 번 틀려서 도어락이 잠겨 밖에서 잔 적 있다.", score: 10 }, { text: "헷갈린 적은 있지만 결국 열고 들어갔다.", score: 5 }, { text: "한 번에 완벽하게 누르고 귀가한다.", score: 0 }] },
+                { q: "술만 마시면 무모한 내기나 도전을 하나?", answers: [{ text: "'내가 저거 뛰어넘는다' 등 목숨 건 기행을 펼친다.", score: 10 }, { text: "술값 내기 가위바위보 정도만 한다.", score: 5 }, { text: "위험한 짓은 절대 안 한다.", score: 0 }] },
+                { q: "나는 술을 마시면 안 되는 사람인가?", answers: [{ text: "그렇다. 나는 인간 병기다. 술을 멀리해야 한다.", score: 10 }, { text: "적당히만 마시면 괜찮은데 조절이 잘 안될 뿐이다.", score: 5 }, { text: "아니다. 나는 완벽한 음주 매너를 갖추고 있다.", score: 0 }] }
+            ],
+            // [4. 다음 날 후회/대인관계 지표 - 25문제]
+            NEXTDAY: [
+                { q: "다음 날 아침, 눈을 떴을 때 상태는?", answers: [{ text: "머리가 깨질 것 같고 변기통을 부여잡으며 오열한다.", score: 10 }, { text: "속이 쓰려서 해장국이나 라면부터 미친 듯이 찾는다.", score: 5 }, { text: "물 한 잔 마시면 평소랑 똑같이 개운하다.", score: 0 }] },
+                { q: "어제 같이 마신 친구에게 온 카톡을 보면?", answers: [{ text: "'너 어제 기억나냐?'라는 말에 심장이 덜컥 내려앉는다.", score: 10 }, { text: "어제 찍은 엽사나 동영상을 보며 낄낄댄다.", score: 5 }, { text: "'잘 들어갔냐'는 인사에 일상적으로 답장한다.", score: 0 }] },
+                { q: "술 먹은 다음 날 회사/학교에 간다면?", answers: [{ text: "연차/자체 공강을 때리고 하루 종일 잠적한다.", score: 10 }, { text: "좀비 같은 몰골로 겨우 가서 영혼 없이 앉아만 있다.", score: 5 }, { text: "지각 없이 정시 출근해서 완벽하게 일과를 소화한다.", score: 0 }] },
+                { q: "어제저녁에 한 나의 약속이나 발언들이 후회되나?", answers: [{ text: "내가 왜 그런 미친 소리를 했을까 자괴감에 빠진다.", score: 10 }, { text: "약간 흑역사 갱신이지만 술자리 해프닝이라 넘긴다.", score: 5 }, { text: "후회할 짓을 안 해서 마음이 평온하다.", score: 0 }] },
+                { q: "다음 날 해장으로 가장 선호하는 것은?", answers: [{ text: "느끼한 피자나 햄버거, 또는 아이스크림으로 눌러버린다.", score: 10 }, { text: "얼큰한 짬뽕, 뼈해장국, 국밥으로 땀을 뺀다.", score: 5 }, { text: "이온 음료나 시원한 냉수 한 잔이면 충분하다.", score: 0 }] },
+                { q: "술 때문에 소중한 인연과 멀어진 적이 있나?", answers: [{ text: "술버릇 때문에 손절 당한 친구/연인이 있다.", score: 10 }, { text: "크게 다툰 적은 있지만 화해했다.", score: 5 }, { text: "술 때문에 인간관계를 망친 적은 단 한 번도 없다.", score: 0 }] },
+                { q: "다음 날 내 휴대폰 사진첩을 열어보면?", answers: [{ text: "초점 다 나간 흔들린 사진과 알 수 없는 동영상이 가득하다.", score: 10 }, { text: "친구들과 즐겁게 찍은 인증샷들이 예쁘게 남아있다.", score: 5 }, { text: "술 마실 땐 폰을 안 봐서 사진이 한 장도 없다.", score: 0 }] },
+                { q: "주변 사람들이 나에게 술을 먹이려고 하나?", answers: [{ text: "내 주사가 너무 웃기고 재밌다며 억지로 계속 먹이려 한다.", score: 10 }, { text: "취하면 귀찮아진다고 적당히 마시라고 말리는 편이다.", score: 5 }, { text: "내가 안 마신다 하면 깔끔하게 존중해 준다.", score: 0 }] },
+                { q: "술 마시고 전 애인에게 연락한 다음 날", answers: [{ text: "수치심에 차라리 지구를 떠나고 싶어 이민을 고민한다.", score: 10 }, { text: "이왕 이렇게 된 거 답장을 기다려본다.", score: 5 }, { text: "절대 전 애인에게 연락하는 찌질한 짓은 안 한다.", score: 0 }] },
+                { q: "어제 쓴 카드 영수증을 봤을 때", answers: [{ text: "'기억도 안 나는 3차 노래방 10만 원?' 현실을 부정한다.", score: 10 }, { text: "N빵을 위해 단톡방에 영수증을 찍어 올린다.", score: 5 }, { text: "정확히 내가 먹은 것만 깔끔하게 계산되어 있다.", score: 0 }] },
+                { q: "술자리 이후 잃어버린 물건을 찾는 과정은?", answers: [{ text: "가게에 전화하고, 택시 기사님께 전화하고 난리 부르스를 떤다.", score: 10 }, { text: "포기하고 새로 산다.", score: 5 }, { text: "분실한 물건이 없어서 찾을 일도 없다.", score: 0 }] },
+                { q: "해장술에 대한 나의 생각은?", answers: [{ text: "머리가 깨질 것 같은데 무슨 해장술? 술 냄새만 맡아도 토할 것 같다.", score: 10 }, { text: "술은 술로 깬다! 해장국에 소주 한 병을 깐다.", score: 5 }, { text: "해장술의 개념 자체를 이해하지 못한다.", score: 0 }] },
+                { q: "어제 술자리에서 있었던 일을 다른 사람을 통해 들었다면?", answers: [{ text: "'내가 진짜 그랬다고?' 믿을 수 없는 현실에 충격을 받는다.", score: 10 }, { text: "'아 맞다 그랬지ㅋㅋ' 가물가물했던 기억의 퍼즐이 맞춰진다.", score: 5 }, { text: "내가 다 기억하고 있어서 남한테 들을 필요가 없다.", score: 0 }] },
+                { q: "술병이 나서 누워있을 때 엄마의 반응은?", answers: [{ text: "'으이구 웬수야 또 술 퍼마셨냐' 등짝 스매싱이 날아온다.", score: 10 }, { text: "아무 말 없이 꿀물이나 헛개수를 타다 주신다.", score: 5 }, { text: "내가 술 마신 줄도 모르게 멀쩡해서 잔소리 들을 일 없다.", score: 0 }] },
+                { q: "나에게 '술'이란?", answers: [{ text: "나를 망치는 악마의 액체이자 끊을 수 없는 마약.", score: 10 }, { text: "스트레스를 날려주는 가끔의 즐거운 일탈.", score: 5 }, { text: "식사 자리를 곁들이는 가벼운 음료수일 뿐.", score: 0 }] },
+                { q: "숙취 해소제를 먹는 타이밍은?", answers: [{ text: "술 먹기 전, 중간, 먹은 후 아침까지 3번을 때려 넣는다.", score: 10 }, { text: "다음 날 속이 너무 안 좋으면 하나 사 먹는다.", score: 5 }, { text: "내 간은 튼튼해서 숙취 해소제 따위 필요 없다.", score: 0 }] },
+                { q: "어제 나를 챙겨준 친구에게 어떤 카톡을 보내나?", answers: [{ text: "'진짜 미안해 내가 쓰레기야 다신 안 그럴게ㅠㅠ' 장문의 사과", score: 10 }, { text: "'어제 데려다줘서 고맙 밥 살게ㅋㅋ' 가벼운 인사", score: 5 }, { text: "내가 챙겼으면 챙겼지 남의 케어를 받은 적이 없다.", score: 0 }] },
+                { q: "취해서 가족(부모님, 형제)과 다툰 적이 있나?", answers: [{ text: "들어오자마자 시비 붙어서 집안을 뒤집어엎은 적이 있다.", score: 10 }, { text: "잔소리 듣기 싫어서 씻지도 않고 방에 박혀 잔다.", score: 5 }, { text: "조용히 들어와서 평화롭게 씻고 잔다.", score: 0 }] },
+                { q: "다음 날 내 입에서 나는 냄새는?", answers: [{ text: "양치를 세 번 해도 알코올과 안주 냄새가 섞여서 올라온다.", score: 10 }, { text: "조금 텁텁하지만 가글 하면 괜찮은 수준이다.", score: 5 }, { text: "상쾌하고 평소와 다를 바 없다.", score: 0 }] },
+                { q: "어제 술자리에서 내가 했던 무리한 약속을 지키는가?", answers: [{ text: "기억도 안 나고 지킬 돈/시간도 없어서 모른 척한다.", score: 10 }, { text: "눈물을 머금고 억지로 약속을 지킨다.", score: 5 }, { text: "무리한 약속을 안 해서 지킬 것도 없다.", score: 0 }] },
+                { q: "가장 후회되는 술자리 경험은?", answers: [{ text: "길에서 자거나 토하거나, 경찰 부르고 깽판 친 최악의 흑역사.", score: 10 }, { text: "전 애인에게 매달리거나 친구랑 치고받고 싸운 흑역사.", score: 5 }, { text: "후회할 짓을 안 만들어서 딱히 없다.", score: 0 }] },
+                { q: "술 마신 다음 날 일의 능률은?", answers: [{ text: "능률 0%. 컴퓨터 화면 글씨가 두 개로 보이고 뇌가 멈췄다.", score: 10 }, { text: "능률 50%. 피곤하긴 한데 루틴한 업무는 처리 가능하다.", score: 5 }, { text: "능률 100%. 평소처럼 완벽하게 일을 소화한다.", score: 0 }] },
+                { q: "금주 선언을 하고 얼마나 가나?", answers: [{ text: "딱 3일. 주말이 되면 귀신같이 술잔을 들고 있다.", score: 10 }, { text: "한두 달 정도는 독하게 참아본 적 있다.", score: 5 }, { text: "마음만 먹으면 1년이든 평생이든 안 마실 수 있다.", score: 0 }] },
+                { q: "나의 인생에서 술을 뺀다면?", answers: [{ text: "인간관계 붕괴, 스트레스 폭발. 내 인생의 낙이 사라진다.", score: 10 }, { text: "조금 아쉽긴 하겠지만 다른 취미로 대체 가능하다.", score: 5 }, { text: "아무 타격 없다. 건강해지고 돈도 굳어서 오히려 좋다.", score: 0 }] },
+                { q: "나의 술버릇을 한마디로 요약하자면?", answers: [{ text: "통제 불능, 시한폭탄, 개진상", score: 10 }, { text: "흥 많은 푼수, 감성충, 징징이", score: 5 }, { text: "인간 무알콜, 절제력 만렙, 철벽녀/철벽남", score: 0 }] }
+            ]
+        };
+
+        let selectedQuestions = []; // 20문제
+        let currentIdx = 0;
+        let totalScore = 0;
+
+        const quizSec = document.getElementById('quiz-section');
+        const resSec = document.getElementById('result-section');
+        const qText = document.getElementById('question-text');
+        const ansBtns = document.getElementById('answer-buttons');
+        const pBar = document.getElementById('progress');
+
+        // 배열 셔플 (피셔-예이츠 알고리즘)
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+
+        // 지표 추출기 (4개 영역에서 5개씩 총 20문제)
+        function buildQuestions() {
+            const categories = ['TENSION', 'HABIT', 'BLACKOUT', 'NEXTDAY'];
+            let temp = [];
+            
+            categories.forEach(cat => {
+                let pool = [...drinkPool[cat]];
+                shuffle(pool); // 카테고리 섞기
+                
+                let picked = pool.slice(0, 5).map(qObj => {
+                    let ansArr = [...qObj.answers];
+                    shuffle(ansArr); // 선택지 섞기
+                    return { q: qObj.q, answers: ansArr };
+                });
+                temp.push(...picked);
+            });
+            
+            shuffle(temp); // 전체 20문제 섞기
+            selectedQuestions = temp;
+        }
+
+        function startTest() {
+            totalScore = 0;
+            currentIdx = 0;
+            buildQuestions();
+            
+            quizSec.style.display = 'block';
+            resSec.style.display = 'none';
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const pct = (currentIdx / selectedQuestions.length) * 100;
+            pBar.style.width = pct + '%';
+
+            const current = selectedQuestions[currentIdx];
+            qText.innerText = `Q${currentIdx + 1}. ${current.q}`;
+            
+            ansBtns.innerHTML = '';
+            current.answers.forEach(ans => {
+                const btn = document.createElement('button');
+                btn.innerText = ans.text;
+                btn.classList.add('btn-answer');
+                btn.onclick = () => {
+                    totalScore += ans.score;
+                    currentIdx++;
+                    if (currentIdx < selectedQuestions.length) {
+                        renderQuestion();
+                    } else {
+                        pBar.style.width = '100%';
+                        setTimeout(calcResult, 300);
+                    }
+                };
+                ansBtns.appendChild(btn);
+            });
+        }
+
+        function calcResult() {
+            quizSec.style.display = 'none';
+            resSec.style.display = 'block';
+
+            const gradeEl = document.getElementById('result-grade');
+            const descEl = document.getElementById('result-desc');
+
+            // 점수 구간 (20문제 * 10점 = 총 200점 만점)
+            if (totalScore >= 160) {
+                gradeEl.innerText = "🧟 통제 불능 만취 좀비";
+                descEl.innerHTML = "당신은 술자리 빌런 끝판왕입니다!<br>기억은 없는데 몸은 돌아다니며 온갖 사건 사고를 저지르는 기적을 보여줍니다.<br>다음 날 눈을 떠서 핸드폰 발신 내역과 카드 결제 문자를 보는 것이 세상에서 제일 무서울 거예요.<br>주변 친구들의 인내심이 바닥나서 손절당하기 전에 당장 금주부터 선언하세요!";
+            } else if (totalScore >= 100) {
+                gradeEl.innerText = "😭 서러운 멜로 주인공";
+                descEl.innerHTML = "술만 들어가면 내면에 숨겨둔 감수성과 서러움이 대폭발합니다.<br>갑자기 세상 다 산 것처럼 눈물을 쏟거나, 전 애인/상사를 찾으며 주변 친구들을 당황하게 만듭니다.<br>안주 대신 눈물 닦을 휴지를 챙겨야 하며, 다음 날 이불킥 100번 예약인 감성 폭발 유형입니다.";
+            } else if (totalScore >= 50) {
+                gradeEl.innerText = "👼 흥 많은 알코올 요정";
+                descEl.innerHTML = "적당히 기분 좋아지고 사람들한테 칭찬 세례를 퍼붓는 귀여운 스타일!<br>텐션이 오르며 술자리의 분위기 메이커 역할을 톡톡히 하지만, 가끔 흥을 주체하지 못하고 너무 나댈(?) 때가 있습니다.<br>블랙아웃 되기 직전에 스스로 귀가하는 본능만 챙긴다면 당신은 최고의 술친구입니다.";
+            } else {
+                gradeEl.innerText = "🧘 흔들림 없는 무알콜 맥주";
+                descEl.innerHTML = "술을 마셔도 평소와 100% 똑같은 철벽 멘탈의 소유자입니다.<br>남들 취해서 멍멍이 소리 하며 바닥을 기어 다닐 때, 조용히 사이다 마시며 친구들의 흑역사를 수집하는 관찰자 스타일입니다.<br>술자리에서 절대 실수하지 않으며, 당신 같은 친구가 한 명 있어야 모두의 안전한 귀가가 보장됩니다.";
+            }
+        }
+
+        function shareResult() {
+            const grade = document.getElementById('result-grade').innerText;
+            const cleanUrl = window.location.href.split('?')[0]; 
+
+            const shareText = `[나의 술자리 주사 테스트]\n\n🍺 나의 술버릇 등급: ${grade}\n\n알코올이 뇌를 지배했을 때 내 본모습은?\n너의 술버릇 팩폭도 지금 당장 확인해봐 ㅋㅋㅋ\n👉 ${cleanUrl}`;
+
+            navigator.clipboard.writeText(shareText).then(() => {
+                alert("결과가 복사되었습니다!\n단톡방에 '붙여넣기' 하시면 내 술버릇이 박제됩니다.");
+            }).catch(err => {
+                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
+            });
+        }
+
+        startTest();
+    </script>
+</body>
+</html>

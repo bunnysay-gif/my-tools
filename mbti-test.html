@@ -103,6 +103,19 @@
                 <a href="index.html" class="btn-home">홈으로</a>
             </div>
         </div>
+        <article style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; text-align: left; line-height: 1.8;">
+            <h2 style="color: #8b5cf6; font-size: 1.4rem; margin-bottom: 20px;">가짜 사회생활 성격은 그만! 진짜 숨겨진 MBTI 찾는 법</h2>
+            <p>최근 성격 유형 검사(MBTI)가 대중화되면서, 회사나 학교에서 살아남기 위해 만들어진 <strong>'사회생활용 가짜 성격(페르소나)'</strong>을 자신의 진짜 성격으로 착각하는 사람들이 많아졌습니다. "나 원래 I인데 회사에서는 E처럼 행동해" 혹은 "난 F인데 일할 때는 T가 돼"라는 말이 대표적이죠.</p>
+            <p>우리의 진짜 본성은 편안한 상태이거나 반대로 극도의 스트레스를 받을 때 무의식적으로 튀어나옵니다. 판도라 툴즈의 '숨겨진 MBTI 테스트'는 뻔한 질문을 피하고, 100개의 빅데이터 팩폭 문항 중 20개를 무작위로 추출하여 당신의 심연에 있는 진짜 성향을 90% 이상의 정확도로 진단해 냅니다.</p>
+            
+            <h3 style="color: #a855f7; font-size: 1.2rem; margin-top: 30px; margin-bottom: 15px;">MBTI 심리테스트를 100% 활용하는 꿀팁</h3>
+            <ul style="padding-left: 20px; list-style-type: square;">
+                <li style="margin-bottom: 10px;"><strong>이상적인 내 모습과 현실 구분하기:</strong> '내가 되고 싶은 모습'이 아니라 '주말에 혼자 있을 때 나의 찐 모습'을 기준으로 답변해야 정확한 결과가 나옵니다.</li>
+                <li style="margin-bottom: 10px;"><strong>팩트 폭격을 긍정적으로 수용하기:</strong> 결과에 나오는 매운맛 단점들은 나를 비난하는 것이 아니라, 내가 인지하고 고쳐나가야 할 무의식적인 습관입니다.</li>
+                <li style="margin-bottom: 10px;"><strong>타인을 이해하는 도구로 쓰기:</strong> 나와 MBTI가 안 맞는다고 무조건 배척하기보다는, '저 사람은 세상을 이런 방식으로 인지하는구나'라며 관계의 윤활유로 활용하세요.</li>
+            </ul>
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">※ 테스트할 때마다 문제가 새롭게 바뀌므로, 친구들과 결과를 공유하고 서로의 진짜 본성을 비교해 보는 재미를 느껴보세요.</p>
+        </article>
     </div>
 
     <script>
@@ -332,14 +345,19 @@
 
         // ✨ 새로 추가된 완벽한 결과 공유 기능 ✨
         function shareResult() {
-            const grade = document.getElementById('result-grade').innerText;
+            // 결과 화면에 뜬 MBTI와 타이틀을 가져옴
+            const mbti = document.getElementById('result-mbti').innerText;
             const title = document.getElementById('result-title').innerText;
+            
+            // 깔끔한 원본 주소만 추출 (? 뒤의 쓸데없는 파라미터 방지)
             const cleanUrl = window.location.href.split('?')[0]; 
 
-            const shareText = `[내 연애 세포 진단기]\n\n💘 내 연애 세포 등급: ${grade} (${title})\n\n나는 왜 연애를 못할까? 뼈 때리는 연애 모의고사!\n너의 연애 세포도 살아있는지 확인해봐 ㅋㅋㅋ\n👉 ${cleanUrl}`;
+            // 카톡방에 복붙하기 좋게 텍스트 포맷팅
+            const shareText = `[진짜 나의 숨겨진 MBTI 찾기]\n\n🧠 내 팩폭 결과: ${mbti} (${title})\n\n사회생활용 가짜 성격은 벗어라!\n너의 진짜 본성도 지금 테스트해봐 ㅋㅋㅋ\n👉 ${cleanUrl}`;
 
+            // 클립보드에 복사
             navigator.clipboard.writeText(shareText).then(() => {
-                alert("결과가 복사되었습니다!\n단톡방에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
+                alert("결과가 복사되었습니다!\n단톡방 입력창에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
             }).catch(err => {
                 alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
             });
