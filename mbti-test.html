@@ -78,18 +78,19 @@
         .btn-home:hover { background: rgba(255,255,255,0.1); }
 
     </style>
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js" integrity="sha384-TiCmbV0Xo506mxyMInxZ8f3eAeq8p1t8v6r/TeyDq3/L2xVqDcvRz/Qn3eM+0b3O" crossorigin="anonymous"></script>
+    <script>Kakao.init('b5119648754c9fe3af835f47f5bae700');</script>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="capture-area">
         <h1>🧠 진짜 나의 숨겨진 MBTI</h1>
         <p class="subtitle">사회생활용 가짜 성격은 벗어라! 팩폭 본성 진단기</p>
 
         <div id="quiz-section">
             <div class="progress-bar"><div class="progress" id="progress"></div></div>
             <div class="question" id="question-text">질문이 여기에 표시됩니다.</div>
-            <div id="answer-buttons">
-                </div>
+            <div id="answer-buttons"></div>
         </div>
 
         <div id="result-section">
@@ -97,12 +98,13 @@
             <div class="result-title" id="result-title">시끄러운 오지라퍼 관종</div>
             <div class="result-desc" id="result-desc">설명이 여기에 표시됩니다.</div>
             
-            <div class="action-btns">
+            <div class="action-btns" id="action-buttons">
                 <button class="btn-share" onclick="shareResult()">친구에게 팩폭 결과 공유하기</button>
                 <button class="btn-home" style="background: rgba(255,255,255,0.1);" onclick="location.reload()">다시 테스트하기</button>
                 <a href="index.html" class="btn-home">홈으로</a>
             </div>
         </div>
+        
         <article style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; text-align: left; line-height: 1.8;">
             <h2 style="color: #8b5cf6; font-size: 1.4rem; margin-bottom: 20px;">가짜 사회생활 성격은 그만! 진짜 숨겨진 MBTI 찾는 법</h2>
             <p>최근 성격 유형 검사(MBTI)가 대중화되면서, 회사나 학교에서 살아남기 위해 만들어진 <strong>'사회생활용 가짜 성격(페르소나)'</strong>을 자신의 진짜 성격으로 착각하는 사람들이 많아졌습니다. "나 원래 I인데 회사에서는 E처럼 행동해" 혹은 "난 F인데 일할 때는 T가 돼"라는 말이 대표적이죠.</p>
@@ -269,7 +271,7 @@
             }
         }
 
-        // 지표 추출기 (각 지표별 5문제씩 = 총 20문제)
+        // 지표 추출기
         function buildQuestions() {
             const types = ['EI', 'SN', 'TF', 'JP'];
             let temp = [];
@@ -343,23 +345,40 @@
             document.getElementById('result-desc').innerText = resultData.d;
         }
 
-        // ✨ 새로 추가된 완벽한 결과 공유 기능 ✨
+        // ✨ 화면 캡처 후 이미지 다운로드 + 텍스트 복사하는 완벽 우회 함수 ✨
         function shareResult() {
-            // 결과 화면에 뜬 MBTI와 타이틀을 가져옴
+            // 카카오톡 초기화 확인
+            if (!Kakao.isInitialized()) {
+                alert('카카오톡 공유를 준비 중입니다. 잠시 후 다시 시도해주세요.');
+                return;
+            }
+
+            // 결과 화면의 텍스트 가져오기
             const mbti = document.getElementById('result-mbti').innerText;
             const title = document.getElementById('result-title').innerText;
-            
-            // 깔끔한 원본 주소만 추출 (? 뒤의 쓸데없는 파라미터 방지)
             const cleanUrl = window.location.href.split('?')[0]; 
 
-            // 카톡방에 복붙하기 좋게 텍스트 포맷팅
-            const shareText = `[진짜 나의 숨겨진 MBTI 찾기]\n\n🧠 내 팩폭 결과: ${mbti} (${title})\n\n사회생활용 가짜 성격은 벗어라!\n너의 진짜 본성도 지금 테스트해봐 ㅋㅋㅋ\n👉 ${cleanUrl}`;
-
-            // 클립보드에 복사
-            navigator.clipboard.writeText(shareText).then(() => {
-                alert("결과가 복사되었습니다!\n단톡방 입력창에 '붙여넣기' 하시면 내 결과가 공유됩니다.");
-            }).catch(err => {
-                alert("복사에 실패했습니다. 브라우저 설정을 확인해주세요.");
+            // 카카오톡 공유 링크 생성
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: `[나의 진짜 MBTI] ${mbti}`,
+                    description: `나의 팩폭 결과는: ${title}\n가짜 사회생활 성격은 벗고 진짜 본성을 확인해봐!`,
+                    imageUrl: 'https://pandoratools.kr/og-image.png', 
+                    link: {
+                        mobileWebUrl: cleanUrl,
+                        webUrl: cleanUrl,
+                    },
+                },
+                buttons: [
+                    {
+                        title: '나도 팩폭 당하러 가기',
+                        link: {
+                            mobileWebUrl: cleanUrl,
+                            webUrl: cleanUrl,
+                        },
+                    },
+                ],
             });
         }
 
