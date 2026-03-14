@@ -347,41 +347,51 @@
 
         // ✨ 화면 캡처 후 이미지 다운로드 + 텍스트 복사하는 완벽 우회 함수 ✨
         function shareResult() {
-            // 카카오톡 초기화 확인
-            if (!Kakao.isInitialized()) {
-                alert('카카오톡 공유를 준비 중입니다. 잠시 후 다시 시도해주세요.');
-                return;
-            }
+            try {
+                // 1. 카카오 스크립트 자체가 안 불러와진 경우
+                if (!window.Kakao) {
+                    alert('카카오 스크립트를 불러오지 못했습니다. 인터넷 연결을 확인하세요.');
+                    return;
+                }
 
-            // 결과 화면의 텍스트 가져오기
-            const mbti = document.getElementById('result-mbti').innerText;
-            const title = document.getElementById('result-title').innerText;
-            const cleanUrl = window.location.href.split('?')[0]; 
+                // 2. 키 값이 틀렸거나 초기화가 안 된 경우
+                if (!Kakao.isInitialized()) {
+                    alert('카카오 키가 제대로 작동하지 않습니다. 키 값을 다시 확인해주세요.');
+                    return;
+                }
 
-            // 카카오톡 공유 링크 생성
-            Kakao.Share.sendDefault({
-                objectType: 'feed',
-                content: {
-                    title: `[나의 진짜 MBTI] ${mbti}`,
-                    description: `나의 팩폭 결과는: ${title}\n가짜 사회생활 성격은 벗고 진짜 본성을 확인해봐!`,
-                    imageUrl: 'https://pandoratools.kr/og-image.png', 
-                    link: {
-                        mobileWebUrl: cleanUrl,
-                        webUrl: cleanUrl,
-                    },
-                },
-                buttons: [
-                    {
-                        title: '나도 팩폭 당하러 가기',
+                const mbti = document.getElementById('result-mbti').innerText;
+                const title = document.getElementById('result-title').innerText;
+                const cleanUrl = window.location.href.split('?')[0]; 
+
+                // 3. 정상적으로 카톡 호출 시도
+                Kakao.Share.sendDefault({
+                    objectType: 'feed',
+                    content: {
+                        title: `[나의 진짜 MBTI] ${mbti}`,
+                        description: `나의 팩폭 결과는: ${title}\n가짜 사회생활 성격은 벗고 진짜 본성을 확인해봐!`,
+                        imageUrl: 'https://pandoratools.kr/og-image.png', 
                         link: {
                             mobileWebUrl: cleanUrl,
                             webUrl: cleanUrl,
                         },
                     },
-                ],
-            });
+                    buttons: [
+                        {
+                            title: '나도 팩폭 당하러 가기',
+                            link: {
+                                mobileWebUrl: cleanUrl,
+                                webUrl: cleanUrl,
+                            },
+                        },
+                    ],
+                });
+                
+            } catch (error) {
+                // 어떤 에러 때문에 막혔는지 화면에 띄워줌
+                alert("공유 중 에러가 발생했습니다: " + error.message);
+            }
         }
-
         startTest();
     </script>
 </body>
