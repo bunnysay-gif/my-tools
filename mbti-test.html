@@ -344,41 +344,67 @@
             document.getElementById('result-desc').innerText = resultData.d;
         }
 
+        // ✨ 화면 캡처 + 텍스트 자동 복사 완벽 해결 함수 ✨
         async function shareResult() {
-            const actionBtns = document.querySelector('.action-btns');
+            // 1. 사진에 안 찍혀야 할 버튼과 하단 블로그 글 숨기기
+            const actionBtns = document.getElementById('action-buttons');
             const article = document.querySelector('article');
             actionBtns.style.display = 'none';
             if(article) article.style.display = 'none';
 
-            const captureTarget = document.querySelector('.container');
+            const captureTarget = document.getElementById('capture-area');
+
+            // 2. 캡처 시 까맣게 나오는 현상 방지 (블러를 끄고 배경색을 임시로 칠함)
+            const originalBg = captureTarget.style.backgroundColor;
+            const originalFilter = captureTarget.style.backdropFilter;
+            captureTarget.style.backgroundColor = '#1e1b4b'; 
+            captureTarget.style.backdropFilter = 'none';
 
             try {
-                // 1. 사진 찰칵!
+                // 3. 사진 찰칵!
                 const canvas = await html2canvas(captureTarget, {
-                    backgroundColor: '#1e293b', 
-                    scale: 2 
+                    scale: 2,
+                    backgroundColor: '#1e1b4b' // 테두리 바깥 배경색
                 });
 
+                // 4. 숨겼던 버튼과 글, 그리고 배경색 다시 원상 복구
+                captureTarget.style.backgroundColor = originalBg;
+                captureTarget.style.backdropFilter = originalFilter;
                 actionBtns.style.display = 'flex';
                 if(article) article.style.display = 'block';
 
-                // 2. 폰 갤러리에 사진을 강제로 다운로드 (가장 확실한 방법)
-                const imgData = canvas.toDataURL('image/png');
-                const a = document.createElement('a');
-                a.href = imgData;
-                a.download = 'mbti_result.png';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+                // 5. 갤러리(PC)에 사진 자동 저장
+                canvas.toBlob((blob) => {
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'mbti_result.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
 
-                // 3. 카톡에 올릴 텍스트 자동 복사
-                const shareText = "내 진짜 본성 확인해봐! 👉 " + window.location.href.split('?')[0];
-                navigator.clipboard.writeText(shareText).catch(() => {});
+                    // 6. 대표님이 원하시는 양식대로 텍스트 포맷팅
+                    const mbti = document.getElementById('result-mbti').innerText;
+                    const title = document.getElementById('result-title').innerText;
+                    const desc = document.getElementById('result-desc').innerText;
+                    const cleanUrl = window.location.href.split('?')[0]; 
 
-                // 4. 유저에게 행동 지침 안내
-                alert("📸 갤러리에 결과 사진이 저장되었습니다!\n텍스트도 복사되었으니, 카톡방에 [사진 첨부] 후 [붙여넣기] 하시면 됩니다.");
+                    const shareText = `나의 MBTI :\n${mbti}\n${title}\n-${desc}\n\n👉 테스트 해보기: ${cleanUrl}`;
+
+                    // 7. 텍스트 복사 및 알림창 띄우기
+                    navigator.clipboard.writeText(shareText).then(() => {
+                        alert("📸 갤러리에 사진이 선명하게 저장되었습니다!\n\n텍스트도 복사되었으니, 카톡방에 [사진 첨부] 후 [붙여넣기] 하시면 됩니다.");
+                    }).catch(() => {
+                        alert("📸 갤러리에 사진이 저장되었습니다!\n카톡에 첨부해서 공유해보세요.");
+                    });
+                }, 'image/png');
 
             } catch (err) {
+                // 에러 나도 화면 원상 복구
+                captureTarget.style.backgroundColor = originalBg;
+                captureTarget.style.backdropFilter = originalFilter;
                 actionBtns.style.display = 'flex';
                 if(article) article.style.display = 'block';
                 alert('이미지 캡처에 실패했습니다.');
