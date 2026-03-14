@@ -53,7 +53,6 @@
             border-radius: 20px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* ✨ PC 화면 최대 너비 확장 (4열 배치를 위해 공간 확보) */
         .container { max-width: 1200px; margin: 0 auto; }
 
         .category-title {
@@ -62,12 +61,8 @@
             display: flex; align-items: center; justify-content: space-between;
         }
 
-        /* ✨ 4열 배치를 위한 핵심 수정 부분 */
         .grid-container {
-            display: grid; 
-            /* PC에서는 최소 240px 너비로 4개까지, 창이 좁아지면 알아서 줄어듦 */
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); 
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
         }
 
         .tool-card { 
@@ -91,7 +86,6 @@
         }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        /* ✨ 카드가 4개로 좁아졌으므로 폰트 크기 미세 조정 */
         .tool-card h2 { margin-top: 0; font-size: 1.15rem; margin-bottom: 10px; color: #fff; word-break: keep-all; }
         .tool-card p { margin: 0; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; word-break: keep-all; }
         .tool-card .icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
@@ -134,52 +128,72 @@
         <div class="grid-container">
             <a href="love-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #f43f5e;">
-                    <div class="new-badge">NEW</div><div class="icon">💘</div><h2>내 연애 세포 진단기</h2><p>"나는 왜 연애를 못할까?"<br>뼈 때리는 팩폭 연애 모의고사</p>
+                    <div class="new-badge">NEW</div><div class="icon">💘</div>
+                    <h2>핑크빛? 잿빛? 내 연애 세포 생존 테스트</h2>
+                    <p>"나는 왜 연애를 못할까?"<br>뼈 때리는 팩폭으로 알아보는 나의 연애 문제점 모의고사</p>
                 </div>
             </a>
             <a href="marriage-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #ec4899;">
-                    <div class="new-badge">NEW</div><div class="icon">💍</div><h2>예비 부부 결혼 준비도</h2><p>돈, 가사분담, 연락 문제 등<br>현실적인 결혼 멘탈 진단기</p>
+                    <div class="new-badge">NEW</div><div class="icon">💍</div>
+                    <h2>파혼 방지! 예비 부부 결혼 모의고사</h2>
+                    <p>돈, 가사분담, 연락 문제 등<br>현실적인 상황으로 알아보는 우리의 결혼 가치관 진단기</p>
                 </div>
             </a>
             <a href="mbti-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #8b5cf6;">
-                    <div class="new-badge">NEW</div><div class="icon">🧠</div><h2>나의 진짜 숨겨진 MBTI</h2><p>가짜 사회생활용 성격 말고,<br>심연에 숨겨진 진짜 본성 찾기</p>
+                    <div class="new-badge">NEW</div><div class="icon">🧠</div>
+                    <h2>가짜 페르소나 벗기기! 팩폭 찐 MBTI 테스트</h2>
+                    <p>사회생활용 가짜 성격은 벗어라!<br>무의식과 본성을 파헤치는 매운맛 성격 진단기</p>
                 </div>
             </a>
             <a href="kkondae-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #d97706;">
-                    <div class="new-badge">NEW</div><div class="icon">☕</div><h2>내 안의 꼰대력 테스트</h2><p>"나 혹시 꼰대인가..?"<br>MZ와 기성세대의 직장 공감 테스트</p>
+                    <div class="new-badge">NEW</div><div class="icon">☕</div>
+                    <h2>라떼는 말이야~ 내 안의 꼰대력 테스트</h2>
+                    <p>혹시 나도 젊은 꼰대?<br>직장/학교 상황별 대처로 알아보는 나의 은밀한 꼰대 지수</p>
                 </div>
             </a>
             <a href="burnout-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #64748b;">
-                    <div class="new-badge">NEW</div><div class="icon">🔋</div><h2>현대인 번아웃 진단기</h2><p>요즘 왜 이렇게 의욕이 없을까?<br>내 안의 방전 에너지 확인</p>
+                    <div class="new-badge">NEW</div><div class="icon">🔋</div>
+                    <h2>직장인 영혼 탈곡 지수 (번아웃 테스트)</h2>
+                    <p>요즘 왜 이렇게 의욕이 없을까?<br>내 안의 방전 에너지와 스트레스 지수 확인하기</p>
                 </div>
             </a>
             <a href="soulmate-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #06b6d4;">
-                    <div class="new-badge">NEW</div><div class="icon">👯‍♀️</div><h2>찰떡 소울메이트 찾기</h2><p>카톡 친구에게 링크를 보내<br>우리 궁합 퍼센트(%) 확인하기</p>
+                    <div class="new-badge">NEW</div><div class="icon">👯‍♀️</div>
+                    <h2>너랑 나랑 찐친 궁합 테스트</h2>
+                    <p>카톡 친구에게 링크를 보내,<br>우리가 얼마나 잘 맞는지 궁합 퍼센트(%) 확인하기</p>
                 </div>
             </a>
             <a href="mental-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #14b8a6;">
-                    <div class="new-badge">NEW</div><div class="icon">🛡️</div><h2>유리 멘탈 vs 강철 멘탈</h2><p>상사의 쿠사리에 나는 버틸까?<br>쿠쿠다스부터 티타늄 멘탈까지!</p>
+                    <div class="new-badge">NEW</div><div class="icon">🛡️</div>
+                    <h2>개복치 vs 터미네이터? 나의 멘탈 강도 테스트</h2>
+                    <p>위기와 스트레스 상황에서 내 멘탈은 얼마나 버틸 수 있을까?<br>숨겨진 맷집 확인하기</p>
                 </div>
             </a>
             <a href="pastlife-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #a8a29e;">
-                    <div class="new-badge">NEW</div><div class="icon">📜</div><h2>나의 전생 직업 테스트</h2><p>조선시대에 나는 뭐였을까?<br>게으른 양반? 눈치백단 주모?</p>
+                    <div class="new-badge">NEW</div><div class="icon">📜</div>
+                    <h2>왕이었을까 노비였을까? 나의 전생 직업 테스트</h2>
+                    <p>현재 나의 성향과 무의식적인 선택으로<br>유추해 보는 재미있는 전생 신분 체험</p>
                 </div>
             </a>
             <a href="rich-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #eab308;">
-                    <div class="new-badge">NEW</div><div class="icon">🤑</div><h2>부자 관상 & 재물운</h2><p>나의 소비 습관 선택으로<br>언제쯤 얼마를 모을지 점쳐보기</p>
+                    <div class="new-badge">NEW</div><div class="icon">🤑</div>
+                    <h2>통장 암살자 vs 미래 재벌! 내 재물운 테스트</h2>
+                    <p>내 평소 소비 습관과 성향으로 알아보는<br>팩폭 재물운 심리테스트 (※ 사진 업로드 X)</p>
                 </div>
             </a>
-            <a href="drinking-test.html">
+            <a href="drink-test.html">
                 <div class="tool-card" style="border-bottom: 4px solid #84cc16;">
-                    <div class="new-badge">NEW</div><div class="icon">🍻</div><h2>나의 술자리 주사 유형</h2><p>술만 마시면 어떻게 변할까?<br>강아지형, 수면형 주사 알아보기</p>
+                    <div class="new-badge">NEW</div><div class="icon">🍻</div>
+                    <h2>흑역사 생성기? 나의 술자리 찐 주사 테스트</h2>
+                    <p>알코올이 들어갔을 때 봉인 해제되는<br>나의 진짜 성격과 술자리 포지션 알아보기</p>
                 </div>
             </a>
         </div>
@@ -311,7 +325,7 @@
             </a>
             <a href="youtube.html">
                 <div class="tool-card" style="border-bottom: 4px solid #ef4444;">
-                    <div class="icon">▶️</div><h2>유튜브 실시간 인기영상</h2><p>영상 링크만 입력하면<br>고화질 썸네일 원본 다운로드</p>
+                    <div class="icon">▶️</div><h2>유튜브 썸네일 추출기</h2><p>영상 링크만 입력하면<br>고화질 썸네일 원본 다운로드</p>
                 </div>
             </a>
         </div>
@@ -320,17 +334,17 @@
         <div class="grid-container">
             <a href="lotto.html">
                 <div class="tool-card" style="border-bottom: 4px solid #eab308;">
-                    <div class="icon">🎰</div><h2>로또 1등 번호 생성기</h2><p>이번 주 주인공은 바로 나!<br>빅데이터(?)가 점지해 주는 행운의 번호</p>
+                    <div class="icon">🎰</div><h2>행운의 로또 번호 생성기</h2><p>이번 주 주인공은 바로 나!<br>빅데이터(?) 기반 행운 번호</p>
                 </div>
             </a>
             <a href="youtube-trends.html">
                 <div class="tool-card" style="border-bottom: 4px solid #ef4444;">
-                    <div class="icon">📈</div><h2>유튜브 인기 검색어</h2><p>유튜브에서 제일 핫한 검색어는?<br>실시간 검색어를 한눈에 싹!</p>
+                    <div class="icon">📈</div><h2>유튜브 인기 검색어</h2><p>실시간 업데이트!<br>대한민국 인기 검색어 TOP</p>
                 </div>
             </a>
             <a href="bookmark.html">
                 <div class="tool-card" style="border-bottom: 4px solid #10b981;">
-                    <div class="icon">🔖</div><h2>필수 유용 사이트 모음</h2><p>즐겨찾기 할 필요 없이 여기서 끝!<br>직장인·학생 필수 웹사이트 총집합</p>
+                    <div class="icon">🔖</div><h2>필수 유용 사이트 모음</h2><p>인터넷 서핑의 시작,<br>분야별 최적의 즐겨찾기</p>
                 </div>
             </a>
             <a href="memory.html">
