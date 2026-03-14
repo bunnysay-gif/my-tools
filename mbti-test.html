@@ -78,10 +78,7 @@
         .btn-home:hover { background: rgba(255,255,255,0.1); }
 
     </style>
-    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
-    <script>
-        Kakao.init('b5119648754c9fe3af835f47f5bae700');
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 
@@ -347,51 +344,53 @@
             document.getElementById('result-desc').innerText = resultData.d;
         }
 
-        // ✨ 화면 캡처 후 이미지 다운로드 + 텍스트 복사하는 완벽 우회 함수 ✨
-        function shareResult() {
+        async function shareResult() {
+            // 1. 빨간 박스 외에 사진에 찍히면 안 되는 것들(버튼, 아래 긴 글) 잠시 숨기기
+            const actionBtns = document.querySelector('.action-btns');
+            const article = document.querySelector('article');
+            actionBtns.style.display = 'none';
+            if(article) article.style.display = 'none';
+
+            // 2. 캡처할 전체 박스 지정
+            const captureTarget = document.querySelector('.container');
+
             try {
-                // 1. 카카오 스크립트 자체가 안 불러와진 경우
-                if (!window.Kakao) {
-                    alert('카카오 스크립트를 불러오지 못했습니다. 인터넷 연결을 확인하세요.');
-                    return;
-                }
-
-                // 2. 키 값이 틀렸거나 초기화가 안 된 경우
-                if (!Kakao.isInitialized()) {
-                    alert('카카오 키가 제대로 작동하지 않습니다. 키 값을 다시 확인해주세요.');
-                    return;
-                }
-
-                const mbti = document.getElementById('result-mbti').innerText;
-                const title = document.getElementById('result-title').innerText;
-                const cleanUrl = window.location.href.split('?')[0]; 
-
-                // 3. 정상적으로 카톡 호출 시도
-                Kakao.Share.sendDefault({
-                    objectType: 'feed',
-                    content: {
-                        title: `[나의 진짜 MBTI] ${mbti}`,
-                        description: `나의 팩폭 결과는: ${title}\n가짜 사회생활 성격은 벗고 진짜 본성을 확인해봐!`,
-                        imageUrl: 'https://pandoratools.kr/og-image.png', 
-                        link: {
-                            mobileWebUrl: cleanUrl,
-                            webUrl: cleanUrl,
-                        },
-                    },
-                    buttons: [
-                        {
-                            title: '나도 팩폭 당하러 가기',
-                            link: {
-                                mobileWebUrl: cleanUrl,
-                                webUrl: cleanUrl,
-                            },
-                        },
-                    ],
+                // 3. 화면을 사진으로 찰칵!
+                const canvas = await html2canvas(captureTarget, {
+                    backgroundColor: '#1e293b', // 뒷배경 색상 맞춤
+                    scale: 2 // 고화질
                 });
-                
-            } catch (error) {
-                // 어떤 에러 때문에 막혔는지 화면에 띄워줌
-                alert("공유 중 에러가 발생했습니다: " + error.message);
+
+                // 4. 숨겼던 버튼과 글 다시 보이게 복구
+                actionBtns.style.display = 'flex';
+                if(article) article.style.display = 'block';
+
+                // 5. 사진을 카톡/인스타로 전송 (스마트폰 전용)
+                canvas.toBlob(async (blob) => {
+                    const file = new File([blob], 'my_result.png', { type: 'image/png' });
+                    
+                    // 스마트폰일 경우 '공유하기' 팝업 띄워서 바로 사진 전송
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            files: [file],
+                            title: '내 테스트 결과',
+                            text: '내 결과 확인해봐! 👉 ' + window.location.href.split('?')[0]
+                        });
+                    } else {
+                        // PC일 경우 사진을 내 컴퓨터에 자동 저장
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'my_result.png';
+                        a.click();
+                        alert("📸 결과 이미지가 저장되었습니다!\n카톡에 사진을 첨부해서 보내보세요.");
+                    }
+                }, 'image/png');
+
+            } catch (err) {
+                actionBtns.style.display = 'flex';
+                if(article) article.style.display = 'block';
+                alert('이미지 캡처에 실패했습니다.');
             }
         }
         startTest();
