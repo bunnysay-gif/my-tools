@@ -345,47 +345,38 @@
         }
 
         async function shareResult() {
-            // 1. 빨간 박스 외에 사진에 찍히면 안 되는 것들(버튼, 아래 긴 글) 잠시 숨기기
             const actionBtns = document.querySelector('.action-btns');
             const article = document.querySelector('article');
             actionBtns.style.display = 'none';
             if(article) article.style.display = 'none';
 
-            // 2. 캡처할 전체 박스 지정
             const captureTarget = document.querySelector('.container');
 
             try {
-                // 3. 화면을 사진으로 찰칵!
+                // 1. 사진 찰칵!
                 const canvas = await html2canvas(captureTarget, {
-                    backgroundColor: '#1e293b', // 뒷배경 색상 맞춤
-                    scale: 2 // 고화질
+                    backgroundColor: '#1e293b', 
+                    scale: 2 
                 });
 
-                // 4. 숨겼던 버튼과 글 다시 보이게 복구
                 actionBtns.style.display = 'flex';
                 if(article) article.style.display = 'block';
 
-                // 5. 사진을 카톡/인스타로 전송 (스마트폰 전용)
-                canvas.toBlob(async (blob) => {
-                    const file = new File([blob], 'my_result.png', { type: 'image/png' });
-                    
-                    // 스마트폰일 경우 '공유하기' 팝업 띄워서 바로 사진 전송
-                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                        await navigator.share({
-                            files: [file],
-                            title: '내 테스트 결과',
-                            text: '내 결과 확인해봐! 👉 ' + window.location.href.split('?')[0]
-                        });
-                    } else {
-                        // PC일 경우 사진을 내 컴퓨터에 자동 저장
-                        const url = URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'my_result.png';
-                        a.click();
-                        alert("📸 결과 이미지가 저장되었습니다!\n카톡에 사진을 첨부해서 보내보세요.");
-                    }
-                }, 'image/png');
+                // 2. 폰 갤러리에 사진을 강제로 다운로드 (가장 확실한 방법)
+                const imgData = canvas.toDataURL('image/png');
+                const a = document.createElement('a');
+                a.href = imgData;
+                a.download = 'mbti_result.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+                // 3. 카톡에 올릴 텍스트 자동 복사
+                const shareText = "내 진짜 본성 확인해봐! 👉 " + window.location.href.split('?')[0];
+                navigator.clipboard.writeText(shareText).catch(() => {});
+
+                // 4. 유저에게 행동 지침 안내
+                alert("📸 갤러리에 결과 사진이 저장되었습니다!\n텍스트도 복사되었으니, 카톡방에 [사진 첨부] 후 [붙여넣기] 하시면 됩니다.");
 
             } catch (err) {
                 actionBtns.style.display = 'flex';
