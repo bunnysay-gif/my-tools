@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /template.html
+Disallow: /api/
+
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+Disallow: /admin.html
+Disallow: /template.html
+
+Sitemap: https://pandoratools.kr/sitemap.xml

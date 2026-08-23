@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://pandoratools.kr/stock-average.html">
+    <title>주식 물타기 평단가 계산기 - PANDORA TOOLS</title>
+    <meta name="description" content="떡락장 구조대! 추가 매수 시 정확한 평균 단가와 총 투자 금액을 미리 계산해보세요.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandoratools.kr/stock-average.html"> <meta property="og:title" content="떡락장 구조대! 주식/코인 물타기 계산기">
+    <meta property="og:description" content="지금 얼마를 더 사야 평단가가 낮아질까? 1초 만에 확인해보세요!">
+    <meta property="og:image" content="https://pandoratools.kr/og-image.png"> 
+
+    <link rel="icon" href="og-image.png" type="image/png">
+    <link rel="apple-touch-icon" href="og-image.png">
+
+    <style>
+        /* 기본 테마 (판도라 툴즈 공통) */
+        body { 
+            background: linear-gradient(135deg, #1e1b4b, #2e1065);
+            color: white; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; margin: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        .container {
+            max-width: 600px; width: 100%;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 40px 30px; border-radius: 20px;
+            box-sizing: border-box; margin-top: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .header-section h1 { font-size: 1.8rem; color: #38bdf8; margin-bottom: 10px; }
+        .header-section p { color: #94a3b8; font-size: 1rem; word-break: keep-all; line-height: 1.5; }
+
+        /* 입력 폼 영역 */
+        .input-group {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px; border-radius: 15px; margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .input-group h3 {
+            margin-top: 0; margin-bottom: 15px; font-size: 1.1rem; 
+            color: #fde047; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
+        }
+        .input-row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .input-box { flex: 1; display: flex; flex-direction: column; }
+        .input-box label { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 5px; }
+        
+        /* 입력창 디자인 (수정됨) */
+        input[type="text"] {
+            width: 100%; /* 추가: 가로 100% 꽉 채우기 */
+            box-sizing: border-box; /* 추가: 패딩을 포함해서 크기 계산 (삐져나감 방지) */
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 15px; border-radius: 8px; color: white;
+            font-size: 1.1rem; text-align: right; transition: 0.3s;
+        }
+        input[type="text"]:focus {
+            outline: none; border-color: #38bdf8; background-color: rgba(56, 189, 248, 0.1);
+        }
+        
+        .unit { position: absolute; right: 15px; top: 12px; color: #94a3b8; pointer-events: none; }
+        .input-wrapper { position: relative; display: flex; flex-direction: column; }
+        .input-wrapper input { padding-right: 35px; }
+
+        /* 계산 버튼 */
+        .btn-calc {
+            width: 100%; background: linear-gradient(135deg, #0ea5e9, #2563eb);
+            border: none; padding: 16px; border-radius: 12px;
+            color: white; font-size: 1.2rem; font-weight: bold;
+            cursor: pointer; transition: 0.3s; margin-top: 10px; box-shadow: 0 5px 15px rgba(37, 99, 235, 0.4);
+        }
+        .btn-calc:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 99, 235, 0.6); }
+
+        /* 결과 영역 */
+        #result-section {
+            display: none; margin-top: 30px; animation: fadeIn 0.5s;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(37, 99, 235, 0.1));
+            border: 1px solid rgba(56, 189, 248, 0.3); padding: 25px; border-radius: 15px; text-align: center;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .result-item { margin-bottom: 15px; }
+        .result-item:last-child { margin-bottom: 0; border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 15px; }
+        .result-label { font-size: 0.95rem; color: #cbd5e1; display: block; margin-bottom: 5px; }
+        .result-value { font-size: 1.5rem; font-weight: bold; color: #fff; }
+        .highlight { color: #facc15; font-size: 2rem; text-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }
+        .diff-text { font-size: 1rem; color: #4ade80; margin-top: 5px; display: block; font-weight: normal; }
+
+        /* 하단 버튼 */
+        .bottom-btns { display: flex; gap: 10px; justify-content: center; margin-top: 30px; }
+        .btn-home {
+            background: transparent; border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px; border-radius: 20px; color: white; text-decoration: none; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .btn-home:hover { background: rgba(255,255,255,0.1); }
+
+        @media (max-width: 480px) {
+            .input-row { flex-direction: column; gap: 10px; }
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="container">
+        <div class="header-section">
+            <h1>📉 주식/코인 물타기 계산기</h1>
+            <p>지금 물타면 평단가가 얼마나 낮아질까?<br>정확한 목표 단가를 위한 필수 계산기</p>
+        </div>
+
+        <div class="input-group">
+            <h3>보유 중인 주식 (현재)</h3>
+            <div class="input-row">
+                <div class="input-box">
+                    <label>현재 평단가</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="curPrice" placeholder="0" oninput="formatNumber(this)">
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <label>보유 수량</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="curQty" placeholder="0" oninput="formatNumber(this)">
+                        <span class="unit">주</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group" style="border-color: rgba(56, 189, 248, 0.3);">
+            <h3 style="color: #38bdf8;">추가 매수 (물타기)</h3>
+            <div class="input-row">
+                <div class="input-box">
+                    <label>매수 단가</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="newPrice" placeholder="0" oninput="formatNumber(this)">
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <label>매수 수량</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="newQty" placeholder="0" oninput="formatNumber(this)">
+                        <span class="unit">주</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-calc" onclick="calculateAvg()">결과 확인하기</button>
+
+        <div id="result-section">
+            <div class="result-item">
+                <span class="result-label">🔥 물타기 후 최종 평단가</span>
+                <span class="result-value highlight" id="resAvgPrice">0원</span>
+                <span class="diff-text" id="resDiff">(기존 대비 -0원 감소)</span>
+            </div>
+            <div class="result-item" style="display: flex; justify-content: space-around; text-align: center;">
+                <div>
+                    <span class="result-label">총 매수 금액</span>
+                    <span class="result-value" id="resTotalAmt" style="font-size: 1.2rem;">0원</span>
+                </div>
+                <div>
+                    <span class="result-label">총 보유 수량</span>
+                    <span class="result-value" id="resTotalQty" style="font-size: 1.2rem;">0주</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-btns">
+            <button class="btn-home" onclick="location.reload()">초기화</button>
+            <a href="index.html" class="btn-home">홈으로 돌아가기</a>
+            
+        </div>
+        <article style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; text-align: left; line-height: 1.8;">
+            <h2 style="color: #38bdf8; font-size: 1.4rem; margin-bottom: 20px;">떡락장 생존 비법! 주식/코인 물타기(추가 매수) 성공 전략</h2>
+            <p>주식이나 코인 투자 중 예상치 못한 하락장을 맞이했을 때, 많은 투자자들이 평균 단가를 낮추기 위해 <strong>'물타기(Averaging Down)'</strong>를 시도합니다. 물타기란 내가 보유한 종목의 가격이 떨어졌을 때 추가로 매수하여 전체 1주당 매수 단가를 낮추는 투자 기법입니다.</p>
+            <p>하지만 계획 없는 무지성 추가 매수는 이른바 '물린 금액'만 눈덩이처럼 키우는 지름길이 될 수 있습니다. 판도라 툴즈의 평단가 계산기를 활용해 내가 가용한 현금으로 목표하는 평단가를 미리 시뮬레이션해보는 것이 중요합니다.</p>
+            
+            <h3 style="color: #7dd3fc; font-size: 1.2rem; margin-top: 30px; margin-bottom: 15px;">안전한 분할 매수를 위한 3가지 원칙</h3>
+            <ul style="padding-left: 20px; list-style-type: square;">
+                <li style="margin-bottom: 10px;"><strong>목표 평단가 미리 설정하기:</strong> 얼마까지 단가를 낮출 것인지 계산기를 통해 명확한 수치를 먼저 확인하세요.</li>
+                <li style="margin-bottom: 10px;"><strong>비중 조절의 중요성:</strong> 10% 하락했을 때 기존 보유량과 동일한 수량을 사면 평단가는 5% 낮아지지만, 50% 하락했을 때는 훨씬 많은 예수금이 필요합니다.</li>
+                <li style="margin-bottom: 10px;"><strong>손절선과 반등 시그널 확인:</strong> 하락 추세가 끝없이 이어지는 '떨어지는 칼날'에서는 물타기를 잠시 멈추고 반등 시점을 노려야 합니다.</li>
+            </ul>
+        </article>
+    </div>
+
+    <script>
+        // 숫자 입력 시 자동으로 콤마(,) 찍어주는 함수
+        function formatNumber(input) {
+            // 숫자만 남기고 제거
+            let value = input.value.replace(/[^0-9]/g, '');
+            // 3자리마다 콤마 추가
+            input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        // 콤마 제거 후 숫자로 변환하는 함수
+        function parseNumber(str) {
+            return parseInt(str.replace(/,/g, '')) || 0;
+        }
+
+        // 평단가 계산 핵심 로직
+        function calculateAvg() {
+            const curPrice = parseNumber(document.getElementById('curPrice').value);
+            const curQty = parseNumber(document.getElementById('curQty').value);
+            const newPrice = parseNumber(document.getElementById('newPrice').value);
+            const newQty = parseNumber(document.getElementById('newQty').value);
+
+            // 입력값 검증
+            if (curPrice === 0 || curQty === 0) {
+                alert("보유 중인 주식의 평단가와 수량을 정확히 입력해주세요.");
+                return;
+            }
+            if (newPrice === 0 || newQty === 0) {
+                alert("추가 매수할 단가와 수량을 입력해주세요.");
+                return;
+            }
+
+            // 계산
+            const currentTotalAmt = curPrice * curQty; // 기존 총 금액
+            const newTotalAmt = newPrice * newQty;     // 추가 총 금액
+            
+            const finalTotalAmt = currentTotalAmt + newTotalAmt; // 최종 총 금액
+            const finalTotalQty = curQty + newQty;               // 최종 총 수량
+            
+            // 최종 평단가 (소수점 버림)
+            const finalAvgPrice = Math.floor(finalTotalAmt / finalTotalQty); 
+            const priceDiff = curPrice - finalAvgPrice; // 낮아진 단가 차이
+
+            // 화면에 콤마 찍어서 출력
+            document.getElementById('resAvgPrice').innerText = finalAvgPrice.toLocaleString() + '원';
+            document.getElementById('resTotalAmt').innerText = finalTotalAmt.toLocaleString() + '원';
+            document.getElementById('resTotalQty').innerText = finalTotalQty.toLocaleString() + '주';
+
+            // 단가 하락/상승 멘트 처리
+            const diffEl = document.getElementById('resDiff');
+            if (priceDiff > 0) {
+                diffEl.innerText = `(기존 평단가 대비 ${priceDiff.toLocaleString()}원 낮아짐!)`;
+                diffEl.style.color = '#4ade80'; // 초록색 (긍정)
+            } else if (priceDiff < 0) {
+                diffEl.innerText = `(기존 평단가 대비 불타기 +${Math.abs(priceDiff).toLocaleString()}원 증가)`;
+                diffEl.style.color = '#f87171'; // 빨간색 (위험)
+            } else {
+                diffEl.innerText = `(기존 평단가와 동일합니다)`;
+                diffEl.style.color = '#cbd5e1'; // 회색
+            }
+
+            // 결과창 부드럽게 보여주기
+            document.getElementById('result-section').style.display = 'block';
+        }
+    </script>
+
+<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:rgba(30,41,59,0.94);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:#cbd5e1;font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
+    <nav>
+        <a href="index.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">홈</a>|
+        <a href="about.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">사이트 소개</a>|
+        <a href="privacy.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
+        <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
+        <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
+    </nav>
+    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 전문가 확인을 거치시기 바랍니다.</div>
+    <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:support@pandoratools.kr" style="color:#93c5fd;text-decoration:none;margin:0 6px;">support@pandoratools.kr</a></div>
+</footer>
+</body>
+</html>

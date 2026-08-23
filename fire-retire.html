@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-TGL7WVVZ');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="canonical" href="https://pandoratools.kr/fire-retire.html">
+    <title>조기 은퇴! 파이어족 은퇴 계산기 - PANDORA TOOLS</title>
+    <meta name="description" content="언제쯤 회사를 그만둘 수 있을까? 내 자산과 저축액으로 파이어족 달성 시기를 계산해보세요.">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandoratools.kr/fire-retire.html">
+    <meta property="og:title" content="조기 은퇴! 파이어족 은퇴 자금 계산기">
+    <meta property="og:description" content="지금처럼 모으면 언제 회사를 때려치울 수 있을까? 내 은퇴 시기 알아보기!">
+    <meta property="og:image" content="https://pandoratools.kr/og-image.png"> 
+
+    <link rel="icon" href="og-image.png" type="image/png">
+    <link rel="apple-touch-icon" href="og-image.png">
+
+    <style>
+        /* 기본 테마 */
+        body { 
+            background: linear-gradient(135deg, #1e1b4b, #2e1065);
+            color: white; font-family: '맑은 고딕', sans-serif; 
+            padding: 20px; margin: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        
+        .container {
+            max-width: 600px; width: 100%;
+            background-color: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 40px 30px; border-radius: 20px;
+            box-sizing: border-box; margin-top: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        .header-section { text-align: center; margin-bottom: 30px; }
+        .header-section h1 { font-size: 1.8rem; color: #f43f5e; margin-bottom: 10px; }
+        .header-section p { color: #94a3b8; font-size: 1rem; word-break: keep-all; line-height: 1.5; }
+
+        /* 입력 폼 영역 */
+        .input-group {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px; border-radius: 15px; margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .input-group h3 {
+            margin-top: 0; margin-bottom: 15px; font-size: 1.1rem; 
+            color: #fda4af; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
+        }
+
+        .input-row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .input-row:last-child { margin-bottom: 0; }
+        .input-box { flex: 1; display: flex; flex-direction: column; }
+        .input-box label { font-size: 0.95rem; color: #cbd5e1; margin-bottom: 8px; font-weight: bold; }
+        
+        /* 입력창 디자인 */
+        input[type="text"] {
+            width: 100%; box-sizing: border-box;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px; border-radius: 8px; color: white;
+            font-size: 1.1rem; text-align: right; transition: 0.3s;
+        }
+        input[type="text"]:focus {
+            outline: none; border-color: #f43f5e; background-color: rgba(244, 63, 94, 0.1);
+        }
+        
+        .unit { position: absolute; right: 15px; top: 15px; color: #94a3b8; font-size: 1rem; pointer-events: none; }
+        .input-wrapper { position: relative; width: 100%; }
+        .input-wrapper input { padding-right: 40px; }
+
+        .hint-text { font-size: 0.8rem; color: #94a3b8; margin-top: 5px; text-align: right; }
+
+        /* 계산 버튼 */
+        .btn-calc {
+            width: 100%; background: linear-gradient(135deg, #e11d48, #be123c);
+            border: none; padding: 16px; border-radius: 12px;
+            color: white; font-size: 1.2rem; font-weight: bold;
+            cursor: pointer; transition: 0.3s; margin-top: 10px; box-shadow: 0 5px 15px rgba(225, 29, 72, 0.4);
+        }
+        .btn-calc:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(225, 29, 72, 0.6); }
+
+        /* 결과 영역 */
+        #result-section {
+            display: none; margin-top: 30px; animation: fadeIn 0.5s;
+            background: linear-gradient(135deg, rgba(244, 63, 94, 0.1), rgba(190, 18, 60, 0.1));
+            border: 1px solid rgba(244, 63, 94, 0.3); padding: 25px; border-radius: 15px; text-align: center;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .result-title { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 10px; }
+        .result-value { font-size: 2.2rem; font-weight: bold; color: #fda4af; text-shadow: 0 0 15px rgba(253, 164, 175, 0.4); margin-bottom: 20px; }
+        
+        .result-box {
+            background: rgba(0,0,0,0.3); padding: 15px; border-radius: 10px;
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+        }
+        .result-box .label { color: #94a3b8; font-size: 0.95rem; }
+        .result-box .val { color: white; font-weight: bold; font-size: 1.1rem; }
+
+        /* 하단 버튼 */
+        .bottom-btns { display: flex; gap: 10px; justify-content: center; margin-top: 30px; }
+        .btn-home {
+            background: transparent; border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px; border-radius: 20px; color: white; text-decoration: none; font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .btn-home:hover { background: rgba(255,255,255,0.1); }
+
+        @media (max-width: 480px) {
+            .input-row { flex-direction: column; gap: 10px; }
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div class="container">
+        <div class="header-section">
+            <h1>🔥 파이어족 조기 은퇴 계산기</h1>
+            <p>경제적 자유까지 얼마나 남았을까?<br>지금처럼 모으면 언제 퇴사할 수 있을지 확인하세요.</p>
+        </div>
+
+        <div class="input-group">
+            <h3>1. 현재 자산 & 저축 상태</h3>
+            <div class="input-row">
+                <div class="input-box">
+                    <label>현재 모은 자산</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="currentAsset" placeholder="0" oninput="formatNumber(this)">
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <label>매월 저축액</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="monthlySaving" placeholder="0" oninput="formatNumber(this)">
+                        <span class="unit">원</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group" style="border-color: rgba(244, 63, 94, 0.3);">
+            <h3 style="color: #fda4af;">2. 은퇴 후 목표 계획</h3>
+            <div class="input-row">
+                <div class="input-box">
+                    <label>은퇴 후 월 생활비</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="monthlyExpense" placeholder="0" oninput="formatNumber(this)">
+                        <span class="unit">원</span>
+                    </div>
+                    <div class="hint-text">* "놀고 먹으려면 월 OOO원은 써야지"</div>
+                </div>
+                <div class="input-box">
+                    <label>예상 투자 수익률 (연)</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="returnRate" value="6" oninput="formatNumber(this)">
+                        <span class="unit">%</span>
+                    </div>
+                    <div class="hint-text">* S&P500 등 장기 평균 5~8%</div>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-calc" onclick="calculateFire()">언제 퇴사할 수 있는지 확인하기</button>
+
+        <div id="result-section">
+            <div class="result-title" id="resTitle">앞으로 회사를 다녀야 할 시간은...</div>
+            <div class="result-value" id="resTime">0년 0개월</div>
+            
+            <div class="result-box">
+                <span class="label">🎯 필요한 최종 은퇴 자산</span>
+                <span class="val" id="resTargetAsset">0원</span>
+            </div>
+            <div class="result-box">
+                <span class="label">💡 은퇴 자산 공식 (4% 룰)</span>
+                <span class="val" style="font-size: 0.85rem; color: #cbd5e1;">연 생활비 ÷ 0.04</span>
+            </div>
+            
+            <p style="font-size: 0.85rem; color: #94a3b8; margin-top: 15px; line-height: 1.5; text-align: left;">
+                * <strong>4% 룰(Safe Withdrawal Rate)이란?</strong><br>
+                은퇴 자산을 주식/채권에 투자해두고 매년 4%씩만 빼서 쓰면, 원금이 영원히 줄어들지 않고 평생 생활할 수 있다는 파이어족의 기본 공식입니다.
+            </p>
+        </div>
+
+        <div class="bottom-btns">
+            <button class="btn-home" onclick="location.reload()">초기화</button>
+            <a href="index.html" class="btn-home">홈으로 돌아가기</a>
+        </div>
+        <article style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; text-align: left; line-height: 1.8;">
+            <h2 style="color: #f43f5e; font-size: 1.4rem; margin-bottom: 20px;">조기 은퇴를 꿈꾸는 파이어족(FIRE)을 위한 4% 룰 가이드</h2>
+            <p><strong>파이어족(FIRE)</strong>이란 'Financial Independence, Retire Early'의 약자로, 극단적인 절약과 투자를 통해 경제적 자립을 이뤄 30~40대에 조기 은퇴하는 것을 목표로 하는 사람들을 뜻합니다. 그렇다면 대체 얼마를 모아야 평생 일하지 않고 살 수 있을까요?</p>
+            <p>그 해답을 제시하는 것이 바로 재테크계에서 가장 유명한 <strong>'4% 룰(Safe Withdrawal Rate)'</strong>입니다. 미국의 트리니티 대학교 연구진이 발표한 이 이론은, 모아둔 은퇴 자금을 주식과 채권 등에 투자하고 매년 생활비로 4%씩만 인출해 쓴다면 물가 상승을 고려하더라도 30년 이상 원금이 고갈되지 않는다는 마법의 공식입니다.</p>
+            
+            <h3 style="color: #fda4af; font-size: 1.2rem; margin-top: 30px; margin-bottom: 15px;">파이어족 달성을 위한 핵심 방정식</h3>
+            <ul style="padding-left: 20px; list-style-type: square;">
+                <li style="margin-bottom: 10px;"><strong>나의 은퇴 목표 자금 산출:</strong> '1년 생활비 × 25배' (혹은 월 생활비 × 300) 공식을 사용하면 내게 필요한 최종 은퇴 자산이 나옵니다. 예컨대 월 300만 원(연 3,600만 원)을 쓰며 살고 싶다면 9억 원이 필요합니다.</li>
+                <li style="margin-bottom: 10px;"><strong>복리의 마법:</strong> 단순히 돈을 저축만 해서는 조기 은퇴가 불가능합니다. S&P 500 같은 시장 지수 추종 ETF나 배당주 투자를 통해 연평균 5~8%의 복리 수익률을 지속적으로 만들어내야 은퇴 시기를 앞당길 수 있습니다.</li>
+                <li style="margin-bottom: 10px;"><strong>소비 통제가 가장 빠르다:</strong> 월 생활비를 50만 원만 줄여도, 모아야 할 목표 은퇴 자산이 무려 1억 5천만 원이나 줄어듭니다. 소득을 늘리는 것만큼이나 씀씀이를 줄이는 것이 중요합니다.</li>
+            </ul>
+        </article>
+    </div>
+
+    <script>
+        function formatNumber(input) {
+            let value = input.value.replace(/[^0-9.]/g, ''); 
+            input.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function parseNumber(str) {
+            return parseFloat(str.replace(/,/g, '')) || 0;
+        }
+
+        function calculateFire() {
+            const currentAsset = parseNumber(document.getElementById('currentAsset').value);
+            const monthlySaving = parseNumber(document.getElementById('monthlySaving').value);
+            const monthlyExpense = parseNumber(document.getElementById('monthlyExpense').value);
+            const returnRate = parseNumber(document.getElementById('returnRate').value);
+
+            if (monthlyExpense === 0) {
+                alert("은퇴 후 필요한 월 생활비를 입력해주세요.");
+                return;
+            }
+
+            // 파이어족 4% 룰 공식: (월 생활비 * 12) / 0.04 = 필요 목표 자산
+            // (= 월 생활비 * 300 과 동일)
+            const targetAsset = monthlyExpense * 300; 
+            
+            // 이미 달성한 경우
+            if (currentAsset >= targetAsset) {
+                document.getElementById('resTitle').innerText = "축하합니다! 이미 경제적 자유를 달성하셨습니다 🎉";
+                document.getElementById('resTime').innerText = "지금 당장 퇴사 가능!";
+                document.getElementById('resTargetAsset').innerText = targetAsset.toLocaleString() + '원';
+                document.getElementById('result-section').style.display = 'block';
+                return;
+            }
+
+            if (monthlySaving === 0 && returnRate === 0) {
+                alert("자산을 불리기 위한 월 저축액 또는 수익률을 입력해주세요.");
+                return;
+            }
+
+            // 복리 계산 시뮬레이션
+            let months = 0;
+            let current = currentAsset;
+            const monthlyReturnRate = (returnRate / 100) / 12; // 연 수익률을 월 수익률로 변환
+
+            // 100년(1200개월)을 상한선으로 두고 시뮬레이션
+            while (current < targetAsset && months < 1200) {
+                current = current * (1 + monthlyReturnRate) + monthlySaving;
+                months++;
+            }
+
+            const yearsToRetire = Math.floor(months / 12);
+            const remainingMonths = months % 12;
+
+            document.getElementById('resTargetAsset').innerText = targetAsset.toLocaleString() + '원';
+
+            if (months >= 1200) {
+                document.getElementById('resTitle').innerText = "이 속도로는... 평생 일해야 할 수도 있어요 😭";
+                document.getElementById('resTime').innerText = "저축액을 더 늘려보세요!";
+            } else {
+                document.getElementById('resTitle').innerText = "앞으로 남은 사노비 생활은...";
+                document.getElementById('resTime').innerText = `${yearsToRetire}년 ${remainingMonths}개월`;
+            }
+
+            document.getElementById('result-section').style.display = 'block';
+        }
+    </script>
+
+<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:rgba(30,41,59,0.94);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:#cbd5e1;font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
+    <nav>
+        <a href="index.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">홈</a>|
+        <a href="about.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">사이트 소개</a>|
+        <a href="privacy.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
+        <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
+        <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
+    </nav>
+    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 전문가 확인을 거치시기 바랍니다.</div>
+    <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:support@pandoratools.kr" style="color:#93c5fd;text-decoration:none;margin:0 6px;">support@pandoratools.kr</a></div>
+</footer>
+</body>
+</html>
