@@ -63,6 +63,9 @@
         .person-row { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; }
         .person-name { flex: 1; background-color: rgba(15, 23, 42, 0.6); border: 1px solid #475569; border-radius: 8px; color: white; padding: 12px; outline: none; font-size: 15px; }
         .person-price { flex: 2; background-color: rgba(15, 23, 42, 0.6); border: 1px solid #475569; border-radius: 8px; color: white; padding: 12px; outline: none; font-size: 15px; text-align: right; }
+        /* flex 자식이 축소되도록 (좁은 화면 가로 스크롤 방지) */
+        .person-name, .person-price { min-width: 0; }
+        .btn-remove { flex-shrink: 0; }
         .btn-remove { background-color: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; width: 45px; height: 45px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .btn-remove:hover { background-color: rgba(239, 68, 68, 0.4); }
         
@@ -109,7 +112,12 @@
         .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 12px; font-weight: bold; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2); margin-bottom: 40px; }
         .back-btn:hover { background-color: rgba(255,255,255,0.2); }
 
-    </style>
+
+        /* flex 자식의 기본 min-width:auto 때문에 좁은 화면에서 입력창이 줄지 않아
+           가로 스크롤이 생기는 것을 막는다 */
+        .input-wrapper input { min-width: 0; }
+        .input-wrapper span { white-space: nowrap; flex-shrink: 0; }
+        </style>
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"

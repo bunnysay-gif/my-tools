@@ -48,7 +48,9 @@
             flex: 1; background: transparent; border: none; color: white; font-size: 18px;
             padding: 15px 0; outline: none; text-align: right; font-weight: bold;
         }
-        .input-wrapper span { color: #94a3b8; font-weight: bold; margin-left: 10px; }
+        .input-wrapper span { color: #94a3b8; font-weight: bold; margin-left: 10px; white-space: nowrap; flex-shrink: 0; }
+        /* flex 자식의 기본 min-width:auto 때문에 좁은 화면에서 입력창이 줄지 않아 가로 스크롤이 생긴다 */
+        .input-wrapper input { min-width: 0; }
 
         /* 빠른 버튼 (1억, 1000만 등) */
         .quick-btns { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
@@ -245,6 +247,34 @@
 
         <h3>3. 만기일시상환 (마이너스 통장 등)</h3>
         <p>대출 기간 동안에는 <strong>오직 '이자'만 매월 내다가</strong>, 대출 만기일에 원금을 한 번에 갚는 방식입니다. 매월 이자만 내기 때문에 당장의 부담은 가장 적지만, 대출 원금이 그대로 남아있어 <strong>총 납부하는 이자는 세 가지 방식 중 가장 많습니다.</strong> 보통 1~2년짜리 전세자금대출이나 신용대출에 많이 쓰입니다.</p>
+
+        <h3>4. 중도상환수수료, 미리 갚으면 손해일까</h3>
+        <p>여윳돈이 생겨 대출을 미리 갚으려 할 때 만나는 벽이 <strong>중도상환수수료</strong>입니다. 은행이 예상했던 이자 수익을 못 받게 되니 그 일부를 보전받는 성격입니다.</p>
+        <p>보통 이렇게 계산합니다.</p>
+        <p style="background:rgba(59,130,246,0.12); border-left:4px solid #3b82f6; padding:14px 18px; border-radius:8px; margin:16px 0;">
+            중도상환수수료 = 중도상환 원금 × 수수료율 × <strong>(잔여일수 ÷ 대출기간)</strong>
+        </p>
+        <p>핵심은 마지막 항목입니다. <strong>시간이 지날수록 수수료가 줄어듭니다.</strong> 3년 만기 대출을 1년 만에 갚으면 수수료율의 3분의 2 정도가 붙지만, 2년 반이 지난 뒤라면 6분의 1 수준으로 떨어집니다. 그리고 <strong>대부분의 대출은 3년이 지나면 중도상환수수료가 면제</strong>됩니다.</p>
+        <p>따라서 미리 갚을지 판단하려면 두 숫자를 비교하면 됩니다. <strong>앞으로 낼 이자 총액</strong>과 <strong>지금 내야 할 중도상환수수료</strong>입니다. 남은 기간이 길고 금리가 높다면 수수료를 물더라도 갚는 편이 유리한 경우가 많습니다. 반대로 만기가 얼마 안 남았다면 그냥 두는 편이 낫습니다.</p>
+        <p>은행에 문의하면 <strong>현재 시점의 정확한 중도상환수수료</strong>를 알려 줍니다. 계산 전에 먼저 확인해 보세요.</p>
+
+        <h3>5. 고정금리와 변동금리, 뭘 고를까</h3>
+        <ul>
+            <li><strong>고정금리:</strong> 만기까지 금리가 그대로입니다. 상환액이 예측 가능해 계획을 세우기 좋습니다. 대신 처음 금리가 변동금리보다 높게 시작하는 경우가 많습니다.</li>
+            <li><strong>변동금리:</strong> 기준이 되는 지표(COFIX 등)에 따라 주기적으로 금리가 바뀝니다. 금리 하락기에는 유리하지만, 오르면 상환액도 함께 올라갑니다.</li>
+            <li><strong>혼합형:</strong> 일정 기간 고정금리를 적용한 뒤 변동금리로 전환됩니다. 주택담보대출에서 흔히 쓰입니다.</li>
+        </ul>
+        <p>금리 방향을 정확히 맞히기는 어렵습니다. 그보다 <strong>금리가 2%p 올라도 상환액을 감당할 수 있는지</strong>를 기준으로 삼는 편이 현실적입니다. 위 계산기에서 금리를 높여 가며 월 상환액이 어떻게 변하는지 확인해 보세요.</p>
+
+        <h3>6. 대출 한도를 결정하는 세 가지 규제</h3>
+        <p>원하는 만큼 빌릴 수 있는 것이 아닙니다. 세 가지 비율이 한도를 결정합니다.</p>
+        <ul>
+            <li><strong>LTV (주택담보대출비율):</strong> 집값 대비 얼마까지 빌려주는지. 집값 5억에 LTV 70%면 최대 3억 5천만 원입니다.</li>
+            <li><strong>DTI (총부채상환비율):</strong> 연소득 대비 <em>주택담보대출 원리금 + 기타 대출 이자</em>가 차지하는 비율입니다.</li>
+            <li><strong>DSR (총부채원리금상환비율):</strong> 연소득 대비 <strong>모든 대출의 원리금</strong>이 차지하는 비율입니다. 신용대출, 카드론, 학자금까지 전부 포함돼 가장 빡빡한 기준입니다.</li>
+        </ul>
+        <p>한도가 예상보다 적게 나왔다면 대개 DSR 때문입니다. 이때는 <strong>기존의 소액 대출부터 정리</strong>하거나 상환 기간을 늘려 연간 원리금을 낮추는 방법이 있습니다. 규제 비율은 지역과 주택 수, 정책에 따라 자주 바뀌므로 실제 한도는 은행 상담으로 확인하셔야 합니다.</p>
+        <p style="font-size:14px; color:#94a3b8; margin-top:16px;">※ 이 계산기는 일반적인 상환 방식에 따른 추정치를 제공합니다. 실제 대출 조건, 수수료, 한도는 금융기관의 심사 결과에 따라 달라집니다.</p>
     </div>
 
     <div class="internal-links">

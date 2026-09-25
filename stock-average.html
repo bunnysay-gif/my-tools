@@ -110,7 +110,12 @@
         @media (max-width: 480px) {
             .input-row { flex-direction: column; gap: 10px; }
         }
-    </style>
+
+        /* flex 자식의 기본 min-width:auto 때문에 좁은 화면에서 입력창이 줄지 않아
+           가로 스크롤이 생기는 것을 막는다 */
+        .input-wrapper input { min-width: 0; }
+        .input-wrapper span { white-space: nowrap; flex-shrink: 0; }
+        </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -199,6 +204,39 @@
                 <li style="margin-bottom: 10px;"><strong>비중 조절의 중요성:</strong> 10% 하락했을 때 기존 보유량과 동일한 수량을 사면 평단가는 5% 낮아지지만, 50% 하락했을 때는 훨씬 많은 예수금이 필요합니다.</li>
                 <li style="margin-bottom: 10px;"><strong>손절선과 반등 시그널 확인:</strong> 하락 추세가 끝없이 이어지는 '떨어지는 칼날'에서는 물타기를 잠시 멈추고 반등 시점을 노려야 합니다.</li>
             </ul>
+
+            <h3 style="color: #7dd3fc; font-size: 1.2rem; margin-top: 30px; margin-bottom: 15px;">물타기 전에 반드시 봐야 할 산수</h3>
+            <p>물타기를 결심하기 전에 알아야 할 숫자가 하나 있습니다. <strong>손실은 같은 비율로 회복되지 않습니다.</strong> 30% 떨어진 종목이 원금으로 돌아오려면 30%가 아니라 42.9%가 올라야 합니다.</p>
+            <table style="width:100%; border-collapse:collapse; margin:16px 0; font-size:15px;">
+                <tr style="background:rgba(56,189,248,0.15);">
+                    <th style="border:1px solid rgba(255,255,255,0.15); padding:10px; text-align:left; color:#bae6fd;">현재 손실률</th>
+                    <th style="border:1px solid rgba(255,255,255,0.15); padding:10px; text-align:left; color:#bae6fd;">원금 회복에 필요한 수익률</th>
+                </tr>
+                <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">-10%</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">+11.1%</td></tr>
+                <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">-20%</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">+25.0%</td></tr>
+                <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">-30%</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">+42.9%</td></tr>
+                <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">-50%</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;"><strong>+100%</strong></td></tr>
+                <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">-70%</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;"><strong>+233%</strong></td></tr>
+            </table>
+            <p>손실이 깊어질수록 회복 난이도가 가파르게 올라갑니다. 물타기가 매력적으로 보이는 이유가 바로 이것입니다. 평단가를 낮추면 <strong>필요한 반등 폭 자체가 줄어들기</strong> 때문입니다. 다만 그 대가로 <strong>투입 원금이 커지므로 같은 하락률에서 잃는 절대 금액도 함께 커집니다.</strong></p>
+
+            <h3 style="color: #7dd3fc; font-size: 1.2rem; margin-top: 30px; margin-bottom: 15px;">통하는 경우와 통하지 않는 경우</h3>
+            <ul style="padding-left: 20px; list-style-type: square;">
+                <li style="margin-bottom: 10px;"><strong>통하는 쪽:</strong> 기업 실적과 사업 구조는 그대로인데 시장 전체가 흔들려 같이 밀린 경우. 지수 추종 ETF처럼 개별 기업 위험이 분산된 자산. 회복을 기다릴 <strong>시간 여유가 있는 자금</strong>으로 투자한 경우.</li>
+                <li style="margin-bottom: 10px;"><strong>통하지 않는 쪽:</strong> 실적 악화나 업황 구조 변화처럼 <strong>하락의 이유가 기업 자체</strong>에 있는 경우. 상장폐지나 관리종목 위험이 있는 종목. 대출이나 곧 써야 할 돈으로 투자한 경우.</li>
+            </ul>
+            <p>핵심 질문은 하나입니다. <strong>"지금 이 종목을 처음 본다면, 이 가격에 살 것인가?"</strong> 답이 아니라면 그건 물타기가 아니라 손실을 인정하기 싫은 마음일 가능성이 큽니다.</p>
+
+            <h3 style="color: #7dd3fc; font-size: 1.2rem; margin-top: 30px; margin-bottom: 15px;">해외주식이라면 세금도 계산에 넣으세요</h3>
+            <p>미국 주식 등 해외주식은 국내 주식과 과세 방식이 다릅니다. 평단가만 보고 판단하면 실제 손익이 어긋납니다.</p>
+            <ul style="padding-left: 20px; list-style-type: square;">
+                <li style="margin-bottom: 10px;"><strong>양도소득세 22%</strong>(지방소득세 포함)가 매도 차익에 부과됩니다.</li>
+                <li style="margin-bottom: 10px;"><strong>연간 250만 원까지 기본공제</strong>됩니다. 이 금액을 넘는 이익분에만 과세합니다.</li>
+                <li style="margin-bottom: 10px;"><strong>손익은 합산됩니다.</strong> 같은 해에 이익 난 종목과 손실 난 종목을 함께 정리하면 과세 대상 이익이 줄어듭니다. 연말에 손실 종목을 정리해 세금을 줄이는 방법이 여기서 나옵니다.</li>
+                <li style="margin-bottom: 10px;"><strong>다음 해 5월에 직접 신고</strong>해야 합니다. 국내 주식처럼 자동으로 끝나지 않습니다. 증권사에서 신고 대행 서비스를 제공하기도 합니다.</li>
+                <li style="margin-bottom: 10px;"><strong>환율도 손익에 포함됩니다.</strong> 주가가 올라도 원화가 강세면 원화 기준 수익은 줄어듭니다.</li>
+            </ul>
+            <p style="font-size:14px; color:#94a3b8; margin-top:16px;">※ 이 페이지는 계산 도구와 일반적인 설명을 제공할 뿐, 특정 종목에 대한 투자 권유가 아닙니다. 투자 판단과 그 결과는 투자자 본인에게 귀속됩니다. 세율과 공제 한도는 개정될 수 있으니 신고 전 국세청 또는 세무 전문가를 통해 확인하시기 바랍니다.</p>
         </article>
     </div>
 

@@ -96,7 +96,12 @@
             background-color: #1e293b; /* 어두운 배경색 강제 지정 */
             color: #ffffff; /* 흰색 글자 강제 지정 */
         }
-    </style>
+
+        /* flex 자식의 기본 min-width:auto 때문에 좁은 화면에서 입력창이 줄지 않아
+           가로 스크롤이 생기는 것을 막는다 */
+        .input-wrapper input { min-width: 0; }
+        .input-wrapper span { white-space: nowrap; flex-shrink: 0; }
+        </style>
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
