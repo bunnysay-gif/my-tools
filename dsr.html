@@ -119,7 +119,9 @@
             .dsr-hero .dsr-value { font-size: 40px; }
             .detail-item { flex-direction: column; align-items: flex-start; gap: 4px; padding: 12px 14px; }
             .detail-item span:last-child { align-self: flex-end; }
+            .gauge { margin-bottom: 54px; }
             .gauge-mark span { font-size: 11px; }
+            .gauge-mark.m50 span { top: 46px; }
         }
     </style>
 </head>
@@ -253,8 +255,8 @@
 
             <div class="gauge">
                 <div class="gauge-fill" id="gaugeFill" style="width:0%;background:#22c55e;"></div>
-                <div class="gauge-mark" style="left:40%;"><span>40% 은행권</span></div>
-                <div class="gauge-mark" style="left:50%;"><span>50% 2금융권</span></div>
+                <div class="gauge-mark m40" style="left:40%;"><span>40% 은행권</span></div>
+                <div class="gauge-mark m50" style="left:50%;"><span>50% 2금융권</span></div>
             </div>
 
             <div class="twin-grid">
