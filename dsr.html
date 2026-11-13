@@ -76,6 +76,7 @@
 
         .detail-title { color: #fde047; font-size: 17px; margin: 25px 0 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; }
         .detail-item { display: flex; justify-content: space-between; font-size: 15px; color: #cbd5e1; background: rgba(0,0,0,0.2); padding: 12px 18px; border-radius: 6px; margin-bottom: 8px; gap: 10px; }
+        .detail-item span:first-child { min-width: 0; overflow-wrap: anywhere; }
         .detail-item span:last-child { font-weight: bold; white-space: nowrap; }
         .detail-item .rate { color: #64748b; font-size: 13px; font-weight: normal; }
         .detail-item.sum { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); }
@@ -116,6 +117,9 @@
             .calculator-card, .seo-section { padding: 20px; }
             .loan-block { padding: 16px 16px 2px; }
             .dsr-hero .dsr-value { font-size: 40px; }
+            .detail-item { flex-direction: column; align-items: flex-start; gap: 4px; padding: 12px 14px; }
+            .detail-item span:last-child { align-self: flex-end; }
+            .gauge-mark span { font-size: 11px; }
         }
     </style>
 </head>
