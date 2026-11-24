@@ -92,8 +92,22 @@
         .tool-card p { margin: 0; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; word-break: keep-all; }
         .tool-card .icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
 
-        a { text-decoration: none; color: inherit; display: block; height: 100%; }
+        a { text-decoration: none; color: inherit; }
+        .grid-container a { display: block; height: 100%; }
+        html { scroll-behavior: smooth; }
 
+        .home-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 760px; margin: 0 auto 45px; }
+        .home-nav a { padding: 9px 18px; border-radius: 999px; background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.32); color: #d8b4fe; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
+        .home-nav a:hover { background: rgba(168, 85, 247, 0.3); color: #fff; border-color: rgba(168, 85, 247, 0.6); }
+        .category-title { scroll-margin-top: 20px; }
+        footer .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; margin: 22px 0 18px; }
+        footer .footer-nav a { color: #cbd5e1; font-size: 0.92rem; transition: 0.2s; }
+        footer .footer-nav a:hover { color: #d8b4fe; }
+        @media (max-width: 600px) {
+            .home-nav { gap: 8px; margin-bottom: 32px; }
+            .home-nav a { padding: 7px 14px; font-size: 0.83rem; }
+            footer .footer-nav { gap: 10px 18px; }
+        }
         footer { 
             text-align: center; margin-top: 100px; padding: 60px 20px; 
             border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); 
@@ -124,7 +138,16 @@
             <div class="domain-badge">Official : pandoratools.kr</div>
         </header>
 
-        <h2 class="category-title">📈 경제 / 재테크 툴</h2>
+        <nav class="home-nav" aria-label="카테고리 바로가기">
+            <a href="#money">📈 경제 · 재테크</a>
+            <a href="#magazine">📰 판도라 매거진</a>
+            <a href="#life">🛒 실생활 · 쇼핑</a>
+            <a href="#it">🚀 라이프 · IT</a>
+            <a href="#test">🔮 심리테스트</a>
+            <a href="#fun">🎮 마법의 상자</a>
+        </nav>
+
+        <h2 id="money" class="category-title">📈 경제 / 재테크 툴</h2>
         <div class="grid-container">
             <a href="salary.html">
                 <div class="tool-card" style="border-bottom: 4px solid #22c55e;">
@@ -203,99 +226,7 @@
             </a>
         </div>
 
-        <h2 class="category-title" style="border-color: #10b981; color: #6ee7b7;">🛒 실생활 / 쇼핑 툴</h2>
-        <div class="grid-container">
-            <a href="unitprice.html">
-                <div class="tool-card" style="border-bottom: 4px solid #10b981;">
-                    <div class="icon">⚖️</div><h2>단가 & 가성비 계산기</h2><p>대용량이 무조건 쌀까?<br>1g/1개당 가격 실시간 비교</p>
-                </div>
-            </a>
-            <a href="delivery.html">
-                <div class="tool-card" style="border-bottom: 4px solid #f97316;">
-                    <div class="icon">🛵</div><h2>배달 팁 더치페이</h2><p>배달비, 메뉴별로 공평하게!<br>1원 단위 더치페이 계산기</p>
-                </div>
-            </a>
-            <a href="fuel.html">
-                <div class="tool-card" style="border-bottom: 4px solid #0d9488;">
-                    <div class="hot-badge">HOT</div><div class="icon">🚗</div><h2>자동차 유류비 더치페이</h2><p>여행 갈 때 톨비+기름값 합쳐서<br>1인당 정산 금액 계산하기</p>
-                </div>
-            </a>
-            <a href="alba.html">
-                <div class="tool-card" style="border-bottom: 4px solid #f59e0b;">
-                    <div class="icon">🍔</div><h2>알바 급여 & 주휴수당</h2><p>최저시급 자동 적용! 주휴수당과<br>3.3% 뗀 진짜 내 알바비는?</p>
-                </div>
-            </a>
-            <a href="converter.html">
-                <div class="tool-card" style="border-bottom: 4px solid #8b5cf6;">
-                    <div class="icon">📏</div><h2>실생활 단위 변환기</h2><p>100제곱미터가 몇 평이지?<br>평수, 인치, 무게 즉시 변환</p>
-                </div>
-            </a>
-            <a href="percent.html">
-                <div class="tool-card" style="border-bottom: 4px solid #38bdf8;">
-                    <div class="icon">💯</div><h2>퍼센트 계산기</h2><p>쇼핑 할인율, 마진율, 수익률 등<br>백분율을 1초 만에 자동 계산</p>
-                </div>
-            </a>
-        </div>
-
-        <h2 class="category-title" style="border-color: #a855f7; color: #d8b4fe;">🚀 라이프 / IT 툴</h2>
-        <div class="grid-container">
-            <a href="vacation.html">
-                <div class="tool-card" style="border-bottom: 4px solid #ec4899;">
-                    <div class="hot-badge">HOT</div><div class="icon">✈️</div><h2>황금 연차 달력</h2><p>연차 하루 쓰고 5일 쉰다!<br>2026~2030 휴가 전략 총정리</p>
-                </div>
-            </a>
-            <a href="compressor.html">
-                <div class="tool-card" style="border-bottom: 4px solid #10b981;">
-                    <div class="hot-badge">HOT</div><div class="icon">📉</div><h2>초고속 이미지 압축기</h2><p>서버 전송 없이 안전하게!<br>10MB 사진을 1MB로 화질 유지 압축</p>
-                </div>
-            </a>
-            <a href="qrcode.html">
-                <div class="tool-card" style="border-bottom: 4px solid #9333ea;">
-                    <div class="icon">📱</div><h2>스마트 QR코드 생성기</h2><p>URL 링크나 카페 와이파이(Wi-Fi)<br>자동 접속 QR코드를 무료로 생성</p>
-                </div>
-            </a>
-            <a href="password.html">
-                <div class="tool-card" style="border-bottom: 4px solid #e11d48;">
-                    <div class="icon">🔐</div><h2>강력한 비밀번호 생성</h2><p>해킹 절대 불가!<br>특수문자 조합 완벽 난수 패스워드</p>
-                </div>
-            </a>
-            <a href="bmi.html">
-                <div class="tool-card" style="border-bottom: 4px solid #f43f5e;">
-                    <div class="icon">🏃‍♂️</div><h2>비만도 & 기초대사량</h2><p>다이어트 필수! 내 몸의 정확한<br>BMI와 하루 권장 칼로리 계산</p>
-                </div>
-            </a>
-            <a href="dday.html">
-                <div class="tool-card" style="border-bottom: 4px solid #6366f1;">
-                    <div class="icon">📅</div><h2>디데이(D-Day) 계산기</h2><p>수능, 전역일, 커플 100일!<br>오차 없는 정확한 날짜 계산</p>
-                </div>
-            </a>
-            <a href="age.html">
-                <div class="tool-card" style="border-bottom: 4px solid #f472b6;">
-                    <div class="icon">🎂</div><h2>만 나이 계산기</h2><p>행정기본법 기준 정확한<br>내 만 나이와 띠 확인</p>
-                </div>
-            </a>
-            <a href="wordcount.html">
-                <div class="tool-card" style="border-bottom: 4px solid #a855f7;">
-                    <div class="icon">📝</div><h2>자소서 글자수 세기</h2><p>공백 포함/제외, 바이트 계산과<br>면접 1분 자기소개 꿀팁까지</p>
-                </div>
-            </a>
-            <a href="law-hub.html">
-                <div class="tool-card" style="border-bottom: 4px solid #eab308;">
-                    <div class="icon">⚖️</div><h2>필수 법령 허브 (TOP 100)</h2><p>근로기준법, 임대차보호법 등<br>생활 필수 법령 1초 검색기</p>
-                </div>
-            </a>
-            <a href="word.html">
-                <div class="tool-card" style="border-bottom: 4px solid #3b82f6;">
-                    <div class="icon">Aa</div><h2>찰떡 맞춤법 검사기</h2><p>헷갈리는 띄어쓰기와<br>오탈자를 깔끔하게 자동 교정</p>
-                </div>
-            </a>
-            <a href="youtube.html">
-                <div class="tool-card" style="border-bottom: 4px solid #ef4444;">
-                    <div class="icon">▶️</div><h2>유튜브 썸네일 추출기</h2><p>영상 링크만 입력하면<br>고화질 썸네일 원본 다운로드</p>
-                </div>
-            </a>
-        </div>
-
+        <div id="magazine"></div>
 <!-- BLOG_SECTION_START -->
         <h2 class="category-title" style="border-color: #f59e0b; color: #fcd34d;">📰 판도라 매거진 (읽을거리)</h2>
         <div class="grid-container">
@@ -357,7 +288,100 @@
         </div>
         <!-- BLOG_SECTION_END -->
 
-        <h2 class="category-title" style="border-color: #ef4444; color: #fca5a5;">
+        <h2 id="life" class="category-title" style="border-color: #10b981; color: #6ee7b7;">🛒 실생활 / 쇼핑 툴</h2>
+        <div class="grid-container">
+            <a href="unitprice.html">
+                <div class="tool-card" style="border-bottom: 4px solid #10b981;">
+                    <div class="icon">⚖️</div><h2>단가 & 가성비 계산기</h2><p>대용량이 무조건 쌀까?<br>1g/1개당 가격 실시간 비교</p>
+                </div>
+            </a>
+            <a href="delivery.html">
+                <div class="tool-card" style="border-bottom: 4px solid #f97316;">
+                    <div class="icon">🛵</div><h2>배달 팁 더치페이</h2><p>배달비, 메뉴별로 공평하게!<br>1원 단위 더치페이 계산기</p>
+                </div>
+            </a>
+            <a href="fuel.html">
+                <div class="tool-card" style="border-bottom: 4px solid #0d9488;">
+                    <div class="hot-badge">HOT</div><div class="icon">🚗</div><h2>자동차 유류비 더치페이</h2><p>여행 갈 때 톨비+기름값 합쳐서<br>1인당 정산 금액 계산하기</p>
+                </div>
+            </a>
+            <a href="alba.html">
+                <div class="tool-card" style="border-bottom: 4px solid #f59e0b;">
+                    <div class="icon">🍔</div><h2>알바 급여 & 주휴수당</h2><p>최저시급 자동 적용! 주휴수당과<br>3.3% 뗀 진짜 내 알바비는?</p>
+                </div>
+            </a>
+            <a href="converter.html">
+                <div class="tool-card" style="border-bottom: 4px solid #8b5cf6;">
+                    <div class="icon">📏</div><h2>실생활 단위 변환기</h2><p>100제곱미터가 몇 평이지?<br>평수, 인치, 무게 즉시 변환</p>
+                </div>
+            </a>
+            <a href="percent.html">
+                <div class="tool-card" style="border-bottom: 4px solid #38bdf8;">
+                    <div class="icon">💯</div><h2>퍼센트 계산기</h2><p>쇼핑 할인율, 마진율, 수익률 등<br>백분율을 1초 만에 자동 계산</p>
+                </div>
+            </a>
+        </div>
+
+        <h2 id="it" class="category-title" style="border-color: #a855f7; color: #d8b4fe;">🚀 라이프 / IT 툴</h2>
+        <div class="grid-container">
+            <a href="vacation.html">
+                <div class="tool-card" style="border-bottom: 4px solid #ec4899;">
+                    <div class="hot-badge">HOT</div><div class="icon">✈️</div><h2>황금 연차 달력</h2><p>연차 하루 쓰고 5일 쉰다!<br>2026~2030 휴가 전략 총정리</p>
+                </div>
+            </a>
+            <a href="compressor.html">
+                <div class="tool-card" style="border-bottom: 4px solid #10b981;">
+                    <div class="hot-badge">HOT</div><div class="icon">📉</div><h2>초고속 이미지 압축기</h2><p>서버 전송 없이 안전하게!<br>10MB 사진을 1MB로 화질 유지 압축</p>
+                </div>
+            </a>
+            <a href="qrcode.html">
+                <div class="tool-card" style="border-bottom: 4px solid #9333ea;">
+                    <div class="icon">📱</div><h2>스마트 QR코드 생성기</h2><p>URL 링크나 카페 와이파이(Wi-Fi)<br>자동 접속 QR코드를 무료로 생성</p>
+                </div>
+            </a>
+            <a href="password.html">
+                <div class="tool-card" style="border-bottom: 4px solid #e11d48;">
+                    <div class="icon">🔐</div><h2>강력한 비밀번호 생성</h2><p>해킹 절대 불가!<br>특수문자 조합 완벽 난수 패스워드</p>
+                </div>
+            </a>
+            <a href="bmi.html">
+                <div class="tool-card" style="border-bottom: 4px solid #f43f5e;">
+                    <div class="icon">🏃‍♂️</div><h2>비만도 & 기초대사량</h2><p>다이어트 필수! 내 몸의 정확한<br>BMI와 하루 권장 칼로리 계산</p>
+                </div>
+            </a>
+            <a href="dday.html">
+                <div class="tool-card" style="border-bottom: 4px solid #6366f1;">
+                    <div class="icon">📅</div><h2>디데이(D-Day) 계산기</h2><p>수능, 전역일, 커플 100일!<br>오차 없는 정확한 날짜 계산</p>
+                </div>
+            </a>
+            <a href="age.html">
+                <div class="tool-card" style="border-bottom: 4px solid #f472b6;">
+                    <div class="icon">🎂</div><h2>만 나이 계산기</h2><p>행정기본법 기준 정확한<br>내 만 나이와 띠 확인</p>
+                </div>
+            </a>
+            <a href="wordcount.html">
+                <div class="tool-card" style="border-bottom: 4px solid #a855f7;">
+                    <div class="icon">📝</div><h2>자소서 글자수 세기</h2><p>공백 포함/제외, 바이트 계산과<br>면접 1분 자기소개 꿀팁까지</p>
+                </div>
+            </a>
+            <a href="law-hub.html">
+                <div class="tool-card" style="border-bottom: 4px solid #eab308;">
+                    <div class="icon">⚖️</div><h2>필수 법령 허브 (TOP 100)</h2><p>근로기준법, 임대차보호법 등<br>생활 필수 법령 1초 검색기</p>
+                </div>
+            </a>
+            <a href="word.html">
+                <div class="tool-card" style="border-bottom: 4px solid #3b82f6;">
+                    <div class="icon">Aa</div><h2>찰떡 맞춤법 검사기</h2><p>헷갈리는 띄어쓰기와<br>오탈자를 깔끔하게 자동 교정</p>
+                </div>
+            </a>
+            <a href="youtube.html">
+                <div class="tool-card" style="border-bottom: 4px solid #ef4444;">
+                    <div class="icon">▶️</div><h2>유튜브 썸네일 추출기</h2><p>영상 링크만 입력하면<br>고화질 썸네일 원본 다운로드</p>
+                </div>
+            </a>
+        </div>
+
+        <h2 id="test" class="category-title" style="border-color: #ef4444; color: #fca5a5;">
             🔮 마법의 심리테스트 (HOT)
         </h2>
         <div class="grid-container">
@@ -433,7 +457,7 @@
             </a>
         </div>
 
-        <h2 class="category-title" style="border-color: #3b82f6; color: #93c5fd;">🎮 마법의 상자 (Fun & Hub)</h2>
+        <h2 id="fun" class="category-title" style="border-color: #3b82f6; color: #93c5fd;">🎮 마법의 상자 (Fun & Hub)</h2>
         <div class="grid-container">
             <a href="lotto.html">
                 <div class="tool-card" style="border-bottom: 4px solid #eab308;">
@@ -468,14 +492,15 @@
             <a href="index.html" class="footer-link">
                 <img src="og-image.png" alt="PANDORA TOOLS Footer Logo" class="footer-logo">
             </a>
-            <div class="copyright">&copy; 2026 <strong>PANDORA TOOLS</strong>. All Rights Reserved.</div>
-            <div class="contact">
-                <a href="about.html" style="margin-right: 15px;">사이트 소개</a> | 
-                <a href="privacy.html" style="margin-right: 15px;">개인정보처리방침</a> | 
-                <a href="terms.html" style="margin-right: 15px;">이용약관</a> | 
-                <a href="contact.html" style="margin-right: 15px;">문의하기</a> | 
-                <span style="margin-left: 15px;">비즈니스 및 제휴 문의: <a href="mailto:support@pandoratools.kr">support@pandoratools.kr</a></span>
-            </div>
+            <nav class="footer-nav" aria-label="사이트 정보">
+                <a href="about.html">사이트 소개</a>
+                <a href="blog/">판도라 매거진</a>
+                <a href="privacy.html">개인정보처리방침</a>
+                <a href="terms.html">이용약관</a>
+                <a href="contact.html">문의하기</a>
+            </nav>
+            <div class="contact">비즈니스 및 제휴 문의 <a href="mailto:support@pandoratools.kr">support@pandoratools.kr</a></div>
+            <div class="copyright" style="margin: 14px 0 0;">&copy; 2026 <strong>PANDORA TOOLS</strong>. All Rights Reserved.</div>
         </footer>
     </div> 
 </body>
