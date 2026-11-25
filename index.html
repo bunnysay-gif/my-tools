@@ -96,6 +96,19 @@
         .grid-container a { display: block; height: 100%; }
         html { scroll-behavior: smooth; }
 
+        .split-col { display: flex; flex-direction: column; gap: 24px; }
+        .cat-list { list-style: none; margin: 0; padding: 0; }
+        .cat-list a { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 10px; border-radius: 10px; transition: 0.15s; }
+        .cat-list a:hover { background: rgba(168, 85, 247, 0.13); }
+        .cat-list .cat-name { font-size: 0.92rem; color: #e9e5f5; font-weight: 600; }
+        .cat-list .cat-count { font-size: 0.78rem; color: #94a3b8; white-space: nowrap; }
+        .cta-panel p { margin: 0 0 14px; font-size: 0.87rem; color: #94a3b8; line-height: 1.6; word-break: keep-all; }
+        .cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
+        .cta-row a { padding: 10px 18px; border-radius: 10px; font-size: 0.87rem; font-weight: 600; transition: 0.2s; }
+        .cta-row .cta-main { background: #a855f7; color: #fff; }
+        .cta-row .cta-main:hover { background: #9333ea; }
+        .cta-row .cta-sub { background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.32); color: #d8b4fe; }
+        .cta-row .cta-sub:hover { background: rgba(168, 85, 247, 0.25); }
         .home-split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-bottom: 55px; }
         .panel { background: rgba(30, 27, 55, 0.55); border: 1px solid rgba(168, 85, 247, 0.18); border-radius: 16px; padding: 22px 20px; }
         .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(168, 85, 247, 0.18); }
@@ -175,6 +188,7 @@
         </nav>
 
         <div class="home-split">
+            <div class="split-col">
             <section class="panel">
                 <div class="panel-head">
                     <h2>🧮 자주 찾는 계산기</h2>
@@ -195,6 +209,32 @@
                     <li><a href="fire-retire.html"><span class="rank">12</span><span class="calc-body"><strong>파이어족 은퇴 계산기</strong><em>얼마 모아야 은퇴할 수 있는지</em></span><span class="tag">은퇴 목표액</span></a></li>
                 </ol>
             </section>
+
+            <section class="panel">
+                <div class="panel-head">
+                    <h2>📂 분야별로 찾기</h2>
+                </div>
+                <ul class="cat-list">
+                    <li><a href="#money"><span class="cat-name">📈 경제 · 재테크</span><span class="cat-count">계산기 15개</span></a></li>
+                    <li><a href="#life"><span class="cat-name">🛒 실생활 · 쇼핑</span><span class="cat-count">도구 6개</span></a></li>
+                    <li><a href="#it"><span class="cat-name">🚀 라이프 · IT</span><span class="cat-count">도구 11개</span></a></li>
+                    <li><a href="#test"><span class="cat-name">🔮 심리테스트</span><span class="cat-count">테스트 10개</span></a></li>
+                    <li><a href="#fun"><span class="cat-name">🎮 마법의 상자</span><span class="cat-count">5개</span></a></li>
+                    <li><a href="blog/"><span class="cat-name">📰 판도라 매거진</span><span class="cat-count">글 10편</span></a></li>
+                </ul>
+            </section>
+
+            <section class="panel cta-panel">
+                <div class="panel-head">
+                    <h2>📬 찾는 계산기가 없나요?</h2>
+                </div>
+                <p>필요한 계산기를 알려주시면 만듭니다. 결과가 이상하거나 기준이 바뀐 것 같을 때도 알려주세요. 근거 자료를 다시 확인하고 고칩니다.</p>
+                <div class="cta-row">
+                    <a class="cta-main" href="contact.html">제안 · 오류 제보하기</a>
+                    <a class="cta-sub" href="about.html">이 사이트는?</a>
+                </div>
+            </section>
+            </div>
 
             <section class="panel" id="magazine">
                 <div class="panel-head">
