@@ -40,6 +40,9 @@ body {
 .article-content th, .article-content td { border: 1px solid rgba(255,255,255,0.15); padding: 12px 14px; text-align: left; }
 .article-content th { background: rgba(56, 189, 248, 0.15); color: #bae6fd; font-weight: bold; }
 .article-content tbody tr:nth-child(even) { background: rgba(0,0,0,0.15); }
+.article-content table.wrap-cells { white-space: normal; }
+.article-content table.wrap-cells th { width: 26%; vertical-align: top; }
+@media (max-width: 520px) { .article-content table.wrap-cells th { width: 34%; } .article-content table.wrap-cells th, .article-content table.wrap-cells td { padding: 10px; font-size: 0.93rem; } }
 .article-content caption { caption-side: bottom; color: #94a3b8; font-size: 0.85rem; padding-top: 10px; text-align: left; white-space: normal; }
 
 /* 주의·면책 박스 */
