@@ -26,148 +26,170 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
     
     <style>
-        /* 기본 배경 */
-        body { 
-            background: linear-gradient(135deg, #1e1b4b, #2e1065);
-            color: white; font-family: '맑은 고딕', sans-serif; 
-            padding: 40px 20px; margin: 0; min-height: 100vh;
+        /* 밝은 테마. 배경(#f6f7fb) < 카드(#fff) 로 밝기를 나눠 층을 만든다 */
+        body {
+            background: #f6f7fb;
+            color: #1f2430; font-family: '맑은 고딕', sans-serif;
+            padding: 32px 20px; margin: 0; min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
-        
-        .header { text-align: center; margin-bottom: 60px; animation: fadeInDown 0.8s ease-out; }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .header .main-logo {
-            max-width: 250px; height: auto; margin-bottom: 25px; 
-            border-radius: 50% !important; 
-            box-shadow: 0 0 50px rgba(168, 85, 247, 0.7) !important; 
-            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 1)) !important; 
-            border: 2px solid rgba(168, 85, 247, 0.5) !important; 
-            transition: 0.3s;
-        }
-        .header .main-logo:hover {
-            transform: scale(1.05) rotate(5deg); 
-            box-shadow: 0 0 70px rgba(168, 85, 247, 1) !important; 
-        }
-        
-        .header p { font-size: 1.1rem; color: #cbd5e1; margin-bottom: 20px; }
-        .header .domain-badge { 
-            display: inline-block; background-color: rgba(255,255,255,0.1); padding: 5px 15px;
-            border-radius: 20px; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.2);
-        }
-
+        a { text-decoration: none; color: inherit; }
+        html { scroll-behavior: smooth; }
         .container { max-width: 1200px; margin: 0 auto; }
 
-        .category-title {
-            border-left: 5px solid #fbbf24; padding-left: 15px; margin-top: 60px;
-            margin-bottom: 25px; font-size: 1.6rem; font-weight: bold; color: #fde047;
-            display: flex; align-items: center; justify-content: space-between;
+        /* 헤더: 로고 원본이 어두운 이미지라 연보라 밴드 위에 올린다 */
+        .header {
+            text-align: center; margin-bottom: 34px; padding: 38px 20px 30px;
+            background: linear-gradient(160deg, #f3efff, #fdfcff 70%);
+            border: 1px solid #e9e4fb; border-radius: 20px;
+        }
+        .header .main-logo {
+            max-width: 190px; height: auto; margin-bottom: 18px;
+            border-radius: 50%; border: 1px solid #e3dbfa;
+            box-shadow: 0 6px 22px rgba(124, 58, 237, 0.18); transition: 0.3s;
+        }
+        .header .main-logo:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(124, 58, 237, 0.26); }
+        .header p { font-size: 1.05rem; color: #5b6476; margin: 0 0 14px; }
+        .header .domain-badge {
+            display: inline-block; background: #fff; color: #6d28d9; padding: 5px 15px;
+            border-radius: 20px; font-size: 0.85rem; border: 1px solid #e3dbfa; font-weight: 600;
         }
 
-        .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px;
+        /* 상단 메뉴: 밑줄 탭 */
+        .home-nav {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 2px;
+            border-bottom: 1px solid #e6e8ef; max-width: 900px; margin: 0 auto 38px;
+        }
+        .home-nav a {
+            padding: 12px 17px; font-size: 0.93rem; font-weight: 600; color: #6b7280;
+            border-bottom: 2px solid transparent; margin-bottom: -1px; transition: 0.15s;
+        }
+        .home-nav a:hover { color: #7c3aed; border-bottom-color: #c4b5fd; }
+
+        /* 좌우 2단 */
+        .home-split { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: start; margin-bottom: 20px; }
+        .split-col { display: flex; flex-direction: column; gap: 22px; }
+        .panel {
+            background: #fff; border: 1px solid #e6e8ef; border-radius: 16px; padding: 20px;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 1px 3px rgba(16, 24, 40, 0.06);
+        }
+        .panel-head {
+            display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+            margin-bottom: 10px; padding-bottom: 12px; border-bottom: 1px solid #eef0f5;
+        }
+        .panel-head h2 { margin: 0; font-size: 1.05rem; color: #141821; letter-spacing: -0.3px; }
+        .panel-head .more { flex: 0 0 auto; font-size: 0.84rem; color: #7c3aed; font-weight: 600; }
+        .panel-head .more:hover { color: #5b21b6; }
+
+        /* 돈 계산기 목록 */
+        .calc-list { list-style: none; margin: 0; padding: 0; }
+        .calc-list a { display: flex; align-items: center; gap: 12px; padding: 10px 8px; border-radius: 10px; transition: 0.15s; }
+        .calc-list a:hover { background: #f7f4ff; }
+        .calc-list .rank {
+            flex: 0 0 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 7px;
+            background: #f1ecfe; color: #6d28d9; font-size: 0.76rem; font-weight: 700;
+        }
+        .calc-list .calc-body { flex: 1 1 auto; min-width: 0; }
+        .calc-list strong { display: block; font-size: 0.93rem; color: #1f2430; font-weight: 600; word-break: keep-all; }
+        .calc-list em { display: block; font-style: normal; font-size: 0.78rem; color: #78839a; margin-top: 2px; word-break: keep-all; }
+        .calc-list .tag {
+            flex: 0 0 auto; font-size: 0.71rem; color: #047857; background: #ecfdf5;
+            border: 1px solid #a7f3d0; padding: 3px 9px; border-radius: 999px; white-space: nowrap;
         }
 
-        .tool-card { 
-            background-color: rgba(30, 41, 59, 0.8); border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px); padding: 25px 20px; border-radius: 20px; text-align: center;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); height: 100%; box-sizing: border-box;
-            display: flex; flex-direction: column; justify-content: center; position: relative;
-        }
-        .tool-card:hover {
-            background-color: rgba(30, 41, 59, 1); transform: translateY(-10px); 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5); border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .new-badge {
-            position: absolute; top: 15px; right: 15px; background-color: #ef4444; color: white;
-            padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold; animation: pulse 2s infinite;
-        }
-        .hot-badge {
-            position: absolute; top: 15px; right: 15px; background-color: #3b82f6; color: white;
-            padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;
-        }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-
-        .tool-card h2 { margin-top: 0; font-size: 1.15rem; margin-bottom: 10px; color: #fff; word-break: keep-all; }
-        .tool-card p { margin: 0; font-size: 0.85rem; color: #94a3b8; line-height: 1.5; word-break: keep-all; }
-        .tool-card .icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
-
-        a { text-decoration: none; color: inherit; }
-        .grid-container a { display: block; height: 100%; }
-        html { scroll-behavior: smooth; }
-
-        .split-col { display: flex; flex-direction: column; gap: 24px; }
+        /* 분야별로 찾기 */
         .cat-list { list-style: none; margin: 0; padding: 0; }
-        .cat-list a { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 10px; border-radius: 10px; transition: 0.15s; }
-        .cat-list a:hover { background: rgba(168, 85, 247, 0.13); }
-        .cat-list .cat-name { font-size: 0.92rem; color: #e9e5f5; font-weight: 600; }
-        .cat-list .cat-count { font-size: 0.78rem; color: #94a3b8; white-space: nowrap; }
-        .cta-panel p { margin: 0 0 14px; font-size: 0.87rem; color: #94a3b8; line-height: 1.6; word-break: keep-all; }
+        .cat-list a { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 8px; border-radius: 10px; transition: 0.15s; }
+        .cat-list a:hover { background: #f7f4ff; }
+        .cat-list .cat-name { font-size: 0.92rem; color: #1f2430; font-weight: 600; }
+        .cat-list .cat-count { font-size: 0.78rem; color: #8a93a5; white-space: nowrap; }
+
+        /* 문의 CTA */
+        .cta-panel p { margin: 0 0 14px; font-size: 0.87rem; color: #5b6476; line-height: 1.65; word-break: keep-all; }
         .cta-row { display: flex; flex-wrap: wrap; gap: 10px; }
         .cta-row a { padding: 10px 18px; border-radius: 10px; font-size: 0.87rem; font-weight: 600; transition: 0.2s; }
-        .cta-row .cta-main { background: #a855f7; color: #fff; }
-        .cta-row .cta-main:hover { background: #9333ea; }
-        .cta-row .cta-sub { background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.32); color: #d8b4fe; }
-        .cta-row .cta-sub:hover { background: rgba(168, 85, 247, 0.25); }
-        .home-split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; margin-bottom: 55px; }
-        .panel { background: rgba(30, 27, 55, 0.55); border: 1px solid rgba(168, 85, 247, 0.18); border-radius: 16px; padding: 22px 20px; }
-        .panel-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid rgba(168, 85, 247, 0.18); }
-        .panel-head h2 { margin: 0; font-size: 1.08rem; color: #fff; letter-spacing: -0.3px; }
-        .panel-head .more { flex: 0 0 auto; font-size: 0.84rem; color: #a855f7; font-weight: 600; }
-        .panel-head .more:hover { color: #d8b4fe; }
-        .calc-list { list-style: none; margin: 0; padding: 0; }
-        .calc-list a { display: flex; align-items: center; gap: 12px; padding: 10px; border-radius: 10px; transition: 0.15s; }
-        .calc-list a:hover { background: rgba(168, 85, 247, 0.13); }
-        .calc-list .rank { flex: 0 0 24px; height: 24px; line-height: 24px; text-align: center; border-radius: 7px; background: rgba(168, 85, 247, 0.18); color: #d8b4fe; font-size: 0.76rem; font-weight: 700; }
-        .calc-list .calc-body { flex: 1 1 auto; min-width: 0; }
-        .calc-list strong { display: block; font-size: 0.93rem; color: #e9e5f5; font-weight: 600; word-break: keep-all; }
-        .calc-list em { display: block; font-style: normal; font-size: 0.78rem; color: #94a3b8; margin-top: 2px; word-break: keep-all; }
-        .calc-list .tag { flex: 0 0 auto; font-size: 0.71rem; color: #6ee7b7; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.26); padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
-        .post-item { display: block; padding: 14px 10px; border-radius: 10px; border-bottom: 1px solid rgba(148, 163, 184, 0.1); transition: 0.15s; }
+        .cta-row .cta-main { background: #7c3aed; color: #fff; }
+        .cta-row .cta-main:hover { background: #6d28d9; }
+        .cta-row .cta-sub { background: #fff; border: 1px solid #ddd6fe; color: #6d28d9; }
+        .cta-row .cta-sub:hover { background: #f7f4ff; }
+
+        /* 매거진 게시물 */
+        .post-item { display: block; padding: 14px 8px; border-radius: 10px; border-bottom: 1px solid #f0f1f5; transition: 0.15s; }
         .post-item:last-child { border-bottom: none; }
-        .post-item:hover { background: rgba(245, 158, 11, 0.08); }
+        .post-item:hover { background: #fffaf0; }
         .post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-        .post-cat { font-size: 0.7rem; color: #fcd34d; background: rgba(245, 158, 11, 0.14); border: 1px solid rgba(245, 158, 11, 0.3); padding: 2px 9px; border-radius: 999px; white-space: nowrap; }
-        .post-date { font-size: 0.72rem; color: #64748b; }
-        .post-title { margin: 0 0 5px; font-size: 0.95rem; color: #f1f5f9; font-weight: 600; line-height: 1.45; word-break: keep-all; }
-        .post-desc { margin: 0; font-size: 0.8rem; color: #94a3b8; line-height: 1.55; word-break: keep-all; }
+        .post-cat {
+            font-size: 0.7rem; color: #b45309; background: #fffbeb; border: 1px solid #fde68a;
+            padding: 2px 9px; border-radius: 999px; white-space: nowrap; font-weight: 600;
+        }
+        .post-date { font-size: 0.72rem; color: #8a93a5; }
+        .post-title { margin: 0 0 5px; font-size: 0.95rem; color: #141821; font-weight: 600; line-height: 1.45; word-break: keep-all; }
+        .post-desc { margin: 0; font-size: 0.8rem; color: #5b6476; line-height: 1.6; word-break: keep-all; }
+
+        /* 카테고리 섹션 */
+        .category-title {
+            border-left: 4px solid #7c3aed; padding-left: 14px; margin-top: 52px; margin-bottom: 20px;
+            font-size: 1.35rem; font-weight: 700; color: #141821; scroll-margin-top: 20px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+        .grid-container a { display: block; height: 100%; }
+        .tool-card {
+            background: #fff; border: 1px solid #e6e8ef; padding: 24px 20px; border-radius: 16px;
+            text-align: center; transition: 0.22s ease; height: 100%; box-sizing: border-box;
+            display: flex; flex-direction: column; justify-content: center; position: relative;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+        }
+        .tool-card:hover {
+            transform: translateY(-4px); border-color: #ddd6fe;
+            box-shadow: 0 10px 24px rgba(16, 24, 40, 0.09);
+        }
+        .tool-card h2 { margin-top: 0; font-size: 1.1rem; margin-bottom: 9px; color: #141821; word-break: keep-all; }
+        .tool-card p { margin: 0; font-size: 0.84rem; color: #5b6476; line-height: 1.55; word-break: keep-all; }
+        .tool-card .icon { font-size: 2.3rem; margin-bottom: 13px; display: block; }
+        .new-badge {
+            position: absolute; top: 13px; right: 13px; background: #ef4444; color: #fff;
+            padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;
+        }
+        .hot-badge {
+            position: absolute; top: 13px; right: 13px; background: #2563eb; color: #fff;
+            padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: bold;
+        }
+
+        /* 푸터 */
+        footer {
+            text-align: center; margin-top: 70px; padding: 44px 20px;
+            border-top: 1px solid #e6e8ef; background: #fff; border-radius: 16px 16px 0 0;
+        }
+        footer .footer-link { display: inline-block; margin-bottom: 14px; opacity: 0.9; transition: 0.3s; }
+        footer .footer-link:hover { opacity: 1; }
+        footer .footer-logo { width: 92px; border-radius: 50%; }
+        footer .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; margin: 16px 0 16px; }
+        footer .footer-nav a { color: #4b5565; font-size: 0.92rem; font-weight: 500; transition: 0.2s; }
+        footer .footer-nav a:hover { color: #7c3aed; }
+        footer .contact { color: #78839a; font-size: 0.85rem; }
+        footer .contact a { color: #7c3aed; font-weight: 600; }
+        footer .contact a:hover { color: #5b21b6; }
+        footer .copyright { color: #8a93a5; font-size: 0.85rem; }
+
         @media (max-width: 860px) {
-            .home-split { grid-template-columns: 1fr; gap: 18px; margin-bottom: 40px; }
-            .panel { padding: 18px 14px; }
+            .home-split { grid-template-columns: 1fr; gap: 16px; }
+            .split-col { gap: 16px; }
+            .panel { padding: 17px 14px; }
             .calc-list .tag { display: none; }
         }
-        .home-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 760px; margin: 0 auto 45px; }
-        .home-nav a { padding: 9px 18px; border-radius: 999px; background: rgba(168, 85, 247, 0.12); border: 1px solid rgba(168, 85, 247, 0.32); color: #d8b4fe; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
-        .home-nav a:hover { background: rgba(168, 85, 247, 0.3); color: #fff; border-color: rgba(168, 85, 247, 0.6); }
-        .category-title { scroll-margin-top: 20px; }
-        footer .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 26px; margin: 22px 0 18px; }
-        footer .footer-nav a { color: #cbd5e1; font-size: 0.92rem; transition: 0.2s; }
-        footer .footer-nav a:hover { color: #d8b4fe; }
         @media (max-width: 600px) {
-            .home-nav { gap: 8px; margin-bottom: 32px; }
-            .home-nav a { padding: 7px 14px; font-size: 0.83rem; }
-            footer .footer-nav { gap: 10px 18px; }
-        }
-        footer { 
-            text-align: center; margin-top: 100px; padding: 60px 20px; 
-            border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); 
-            border-radius: 0 0 20px 20px;
-        }
-        footer .footer-link { display: inline-block; margin-bottom: 20px; opacity: 0.8; transition: 0.3s; }
-        footer .footer-link:hover { opacity: 1; transform: scale(1.05); }
-        footer .footer-logo { width: 120px; filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4)); }
-        footer .copyright { color: #94a3b8; font-size: 0.9rem; margin-bottom: 15px; }
-        footer .contact { color: #64748b; font-size: 0.85rem; }
-        footer .contact a { color: #a855f7; border-bottom: 1px solid rgba(168, 85, 247, 0.3); text-decoration: none; transition: 0.2s; }
-        footer .contact a:hover { color: #d8b4fe; }
-
-        @media (max-width: 600px) {
-            .grid-container { grid-template-columns: 1fr; gap: 15px; }
-            .header { margin-bottom: 28px; }
-            .header .main-logo { max-width: 130px; margin-bottom: 14px; }
-            .header p { font-size: 0.95rem; margin-bottom: 12px; }
+            body { padding: 18px 14px; }
+            .grid-container { grid-template-columns: 1fr; gap: 14px; }
+            .header { margin-bottom: 22px; padding: 26px 16px 22px; }
+            .header .main-logo { max-width: 120px; margin-bottom: 12px; }
+            .header p { font-size: 0.95rem; margin-bottom: 11px; }
             .header .domain-badge { font-size: 0.78rem; padding: 4px 12px; }
-            footer { padding: 40px 20px; }
+            .home-nav { margin-bottom: 26px; gap: 0; }
+            .home-nav a { padding: 10px 12px; font-size: 0.85rem; }
+            .category-title { font-size: 1.18rem; margin-top: 38px; }
+            footer { padding: 34px 18px; margin-top: 46px; }
+            footer .footer-nav { gap: 10px 18px; }
         }
     </style>
 </head>
@@ -182,19 +204,19 @@
         </header>
 
         <nav class="home-nav" aria-label="카테고리 바로가기">
-            <a href="#money">📈 경제 · 재테크</a>
-            <a href="#magazine">📰 판도라 매거진</a>
-            <a href="#life">🛒 실생활 · 쇼핑</a>
-            <a href="#it">🚀 라이프 · IT</a>
-            <a href="#test">🔮 심리테스트</a>
-            <a href="#fun">🎮 마법의 상자</a>
+            <a href="#money">경제 · 재테크</a>
+            <a href="#magazine">판도라 매거진</a>
+            <a href="#life">실생활 · 쇼핑</a>
+            <a href="#it">라이프 · IT</a>
+            <a href="#test">심리테스트</a>
+            <a href="#fun">마법의 상자</a>
         </nav>
 
         <div class="home-split">
             <div class="split-col">
             <section class="panel">
                 <div class="panel-head">
-                    <h2>🧮 자주 찾는 계산기</h2>
+                    <h2>돈 계산기 모음</h2>
                     <a class="more" href="#money">전체 도구 보기 →</a>
                 </div>
                 <ol class="calc-list">
@@ -215,21 +237,21 @@
 
             <section class="panel">
                 <div class="panel-head">
-                    <h2>📂 분야별로 찾기</h2>
+                    <h2>분야별로 찾기</h2>
                 </div>
                 <ul class="cat-list">
-                    <li><a href="#money"><span class="cat-name">📈 경제 · 재테크</span><span class="cat-count">계산기 15개</span></a></li>
-                    <li><a href="#life"><span class="cat-name">🛒 실생활 · 쇼핑</span><span class="cat-count">도구 6개</span></a></li>
-                    <li><a href="#it"><span class="cat-name">🚀 라이프 · IT</span><span class="cat-count">도구 11개</span></a></li>
-                    <li><a href="#test"><span class="cat-name">🔮 심리테스트</span><span class="cat-count">테스트 10개</span></a></li>
-                    <li><a href="#fun"><span class="cat-name">🎮 마법의 상자</span><span class="cat-count">5개</span></a></li>
-                    <li><a href="blog/"><span class="cat-name">📰 판도라 매거진</span><span class="cat-count">글 10편</span></a></li>
+                    <li><a href="#money"><span class="cat-name">경제 · 재테크</span><span class="cat-count">계산기 15개</span></a></li>
+                    <li><a href="#life"><span class="cat-name">실생활 · 쇼핑</span><span class="cat-count">도구 6개</span></a></li>
+                    <li><a href="#it"><span class="cat-name">라이프 · IT</span><span class="cat-count">도구 11개</span></a></li>
+                    <li><a href="#test"><span class="cat-name">심리테스트</span><span class="cat-count">테스트 10개</span></a></li>
+                    <li><a href="#fun"><span class="cat-name">마법의 상자</span><span class="cat-count">5개</span></a></li>
+                    <li><a href="blog/"><span class="cat-name">판도라 매거진</span><span class="cat-count">글 10편</span></a></li>
                 </ul>
             </section>
 
             <section class="panel cta-panel">
                 <div class="panel-head">
-                    <h2>📬 찾는 계산기가 없나요?</h2>
+                    <h2>찾는 계산기가 없나요?</h2>
                 </div>
                 <p>필요한 계산기를 알려주시면 만듭니다. 결과가 이상하거나 기준이 바뀐 것 같을 때도 알려주세요. 근거 자료를 다시 확인하고 고칩니다.</p>
                 <div class="cta-row">
@@ -241,7 +263,7 @@
 
             <section class="panel" id="magazine">
                 <div class="panel-head">
-                    <h2>📰 판도라 매거진</h2>
+                    <h2>판도라 매거진</h2>
                     <a class="more" href="blog/">전체 글 보기 →</a>
                 </div>
                 <div class="post-list">
@@ -380,7 +402,7 @@
             </a>
         </div>
 
-        <h2 id="life" class="category-title" style="border-color: #10b981; color: #6ee7b7;">🛒 실생활 / 쇼핑 툴</h2>
+        <h2 id="life" class="category-title">🛒 실생활 / 쇼핑 툴</h2>
         <div class="grid-container">
             <a href="unitprice.html">
                 <div class="tool-card" style="border-bottom: 4px solid #10b981;">
@@ -414,7 +436,7 @@
             </a>
         </div>
 
-        <h2 id="it" class="category-title" style="border-color: #a855f7; color: #d8b4fe;">🚀 라이프 / IT 툴</h2>
+        <h2 id="it" class="category-title">🚀 라이프 / IT 툴</h2>
         <div class="grid-container">
             <a href="vacation.html">
                 <div class="tool-card" style="border-bottom: 4px solid #ec4899;">
@@ -473,7 +495,7 @@
             </a>
         </div>
 
-        <h2 id="test" class="category-title" style="border-color: #ef4444; color: #fca5a5;">
+        <h2 id="test" class="category-title">
             🔮 마법의 심리테스트 (HOT)
         </h2>
         <div class="grid-container">
@@ -549,7 +571,7 @@
             </a>
         </div>
 
-        <h2 id="fun" class="category-title" style="border-color: #3b82f6; color: #93c5fd;">🎮 마법의 상자 (Fun & Hub)</h2>
+        <h2 id="fun" class="category-title">🎮 마법의 상자 (Fun & Hub)</h2>
         <div class="grid-container">
             <a href="lotto.html">
                 <div class="tool-card" style="border-bottom: 4px solid #eab308;">
