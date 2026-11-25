@@ -45,6 +45,10 @@ body {
 /* 주의·면책 박스 */
 .notice-box { background: rgba(245, 158, 11, 0.1); border-left: 4px solid #f59e0b; padding: 18px 22px; border-radius: 8px; margin: 30px 0; color: #fde68a; font-size: 1rem; line-height: 1.7; }
 .notice-box strong { color: #fcd34d; background: none; padding: 0; }
+.invest-notice { background: rgba(239, 68, 68, 0.09); border: 1px solid rgba(239, 68, 68, 0.3); border-left: 4px solid #ef4444; padding: 18px 22px; border-radius: 8px; margin: 36px 0 12px; color: #fecaca; font-size: 0.95rem; line-height: 1.75; }
+.invest-notice strong { color: #fca5a5; background: none; padding: 0; }
+.invest-notice p { margin: 0 0 8px; color: inherit; }
+.invest-notice p:last-child { margin-bottom: 0; }
 
 /* 목차 */
 .toc { background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 22px 26px; margin-bottom: 36px; }
