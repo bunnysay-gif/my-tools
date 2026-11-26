@@ -24,7 +24,7 @@
         :root { --main-pink: #ff85a2; --soft-pink: #ffebf0; }
         body { background-color: var(--soft-pink); font-family: 'Apple SD Gothic Neo', sans-serif; display: flex; flex-direction: column; align-items: center; margin: 0; padding-bottom: 30px; }
         h1 { color: #d63384; margin: 15px 0; text-shadow: 1.5px 1.5px white; font-size: 1.6rem; }
-        .setup-area { background: white; padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; text-align: center; width: 92%; max-width: 400px; }
+        .setup-area { background: var(--pt-card); padding: 15px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 15px; text-align: center; width: 92%; max-width: 400px; }
         .control-group { margin: 8px 0; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 17px; font-weight: bold; color: #d63384; }
         input[type="number"] { width: 60px; height: 38px; font-size: 18px; text-align: center; border: 2px solid var(--main-pink); border-radius: 8px; }
         .size-btn { width: 38px; height: 38px; border-radius: 8px; border: none; background: var(--main-pink); color: white; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 0 #d63384; }
@@ -38,7 +38,7 @@
         .card.flipped .card-inner { transform: rotateY(180deg); }
         .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; border-radius: 8px; border: 2.5px solid white; box-shadow: 0 3px 5px rgba(0,0,0,0.1); }
         .card-front { background: linear-gradient(135deg, #ff85a2, #ffb6c1); color: white; font-size: 1.5rem; }
-        .card-back { background-color: white; transform: rotateY(180deg); overflow: hidden; }
+        .card-back { background-color: var(--pt-card); transform: rotateY(180deg); overflow: hidden; }
         .card-back img { width: 100%; height: 100%; object-fit: cover; }
 
         /* 시작 문구 오버레이 */
@@ -50,7 +50,7 @@
         #countdown-text { font-size: 80px; font-weight: bold; text-shadow: 0 0 20px #ff85a2; }
         @keyframes pop { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1.2); opacity: 1; } }
 
-        .modal-content { background: white; width: 85%; max-width: 400px; max-height: 75vh; overflow-y: auto; border-radius: 15px; padding: 20px; position: relative; }
+        .modal-content { background: var(--pt-card); width: 85%; max-width: 400px; max-height: 75vh; overflow-y: auto; border-radius: 15px; padding: 20px; position: relative; }
         .thumb { width: 60px; height: 60px; border-radius: 8px; }
     </style>
     <link rel="stylesheet" href="theme.css">
