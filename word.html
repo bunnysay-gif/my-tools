@@ -36,12 +36,12 @@
             width: 100%;
             box-sizing: border-box;
             max-width: 800px;
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--pt-card-2);
             backdrop-filter: blur(15px);
             padding: 30px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid var(--pt-border-strong);
+            box-shadow: var(--pt-shadow);
         }
 
         h1 { text-align: center; font-size: 2rem; margin-bottom: 30px; }
@@ -68,15 +68,15 @@
             justify-content: space-around;
             margin-top: 25px;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.2);
+            background: var(--pt-sunken);
             border-radius: 12px;
         }
 
         .result-item { text-align: center; }
-        .result-item span { display: block; font-size: 0.9rem; color: #cbd5e1; margin-bottom: 10px; }
+        .result-item span { display: block; font-size: 0.9rem; color: var(--pt-text-2); margin-bottom: 10px; }
         .result-item strong { font-size: 2.2rem; color: #fbbf24; }
         .result-item small { font-size: 1.1rem; color: #fbbf24; margin-left: 5px; }
-        .byte-info { font-size: 0.85rem; color: #94a3b8; margin-top: 5px; }
+        .byte-info { font-size: 0.85rem; color: var(--pt-muted); margin-top: 5px; }
 
         /* 버튼 영역 */
         .btn-area {
@@ -101,6 +101,8 @@
 
         footer { margin-top: 40px; opacity: 0.6; font-size: 0.8rem; }
     </style>
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
@@ -222,7 +224,7 @@
         <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
         <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다. 투자 관련 정보는 매수·매도 추천이 아니며, 투자의 최종 책임은 투자자 본인에게 있습니다.</div>
+    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
     <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>

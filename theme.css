@@ -1,0 +1,150 @@
+/* PANDORA TOOLS 공통 테마
+   라이트가 기본값이고, 사용자가 고르지 않았으면 기기 설정(prefers-color-scheme)을 따른다.
+   페이지의 색은 전부 아래 변수를 통해 지정한다. 하드코딩하면 테마 전환이 깨진다. */
+
+:root {
+    --pt-bg: #f6f7fb;
+    --pt-card: #ffffff;
+    --pt-card-2: #fbfbfd;
+    --pt-panel: #ffffff;
+    --pt-border: #e6e8ef;
+    --pt-border-strong: #d7dbe4;
+    --pt-text: #1f2430;
+    --pt-text-2: #5b6476;
+    --pt-muted: #8a93a5;
+    --pt-head: #5b21b6;
+    --pt-link: #7c3aed;
+    --pt-link-hover: #5b21b6;
+    --pt-input-bg: #ffffff;
+    --pt-input-border: #d7dbe4;
+    --pt-shadow: 0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.06);
+    --pt-shadow-lg: 0 4px 16px rgba(16,24,40,.08);
+    --pt-sunken: #f1f2f7;
+    --pt-accent-soft: #f3efff;
+    --pt-text-shadow: none;
+    --pt-header-band: linear-gradient(160deg, #f3efff, #fdfcff 70%);
+    --pt-accent-border: #e3dbfa;
+    --pt-accent-soft-2: #f7f4ff;
+    --pt-mag-fg: #b45309;
+    --pt-mag-bg: #fffbeb;
+    --pt-mag-bd: #fde68a;
+    --pt-tag-fg: #047857;
+    --pt-tag-bg: #ecfdf5;
+    --pt-tag-bd: #a7f3d0;
+    --pt-accent: #0369a1;
+    --pt-accent-2: #b45309;
+    --pt-accent-3: #075985;
+    --pt-danger: #b91c1c;
+}
+
+/* 기기 설정이 어두움이고, 사용자가 밝게를 고르지 않았을 때 */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --pt-bg: linear-gradient(135deg, #1e1b4b, #2e1065);
+        --pt-card: rgba(30, 41, 59, 0.8);
+        --pt-card-2: rgba(255, 255, 255, 0.05);
+        --pt-panel: rgba(30, 41, 59, 0.94);
+        --pt-border: rgba(255, 255, 255, 0.1);
+        --pt-border-strong: rgba(255, 255, 255, 0.2);
+        --pt-text: #ffffff;
+        --pt-text-2: #cbd5e1;
+        --pt-muted: #94a3b8;
+        --pt-head: #fde047;
+        --pt-link: #93c5fd;
+        --pt-link-hover: #bfdbfe;
+        --pt-input-bg: rgba(15, 23, 42, 0.6);
+        --pt-input-border: #475569;
+        --pt-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        --pt-shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+        --pt-sunken: rgba(0, 0, 0, 0.2);
+        --pt-accent-soft: rgba(139, 92, 246, 0.2);
+        --pt-text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    --pt-header-band: linear-gradient(160deg, rgba(124,58,237,0.22), rgba(30,27,75,0) 72%);
+    --pt-accent-border: rgba(167,139,250,0.34);
+    --pt-accent-soft-2: rgba(124,58,237,0.14);
+    --pt-mag-fg: #fcd34d;
+    --pt-mag-bg: rgba(180,83,9,0.2);
+    --pt-mag-bd: rgba(252,211,77,0.34);
+    --pt-tag-fg: #6ee7b7;
+    --pt-tag-bg: rgba(4,120,87,0.22);
+    --pt-tag-bd: rgba(110,231,183,0.34);
+    --pt-accent: #7dd3fc;
+    --pt-accent-2: #fcd34d;
+    --pt-accent-3: #bae6fd;
+    --pt-danger: #fca5a5;
+        --pt-header-band: linear-gradient(160deg, rgba(124,58,237,0.22), rgba(30,27,75,0) 72%);
+        --pt-accent-border: rgba(167,139,250,0.34);
+        --pt-accent-soft-2: rgba(124,58,237,0.14);
+        --pt-mag-fg: #fcd34d;
+        --pt-mag-bg: rgba(180,83,9,0.2);
+        --pt-mag-bd: rgba(252,211,77,0.34);
+        --pt-tag-fg: #6ee7b7;
+        --pt-tag-bg: rgba(4,120,87,0.22);
+        --pt-tag-bd: rgba(110,231,183,0.34);
+        --pt-accent: #7dd3fc;
+        --pt-accent-2: #fcd34d;
+        --pt-accent-3: #bae6fd;
+        --pt-danger: #fca5a5;
+    }
+}
+
+/* 사용자가 직접 어둡게를 골랐을 때 */
+:root[data-theme="dark"] {
+    --pt-bg: linear-gradient(135deg, #1e1b4b, #2e1065);
+    --pt-card: rgba(30, 41, 59, 0.8);
+    --pt-card-2: rgba(255, 255, 255, 0.05);
+    --pt-panel: rgba(30, 41, 59, 0.94);
+    --pt-border: rgba(255, 255, 255, 0.1);
+    --pt-border-strong: rgba(255, 255, 255, 0.2);
+    --pt-text: #ffffff;
+    --pt-text-2: #cbd5e1;
+    --pt-muted: #94a3b8;
+    --pt-head: #fde047;
+    --pt-link: #93c5fd;
+    --pt-link-hover: #bfdbfe;
+    --pt-input-bg: rgba(15, 23, 42, 0.6);
+    --pt-input-border: #475569;
+    --pt-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    --pt-shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
+    --pt-sunken: rgba(0, 0, 0, 0.2);
+    --pt-accent-soft: rgba(139, 92, 246, 0.2);
+    --pt-text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+html { background: var(--pt-bg); }
+body { background: var(--pt-bg); color: var(--pt-text); }
+
+/* ── 오른쪽 위 테마 버튼 ───────────────────────────── */
+.pt-theme-toggle {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 9999;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 11px;
+    border: 1px solid var(--pt-border-strong);
+    background: var(--pt-card);
+    color: var(--pt-text-2);
+    cursor: pointer;
+    box-shadow: var(--pt-shadow);
+    transition: color .15s, border-color .15s, transform .15s;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+.pt-theme-toggle:hover { color: var(--pt-link); border-color: var(--pt-link); transform: translateY(-1px); }
+.pt-theme-toggle:focus-visible { outline: 2px solid var(--pt-link); outline-offset: 2px; }
+.pt-theme-toggle svg { width: 20px; height: 20px; display: block; }
+.pt-theme-toggle svg:not(.on) { display: none; }
+
+/* 버튼이 내용 위를 덮지 않도록 위쪽 여백을 살짝 확보 */
+@media (max-width: 640px) {
+    .pt-theme-toggle { top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 10px; }
+    .pt-theme-toggle svg { width: 18px; height: 18px; }
+}
+
+@media print { .pt-theme-toggle { display: none; } }

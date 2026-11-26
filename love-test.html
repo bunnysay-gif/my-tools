@@ -20,16 +20,16 @@
     <style>
         /* 기본 테마 (index.html과 통일) */
         body { 
-            background: linear-gradient(135deg, #1e1b4b, #2e1065);
-            color: white; font-family: '맑은 고딕', sans-serif; 
+            background: var(--pt-bg);
+            color: var(--pt-text); font-family: '맑은 고딕', sans-serif; 
             padding: 20px; margin: 0; min-height: 100vh;
             display: flex; flex-direction: column; align-items: center;
         }
         
         .container {
             max-width: 600px; width: 100%;
-            background-color: rgba(30, 41, 59, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--pt-card);
+            border: 1px solid var(--pt-border);
             backdrop-filter: blur(12px);
             padding: 40px 30px; border-radius: 20px;
             text-align: center; box-sizing: border-box;
@@ -38,11 +38,11 @@
         }
 
         h1 { font-size: 1.8rem; color: #f43f5e; margin-bottom: 10px; }
-        .subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 30px; word-break: keep-all; }
+        .subtitle { color: var(--pt-muted); font-size: 1rem; margin-bottom: 30px; word-break: keep-all; }
 
         /* 진행률 바 */
         .progress-bar {
-            width: 100%; height: 10px; background-color: rgba(255,255,255,0.1);
+            width: 100%; height: 10px; background-color: var(--pt-card-2);
             border-radius: 5px; margin-bottom: 30px; overflow: hidden;
         }
         .progress {
@@ -52,13 +52,13 @@
 
         /* 퀴즈 영역 */
         #quiz-section { display: block; }
-        .question { font-size: 1.3rem; font-weight: bold; margin-bottom: 30px; color: #fff; word-break: keep-all; line-height: 1.5; }
+        .question { font-size: 1.3rem; font-weight: bold; margin-bottom: 30px; color: var(--pt-text); word-break: keep-all; line-height: 1.5; }
         
         .btn-answer {
             display: block; width: 100%; padding: 15px 20px; margin-bottom: 15px;
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px; color: white; font-size: 1rem; cursor: pointer;
+            background-color: var(--pt-card-2);
+            border: 1px solid var(--pt-border-strong);
+            border-radius: 12px; color: var(--pt-text); font-size: 1rem; cursor: pointer;
             transition: 0.2s; word-break: keep-all;
         }
         .btn-answer:hover {
@@ -71,13 +71,13 @@
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
         .grade { font-size: 5rem; font-weight: bold; margin: 20px 0; text-shadow: 0 0 20px rgba(244, 63, 94, 0.8); }
-        .grade-S { color: #facc15; }
+        .grade-S { color: var(--pt-head); }
         .grade-A { color: #4ade80; }
         .grade-C { color: #fb923c; }
-        .grade-F { color: #94a3b8; }
+        .grade-F { color: var(--pt-muted); }
 
         .result-title { font-size: 1.5rem; margin-bottom: 15px; font-weight: bold; }
-        .result-desc { color: #cbd5e1; line-height: 1.6; margin-bottom: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; }
+        .result-desc { color: var(--pt-text-2); line-height: 1.6; margin-bottom: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; }
 
         /* 하단 버튼 */
         .action-btns { display: flex; gap: 10px; justify-content: center; }
@@ -89,14 +89,16 @@
         .btn-share:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(225, 29, 72, 0.5); }
         
         .btn-home {
-            background: transparent; border: 1px solid rgba(255,255,255,0.3);
-            padding: 12px 25px; border-radius: 25px; color: white; text-decoration: none; font-weight: bold;
+            background: transparent; border: 1px solid var(--pt-border-strong);
+            padding: 12px 25px; border-radius: 25px; color: var(--pt-text); text-decoration: none; font-weight: bold;
             transition: 0.3s; display: inline-block;
         }
-        .btn-home:hover { background: rgba(255,255,255,0.1); }
+        .btn-home:hover { background: var(--pt-card-2); }
 
     </style>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
@@ -342,7 +344,7 @@ startQuiz();
         <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
         <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다. 투자 관련 정보는 매수·매도 추천이 아니며, 투자의 최종 책임은 투자자 본인에게 있습니다.</div>
+    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
     <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>

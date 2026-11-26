@@ -22,30 +22,30 @@
 
     <style>
         body { 
-            background: linear-gradient(135deg, #1e1b4b, #2e1065);
-            color: white; font-family: '맑은 고딕', sans-serif; 
+            background: var(--pt-bg);
+            color: var(--pt-text); font-family: '맑은 고딕', sans-serif; 
             padding: 20px; max-width: 900px; margin: 0 auto; line-height: 1.6;
         }
         
         .page-header { text-align: center; margin-bottom: 40px; }
         .page-header h1 { font-size: 32px; margin-bottom: 10px; color: #fef08a; text-shadow: 2px 2px 15px rgba(250, 204, 21, 0.4); }
-        .badge { background-color: rgba(234, 179, 8, 0.2); border: 1px solid #eab308; color: #fde047; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+        .badge { background-color: rgba(234, 179, 8, 0.2); border: 1px solid #eab308; color: var(--pt-head); padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
         /* 메인 생성기 영역 */
         .lotto-container {
-            background-color: rgba(30, 41, 59, 0.8); border-radius: 16px; padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+            background-color: var(--pt-card); border-radius: 16px; padding: 30px;
+            box-shadow: var(--pt-shadow); border: 1px solid var(--pt-border);
             backdrop-filter: blur(10px); margin-bottom: 40px; text-align: center;
         }
 
         /* 로딩 애니메이션 */
         .loading-box { display: none; margin: 30px 0; }
         .spinner {
-            width: 50px; height: 50px; border: 5px solid rgba(255,255,255,0.1); border-radius: 50%;
+            width: 50px; height: 50px; border: 5px solid var(--pt-border); border-radius: 50%;
             border-top-color: #fde047; animation: spin 1s ease-in-out infinite; margin: 0 auto 15px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .loading-text { color: #cbd5e1; font-weight: bold; font-size: 16px; animation: pulse 1.5s infinite; }
+        .loading-text { color: var(--pt-text-2); font-weight: bold; font-size: 16px; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
         /* 결과 화면 */
@@ -54,15 +54,15 @@
         
         .lotto-row {
             display: flex; align-items: center; justify-content: center; gap: 10px;
-            background-color: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 12px;
+            background-color: var(--pt-input-bg); padding: 15px; border-radius: 12px;
             margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.05);
         }
-        .row-label { font-weight: bold; color: #94a3b8; width: 30px; font-size: 18px; }
+        .row-label { font-weight: bold; color: var(--pt-muted); width: 30px; font-size: 18px; }
         
         /* 공통 공 스타일 */
         .ball {
             width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 18px; font-weight: 900; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            font-size: 18px; font-weight: 900; color: var(--pt-text); text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
             box-shadow: inset -5px -5px 10px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.2);
         }
         
@@ -94,18 +94,18 @@
         .copy-btn:hover { background-color: #fada0a; transform: translateY(-2px); }
 
         /* SEO 설명 섹션 */
-        .seo-section { background-color: rgba(30, 41, 59, 0.7); padding: 30px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px; }
-        .seo-section h2 { color: #fde047; font-size: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-top: 0; }
+        .seo-section { background-color: rgba(30, 41, 59, 0.7); padding: 30px; border-radius: 16px; border: 1px solid var(--pt-border); margin-bottom: 40px; }
+        .seo-section h2 { color: var(--pt-head); font-size: 20px; border-bottom: 1px solid var(--pt-border); padding-bottom: 15px; margin-top: 0; }
         .seo-section h3 { color: #fcd34d; font-size: 17px; margin-top: 25px; margin-bottom: 10px; }
-        .seo-section p { color: #cbd5e1; font-size: 15px; line-height: 1.7; margin-bottom: 15px; }
+        .seo-section p { color: var(--pt-text-2); font-size: 15px; line-height: 1.7; margin-bottom: 15px; }
 
         /* 내부 링크 */
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
-        .link-card { flex: 1; min-width: 200px; background-color: rgba(234, 179, 8, 0.1); padding: 20px; border-radius: 12px; text-decoration: none; color: #fde047; font-weight: bold; text-align: center; border: 1px solid rgba(234, 179, 8, 0.2); transition: 0.2s; }
+        .link-card { flex: 1; min-width: 200px; background-color: rgba(234, 179, 8, 0.1); padding: 20px; border-radius: 12px; text-decoration: none; color: var(--pt-head); font-weight: bold; text-align: center; border: 1px solid rgba(234, 179, 8, 0.2); transition: 0.2s; }
         .link-card:hover { background-color: rgba(234, 179, 8, 0.2); transform: translateY(-3px); }
         .link-card span { display: block; font-size: 13px; color: #fcd34d; font-weight: normal; margin-top: 5px; }
 
-        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 12px; font-weight: bold; transition: 0.2s; border: 1px solid rgba(255,255,255,0.2); margin-bottom: 40px; }
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: var(--pt-card-2); color: var(--pt-text); text-decoration: none; border-radius: 12px; font-weight: bold; transition: 0.2s; border: 1px solid var(--pt-border-strong); margin-bottom: 40px; }
         .back-btn:hover { background-color: rgba(255,255,255,0.2); }
 
         @media (max-width: 600px) {
@@ -116,6 +116,8 @@
             .copy-btn { font-size: 15px; }
         }
     </style>
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
@@ -301,7 +303,7 @@
         <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
         <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다. 투자 관련 정보는 매수·매도 추천이 아니며, 투자의 최종 책임은 투자자 본인에게 있습니다.</div>
+    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
     <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>

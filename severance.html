@@ -22,35 +22,35 @@
 
     <style>
         body { 
-            background: linear-gradient(135deg, #1e1b4b, #2e1065); color: white; font-family: '맑은 고딕', sans-serif; 
+            background: var(--pt-bg); color: var(--pt-text); font-family: '맑은 고딕', sans-serif; 
             padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6;
         }
         
         .page-header { text-align: center; margin-bottom: 30px; }
-        .page-header h1 { color: #fde047; margin-bottom: 10px; font-size: 28px; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-        .page-header p { color: #cbd5e1; font-size: 15px; margin-top: 0; }
+        .page-header h1 { color: var(--pt-head); margin-bottom: 10px; font-size: 28px; text-shadow: var(--pt-text-shadow); }
+        .page-header p { color: var(--pt-text-2); font-size: 15px; margin-top: 0; }
         .badge { background-color: rgba(20, 184, 166, 0.2); color: #5eead4; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #14b8a6; }
 
         /* 계산기 메인 영역 (다크 유리창) */
         .calculator-card {
-            background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1);
+            background-color: var(--pt-card); padding: 30px; border-radius: 12px;
+            box-shadow: var(--pt-shadow); margin-bottom: 30px; border: 1px solid var(--pt-border);
             backdrop-filter: blur(10px); border-left: 5px solid #14b8a6;
         }
 
         .input-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .input-group label { font-weight: bold; width: 40%; color: #94a3b8; font-size: 16px; }
+        .input-group label { font-weight: bold; width: 40%; color: var(--pt-muted); font-size: 16px; }
         
         .input-wrapper { width: 60%; position: relative; }
         .input-wrapper input {
-            width: 100%; padding: 12px; font-size: 16px; background-color: rgba(15, 23, 42, 0.6); color: white;
-            border: 1px solid #475569; border-radius: 8px; box-sizing: border-box; font-family: inherit; transition: 0.2s; outline: none;
+            width: 100%; padding: 12px; font-size: 16px; background-color: var(--pt-input-bg); color: var(--pt-text);
+            border: 1px solid var(--pt-input-border); border-radius: 8px; box-sizing: border-box; font-family: inherit; transition: 0.2s; outline: none;
         }
-        .input-wrapper input:focus { border-color: #14b8a6; box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.3); background-color: rgba(255,255,255,0.1); }
+        .input-wrapper input:focus { border-color: #14b8a6; box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.3); background-color: var(--pt-card-2); }
         
         /* 오른쪽 '원' 글씨 확보용 패딩 */
         .input-wrapper input[type="number"] { text-align: right; padding-right: 40px; }
-        .unit-label { position: absolute; right: 15px; top: 12px; color: #cbd5e1; font-weight: bold; }
+        .unit-label { position: absolute; right: 15px; top: 12px; color: var(--pt-text-2); font-weight: bold; }
 
         /* 다크 모드 달력 아이콘 반전 */
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
@@ -74,12 +74,12 @@
 
         /* SEO 최적화 설명 섹션 */
         .seo-section {
-            background-color: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); border-top: 4px solid #14b8a6; backdrop-filter: blur(10px);
+            background-color: var(--pt-card); padding: 30px; border-radius: 12px;
+            box-shadow: var(--pt-shadow); margin-bottom: 30px; border: 1px solid var(--pt-border); border-top: 4px solid #14b8a6; backdrop-filter: blur(10px);
         }
-        .seo-section h2 { color: #fde047; font-size: 22px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-top: 0; }
+        .seo-section h2 { color: var(--pt-head); font-size: 22px; border-bottom: 1px solid var(--pt-border); padding-bottom: 10px; margin-top: 0; }
         .seo-section h3 { color: #5eead4; font-size: 18px; margin-top: 25px; }
-        .seo-section p, .seo-section ul { color: #cbd5e1; font-size: 15px; line-height: 1.7; }
+        .seo-section p, .seo-section ul { color: var(--pt-text-2); font-size: 15px; line-height: 1.7; }
         .seo-section li { margin-bottom: 8px; }
 
         /* 🏛️ 공식 법령 출처 박스 */
@@ -95,14 +95,14 @@
         /* 내부 링크 */
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
         .link-card {
-            flex: 1; background-color: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;
+            flex: 1; background-color: var(--pt-card-2); padding: 20px; border-radius: 12px;
             text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center;
-            border: 1px solid rgba(255,255,255,0.1); transition: 0.2s;
+            border: 1px solid var(--pt-border); transition: 0.2s;
         }
-        .link-card:hover { background-color: rgba(255,255,255,0.1); transform: translateY(-3px); border-color: #14b8a6; }
-        .link-card span { display: block; font-size: 13px; color: #94a3b8; font-weight: normal; margin-top: 5px; }
+        .link-card:hover { background-color: var(--pt-card-2); transform: translateY(-3px); border-color: #14b8a6; }
+        .link-card span { display: block; font-size: 13px; color: var(--pt-muted); font-weight: normal; margin-top: 5px; }
 
-        .back-btn { display: block; text-align: center; padding: 15px; background-color: rgba(255,255,255,0.1); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s;}
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: var(--pt-card-2); color: var(--pt-text); text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid var(--pt-border-strong); transition: 0.2s;}
         .back-btn:hover { background-color: rgba(255,255,255,0.2); }
 
         @media (max-width: 600px) {
@@ -112,6 +112,8 @@
             .internal-links { flex-direction: column; }
         }
     </style>
+    <link rel="stylesheet" href="theme.css">
+    <script src="theme.js"></script>
 </head>
 <body>
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TGL7WVVZ"
@@ -244,7 +246,7 @@
         <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
         <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다. 투자 관련 정보는 매수·매도 추천이 아니며, 투자의 최종 책임은 투자자 본인에게 있습니다.</div>
+    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
     <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>
