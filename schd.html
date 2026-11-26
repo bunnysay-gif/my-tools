@@ -32,7 +32,7 @@
         
         /* SCHD 전용 타이틀 강조 */
         .page-header { text-align: center; margin-bottom: 30px; }
-        .page-header h1 { color: #1e3a8a; margin-bottom: 5px; font-size: 32px; }
+        .page-header h1 { color: var(--pt-head); margin-bottom: 5px; font-size: 32px; }
         .page-header p { color: var(--pt-muted); font-size: 16px; margin-top: 0; }
         .badge { background-color: var(--pt-accent); color: var(--pt-on-accent); padding: 4px 10px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
@@ -54,7 +54,7 @@
             padding-bottom: 12px;
         }
 
-        .input-group label { font-weight: bold; width: 35%; color: #495057; }
+        .input-group label { font-weight: bold; width: 35%; color: var(--pt-text); }
         .highlight-label { color: #1d4ed8 !important; } /* SCHD 특화 항목 강조 */
         
         .input-wrapper {
@@ -73,7 +73,7 @@
             border-radius: 5px;
         }
 
-        .input-wrapper .unit { margin-left: 8px; margin-right: 15px; font-weight: bold; color: #495057; text-align: left; }
+        .input-wrapper .unit { margin-left: 8px; margin-right: 15px; font-weight: bold; color: var(--pt-text); text-align: left; }
 
         .btn-group { display: flex; gap: 5px; }
         .option-btn { padding: 6px 12px; background-color: #e2e8f0; color: #475569; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; font-weight: bold; transition: 0.2s; }
@@ -105,14 +105,14 @@
             margin-bottom: 30px;
             border-left: 5px solid #1e3a8a;
         }
-        .summary-box h3 { margin-top: 0; color: #1e3a8a; font-size: 22px; }
+        .summary-box h3 { margin-top: 0; color: var(--pt-head); font-size: 22px; }
         .summary-box p { font-size: 18px; margin: 10px 0; }
         .summary-box span { font-weight: bold; }
 
         .chart-container { background-color: var(--pt-card); padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 30px; display: none; }
         
         .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; display: none; }
-        .table-header h2 { margin: 0; color: #2c3e50; font-size: 20px; }
+        .table-header h2 { margin: 0; color: var(--pt-text); font-size: 20px; }
         .excel-btn { background-color: var(--pt-accent); color: var(--pt-on-accent); padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
         .excel-btn:hover { background-color: #059669; }
 
@@ -132,14 +132,14 @@
             text-align: left;
             border-top: 4px solid #1e3a8a; 
         }
-        .info-section h2 { color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-top: 0; }
+        .info-section h2 { color: var(--pt-text); border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; margin-top: 0; }
         .info-block { margin-bottom: 30px; }
-        .info-block h3 { color: #1e3a8a; margin-bottom: 12px; font-size: 1.3rem; }
-        .info-block p { color: #475569; line-height: 1.7; font-size: 15px; margin: 0; }
+        .info-block h3 { color: var(--pt-head); margin-bottom: 12px; font-size: 1.3rem; }
+        .info-block p { color: var(--pt-text); line-height: 1.7; font-size: 15px; margin: 0; }
         .highlight { background-color: var(--pt-accent); padding: 2px 6px; border-radius: 3px; font-weight: bold; color: var(--pt-on-accent); }
         
         .tip-box { background-color: #f8fafc; border-left: 4px solid #10b981; padding: 20px; border-radius: 6px; margin-top: 20px; }
-        .tip-box strong { color: #047857; font-size: 16px; }
+        .tip-box strong { color: var(--pt-head); font-size: 16px; }
         
         .back-btn-wrapper { text-align: center; margin-top: 40px; margin-bottom: 50px; }
         .back-btn { display: inline-block; padding: 12px 25px; background-color: #64748b; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
@@ -253,8 +253,8 @@
     <div class="summary-wrapper" id="summaryWrapper">
         <div class="summary-box">
             <h3>🎯 <span id="resYears">0</span>년 뒤 당신의 자산은?</h3>
-            <p>총 투자원금: <span id="resPrincipal" style="color:#1e3a8a;">0</span> 만원</p>
-            <p>총 평가금액: <span id="resTotal" style="color:#1e3a8a;">0</span> 만원</p>
+            <p>총 투자원금: <span id="resPrincipal" style="color:var(--pt-head);">0</span> 만원</p>
+            <p>총 평가금액: <span id="resTotal" style="color:var(--pt-head);">0</span> 만원</p>
             <p>예상 월 배당금: <span id="resMonthlyDiv" style="color:#e11d48;">0</span> 만원 (세후)</p>
             <p>예상 연 배당금: <span id="resYearlyDiv" style="color:#e11d48;">0</span> 만원 (세후)</p>
         </div>
@@ -293,7 +293,7 @@
 
         <div class="tip-box">
             <strong>경영학 똑똑이와 함께 완벽한 포트폴리오 만들기</strong>
-            <p style="margin-top:8px; font-size: 15px; color: #334155;">단순히 주식을 사는 것을 넘어, 거시 경제의 흐름을 읽는 눈이 필요합니다. 금리 인하 시기에는 어떤 전략을 취해야 할까요? 경영학 똑똑이 채널에서 더 깊이 있는 인사이트를 확인해 보세요!</p>
+            <p style="margin-top:8px; font-size: 15px; color: var(--pt-text);">단순히 주식을 사는 것을 넘어, 거시 경제의 흐름을 읽는 눈이 필요합니다. 금리 인하 시기에는 어떤 전략을 취해야 할까요? 경영학 똑똑이 채널에서 더 깊이 있는 인사이트를 확인해 보세요!</p>
         </div>
     </div>
 
@@ -386,7 +386,7 @@
                     <tr>
                         <td>${y}년차</td>
                         <td>${formatMoney(afterTaxDiv)}만원 (${currentYieldPct.toFixed(2)}%)</td>
-                        <td style="color:#1e3a8a; font-weight:bold;">${formatMoney(totalAsset)}만원</td>
+                        <td style="color:var(--pt-head); font-weight:bold;">${formatMoney(totalAsset)}만원</td>
                         <td>${formatMoney(totalPrincipal)}만원</td>
                         <td>${sharePrice.toFixed(1)}만원</td>
                         <td>${formatMoney(ownedShares)}</td>

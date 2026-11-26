@@ -30,7 +30,7 @@
             margin: 0 auto; 
         }
         
-        h1 { text-align: center; color: #2c3e50; margin-bottom: 30px; }
+        h1 { text-align: center; color: var(--pt-text); margin-bottom: 30px; }
         
         .input-card {
             background-color: var(--pt-card);
@@ -50,7 +50,7 @@
             padding-bottom: 12px;
         }
 
-        .input-group label { font-weight: bold; width: 30%; color: #495057; }
+        .input-group label { font-weight: bold; width: 30%; color: var(--pt-text); }
         
         .input-wrapper {
             width: 70%;
@@ -72,7 +72,7 @@
             margin-left: 8px;
             margin-right: 15px;
             font-weight: bold;
-            color: #495057;
+            color: var(--pt-text);
             text-align: left;
         }
 
@@ -122,7 +122,7 @@
             margin-bottom: 30px;
             border-left: 5px solid #1d4ed8;
         }
-        .summary-box h3 { margin-top: 0; color: #1d4ed8; font-size: 22px; }
+        .summary-box h3 { margin-top: 0; color: var(--pt-head); font-size: 22px; }
         .summary-box p { font-size: 18px; margin: 10px 0; }
         .summary-box span { font-weight: bold; }
 
@@ -142,7 +142,7 @@
             margin-bottom: 10px;
             display: none;
         }
-        .table-header h2 { margin: 0; color: #2c3e50; font-size: 20px; }
+        .table-header h2 { margin: 0; color: var(--pt-text); font-size: 20px; }
         .excel-btn {
             background-color: var(--pt-accent);
             color: var(--pt-on-accent);
@@ -181,14 +181,14 @@
             border-top: 4px solid #f59e0b;
         }
         .info-section h2 { 
-            color: #1e293b; 
+            color: var(--pt-text); 
             border-bottom: 2px solid #f1f5f9; 
             padding-bottom: 15px; 
             margin-top: 0;
         }
         .info-block { margin-bottom: 30px; }
-        .info-block h3 { color: #334155; margin-bottom: 12px; font-size: 1.3rem; display: flex; align-items: center; }
-        .info-block p { color: #475569; line-height: 1.7; font-size: 15px; margin: 0; }
+        .info-block h3 { color: var(--pt-text); margin-bottom: 12px; font-size: 1.3rem; display: flex; align-items: center; }
+        .info-block p { color: var(--pt-text); line-height: 1.7; font-size: 15px; margin: 0; }
         .highlight { background-color: var(--pt-accent-2); padding: 2px 6px; border-radius: 3px; font-weight: bold; color: var(--pt-on-accent); }
         
         .tip-box { 
@@ -198,7 +198,7 @@
             border-radius: 6px; 
             margin-top: 20px;
         }
-        .tip-box strong { color: #1e40af; font-size: 16px; }
+        .tip-box strong { color: var(--pt-head); font-size: 16px; }
         
         .back-btn-wrapper { text-align: center; margin-top: 40px; margin-bottom: 50px; }
         .back-btn {
@@ -315,8 +315,8 @@
     <div class="summary-wrapper" id="summaryWrapper">
         <div class="summary-box">
             <h3>🎯 <span id="resYears">0</span>년 뒤 당신의 자산은?</h3>
-            <p>총 투자원금: <span id="resPrincipal" style="color:#1d4ed8;">0</span> 만원</p>
-            <p>총 평가금액: <span id="resTotal" style="color:#1d4ed8;">0</span> 만원</p>
+            <p>총 투자원금: <span id="resPrincipal" style="color:var(--pt-head);">0</span> 만원</p>
+            <p>총 평가금액: <span id="resTotal" style="color:var(--pt-head);">0</span> 만원</p>
             <p>예상 월 배당금: <span id="resMonthlyDiv" style="color:#e11d48;">0</span> 만원 (세후)</p>
             <p>예상 연 배당금: <span id="resYearlyDiv" style="color:#e11d48;">0</span> 만원 (세후)</p>
         </div>
@@ -365,7 +365,7 @@
 
         <div class="tip-box">
             <strong>📺 경영학 똑똑이의 추천 콘텐츠</strong>
-            <p style="margin-top:8px; font-size: 15px; color: #334155;">나중에 이곳에 직접 제작하신 경제 유튜브 영상 링크나 인사이트 칼럼을 배치해보세요! 방문자들이 계산기를 써보고 글을 읽은 뒤 영상을 시청하면, 채널 구독과 팬덤 형성으로 이어지는 완벽한 구조가 만들어집니다.</p>
+            <p style="margin-top:8px; font-size: 15px; color: var(--pt-text);">나중에 이곳에 직접 제작하신 경제 유튜브 영상 링크나 인사이트 칼럼을 배치해보세요! 방문자들이 계산기를 써보고 글을 읽은 뒤 영상을 시청하면, 채널 구독과 팬덤 형성으로 이어지는 완벽한 구조가 만들어집니다.</p>
         </div>
     </div>
 
@@ -464,7 +464,7 @@
                     <tr>
                         <td>${y}년차</td>
                         <td>${formatMoney(afterTaxDiv)}만원 (${currentYieldPct.toFixed(2)}%)</td>
-                        <td style="color:#1d4ed8; font-weight:bold;">${formatMoney(totalAsset)}만원</td>
+                        <td style="color:var(--pt-head); font-weight:bold;">${formatMoney(totalAsset)}만원</td>
                         <td>${formatMoney(totalPrincipal)}만원</td>
                         <td>${sharePrice.toFixed(1)}만원</td>
                         <td>${formatMoney(ownedShares)}</td>
