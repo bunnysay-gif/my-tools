@@ -22,6 +22,7 @@
     --pt-sunken: #f1f2f7;
     --pt-accent-soft: #f3efff;
     --pt-text-shadow: none;
+    --pt-on-accent: #ffffff;
     --pt-header-band: linear-gradient(160deg, #f3efff, #fdfcff 70%);
     --pt-accent-border: #e3dbfa;
     --pt-accent-soft-2: #f7f4ff;
@@ -63,6 +64,7 @@
         --pt-sunken: rgba(0, 0, 0, 0.2);
         --pt-accent-soft: rgba(139, 92, 246, 0.2);
         --pt-text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        --pt-on-accent: #1f2430;
     --pt-header-band: linear-gradient(160deg, rgba(124,58,237,0.22), rgba(30,27,75,0) 72%);
     --pt-accent-border: rgba(167,139,250,0.34);
     --pt-accent-soft-2: rgba(124,58,237,0.14);
@@ -121,7 +123,42 @@
     --pt-sunken: rgba(0, 0, 0, 0.2);
     --pt-accent-soft: rgba(139, 92, 246, 0.2);
     --pt-text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-}
+        --pt-on-accent: #1f2430;
+    --pt-header-band: linear-gradient(160deg, rgba(124,58,237,0.22), rgba(30,27,75,0) 72%);
+    --pt-accent-border: rgba(167,139,250,0.34);
+    --pt-accent-soft-2: rgba(124,58,237,0.14);
+    --pt-mag-fg: #fcd34d;
+    --pt-mag-bg: rgba(180,83,9,0.2);
+    --pt-mag-bd: rgba(252,211,77,0.34);
+    --pt-tag-fg: #6ee7b7;
+    --pt-tag-bg: rgba(4,120,87,0.22);
+    --pt-tag-bd: rgba(110,231,183,0.34);
+    --pt-accent: #7dd3fc;
+    --pt-accent-2: #fcd34d;
+    --pt-accent-3: #bae6fd;
+    --pt-danger: #fca5a5;
+    --pt-violet: #c4b5fd;
+    --pt-green: #6ee7b7;
+    --pt-orange: #fdba74;
+    --pt-pink: #f9a8d4;
+    --pt-header-band: linear-gradient(160deg, rgba(124,58,237,0.22), rgba(30,27,75,0) 72%);
+    --pt-accent-border: rgba(167,139,250,0.34);
+    --pt-accent-soft-2: rgba(124,58,237,0.14);
+    --pt-mag-fg: #fcd34d;
+    --pt-mag-bg: rgba(180,83,9,0.2);
+    --pt-mag-bd: rgba(252,211,77,0.34);
+    --pt-tag-fg: #6ee7b7;
+    --pt-tag-bg: rgba(4,120,87,0.22);
+    --pt-tag-bd: rgba(110,231,183,0.34);
+    --pt-accent: #7dd3fc;
+    --pt-accent-2: #fcd34d;
+    --pt-accent-3: #bae6fd;
+    --pt-danger: #fca5a5;
+    --pt-violet: #c4b5fd;
+    --pt-green: #6ee7b7;
+    --pt-orange: #fdba74;
+    --pt-pink: #f9a8d4;
+    }
 
 html { background: var(--pt-bg); }
 body { background: var(--pt-bg); color: var(--pt-text); }

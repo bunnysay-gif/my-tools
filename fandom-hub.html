@@ -69,7 +69,7 @@
             cursor: pointer; transition: 0.3s;
         }
         .btn-filter:hover, .btn-filter.active {
-            background: rgba(168, 85, 247, 0.2); border-color: #a855f7; color: white; font-weight: bold;
+            background: rgba(168, 85, 247, 0.2); border-color: #a855f7; color: var(--pt-text); font-weight: bold;
         }
 
         /* 셀럽 그리드 */
@@ -119,11 +119,11 @@
         .btn-youtube { background-color: #FF0000; } /* YouTube */
         .btn-youtube:hover { background-color: #cc0000; }
 
-        .btn-cafe { background-color: var(--pt-accent); } /* Fan Cafe */
-        .btn-cafe:hover { background-color: var(--pt-accent); }
+        .btn-cafe { background-color: var(--pt-on-accent); } /* Fan Cafe */
+        .btn-cafe:hover { background-color: var(--pt-on-accent); }
 
-        .btn-shop { background-color: var(--pt-accent-2); color: #1e1b4b; } /* Goods Shop */
-        .btn-shop:hover { background-color: var(--pt-accent-2); }
+        .btn-shop { background-color: var(--pt-on-accent); color: var(--pt-on-accent); } /* Goods Shop */
+        .btn-shop:hover { background-color: var(--pt-on-accent); }
 
         /* 결과 없음 */
         #noResults {
@@ -451,7 +451,7 @@
                 };
 
                 // 이미지 태그 생성 (null이면Placeholder) ⭐⭐⭐
-                const imgTag = celeb.img ? `<img src="${celeb.img}" alt="${celeb.name}" class="celeb-img">` : `<div class="celeb-imgPlaceholder" style="width:80px; height:80px; border-radius:50%; background-color:rgba(168, 85, 247, 0.1); display:flex; align-items:center; justify-content:center; color:white; font-weight:bold; font-size:1.5rem; border: 2px solid rgba(168, 85, 247, 0.2); margin-bottom: 15px;">${celeb.name.charAt(0)}</div>`;
+                const imgTag = celeb.img ? `<img src="${celeb.img}" alt="${celeb.name}" class="celeb-img">` : `<div class="celeb-imgPlaceholder" style="width:80px; height:80px; border-radius:50%; background-color:rgba(168, 85, 247, 0.1); display:flex; align-items:center; justify-content:center; color:var(--pt-text); font-weight:bold; font-size:1.5rem; border: 2px solid rgba(168, 85, 247, 0.2); margin-bottom: 15px;">${celeb.name.charAt(0)}</div>`;
 
                 card.innerHTML = `
                     ${imgTag}
