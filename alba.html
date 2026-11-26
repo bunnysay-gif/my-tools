@@ -83,7 +83,7 @@
         .law-link:hover { text-decoration: underline; color: var(--pt-orange); }
 
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
-        .link-card { flex: 1; background-color: var(--pt-card-2); padding: 20px; border-radius: 12px; text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center; border: 1px solid var(--pt-border); transition: 0.2s; }
+        .link-card { flex: 1; background-color: var(--pt-card-2); padding: 20px; border-radius: 12px; text-decoration: none; color: var(--pt-accent); font-weight: bold; text-align: center; border: 1px solid var(--pt-border); transition: 0.2s; }
         .link-card:hover { background-color: var(--pt-card-2); transform: translateY(-3px); border-color: var(--pt-orange); }
         .link-card span { display: block; font-size: 13px; color: var(--pt-muted); font-weight: normal; margin-top: 5px; }
 
@@ -115,7 +115,7 @@
 
     <div class="calculator-card">
         <div class="input-group">
-            <label>시급 <br><span style="font-size: 13px; font-weight: normal; color: #64748b;">(직접 확인 후 입력)</span></label>
+            <label>시급 <br><span style="font-size: 13px; font-weight: normal; color: var(--pt-muted);">(직접 확인 후 입력)</span></label>
             <div class="input-wrapper">
                 <div style="position: relative;">
                     <input type="number" id="hourlyWage" placeholder="시급을 입력하세요">
@@ -223,14 +223,14 @@
         <p>여기서 문제가 자주 생깁니다. <strong>3.3% 원천징수는 프리랜서(사업소득자)에게 적용하는 방식</strong>입니다. 정해진 출퇴근 시간에 따라 사장님의 지시를 받으며 일한다면 법적으로는 <strong>근로자</strong>이고, 이 경우 3.3%가 아니라 4대보험과 근로소득세를 적용하는 것이 맞습니다.</p>
         <table style="width:100%; border-collapse:collapse; margin:16px 0; font-size:15px;">
             <tr style="background:rgba(255,255,255,0.08);">
-                <th style="border:1px solid rgba(255,255,255,0.15); padding:10px; text-align:left;">구분</th>
-                <th style="border:1px solid rgba(255,255,255,0.15); padding:10px; text-align:left;">근로자</th>
-                <th style="border:1px solid rgba(255,255,255,0.15); padding:10px; text-align:left;">프리랜서</th>
+                <th style="border:1px solid var(--pt-border); padding:10px; text-align:left;">구분</th>
+                <th style="border:1px solid var(--pt-border); padding:10px; text-align:left;">근로자</th>
+                <th style="border:1px solid var(--pt-border); padding:10px; text-align:left;">프리랜서</th>
             </tr>
-            <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">공제</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">4대보험 + 근로소득세</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">3.3%</td></tr>
-            <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">주휴수당</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">있음</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">없음</td></tr>
-            <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">퇴직금</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">1년 이상 시 있음</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">없음</td></tr>
-            <tr><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">실업급여</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">조건 충족 시 가능</td><td style="border:1px solid rgba(255,255,255,0.15); padding:10px;">불가</td></tr>
+            <tr><td style="border:1px solid var(--pt-border); padding:10px;">공제</td><td style="border:1px solid var(--pt-border); padding:10px;">4대보험 + 근로소득세</td><td style="border:1px solid var(--pt-border); padding:10px;">3.3%</td></tr>
+            <tr><td style="border:1px solid var(--pt-border); padding:10px;">주휴수당</td><td style="border:1px solid var(--pt-border); padding:10px;">있음</td><td style="border:1px solid var(--pt-border); padding:10px;">없음</td></tr>
+            <tr><td style="border:1px solid var(--pt-border); padding:10px;">퇴직금</td><td style="border:1px solid var(--pt-border); padding:10px;">1년 이상 시 있음</td><td style="border:1px solid var(--pt-border); padding:10px;">없음</td></tr>
+            <tr><td style="border:1px solid var(--pt-border); padding:10px;">실업급여</td><td style="border:1px solid var(--pt-border); padding:10px;">조건 충족 시 가능</td><td style="border:1px solid var(--pt-border); padding:10px;">불가</td></tr>
         </table>
         <p>당장 3.3%만 떼면 손에 쥐는 돈은 많아 보입니다. 하지만 주휴수당·퇴직금·실업급여를 모두 포기하는 셈이라 <strong>길게 보면 손해인 경우가 많습니다.</strong> 실질이 근로자인데 프리랜서로 처리됐다면 고용노동부에 진정을 넣어 근로자성을 인정받을 수 있습니다.</p>
 
@@ -250,12 +250,12 @@
         </div>
     </div>
 
-    <footer style="text-align: center; margin-top: 100px; padding: 60px 20px; border-top: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2); border-radius: 0 0 20px 20px;">
+    <footer style="text-align: center; margin-top: 100px; padding: 60px 20px; border-top: 1px solid var(--pt-border); background: var(--pt-sunken); border-radius: 0 0 20px 20px;">
         <a href="index.html" style="display: inline-block; margin-bottom: 20px; opacity: 0.8; transition: 0.3s;">
             <img src="og-image.png" alt="PANDORA TOOLS Footer Logo" style="width: 120px; filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.4));">
         </a>
-        <div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 10px;">&copy; 2026 <strong>PANDORA TOOLS</strong>. All Rights Reserved.</div>
-        <div style="color: #64748b; font-size: 0.85rem;">문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color: #f59e0b; text-decoration: none; border-bottom: 1px solid rgba(245, 158, 11, 0.3);">starlinelabs.studio@gmail.com</a></div>
+        <div style="color: var(--pt-muted); font-size: 0.9rem; margin-bottom: 10px;">&copy; 2026 <strong>PANDORA TOOLS</strong>. All Rights Reserved.</div>
+        <div style="color: var(--pt-muted); font-size: 0.85rem;">문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color: var(--pt-orange); text-decoration: none; border-bottom: 1px solid rgba(245, 158, 11, 0.3);">starlinelabs.studio@gmail.com</a></div>
     </footer>
 
     <script>
@@ -313,16 +313,16 @@
         }
     </script>
 
-<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:rgba(30,41,59,0.94);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:#cbd5e1;font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
+<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:var(--pt-panel);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:var(--pt-text-2);font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
     <nav>
-        <a href="index.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">홈</a>|
-        <a href="about.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">사이트 소개</a>|
-        <a href="privacy.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
-        <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
-        <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
+        <a href="index.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">홈</a>|
+        <a href="about.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">사이트 소개</a>|
+        <a href="privacy.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
+        <a href="terms.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">이용약관</a>|
+        <a href="contact.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
-    <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
+    <div style="margin-top:8px;font-size:13px;color:var(--pt-muted);">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
+    <div style="margin-top:6px;font-size:13px;color:var(--pt-muted);">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>
 </html>

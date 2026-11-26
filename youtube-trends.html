@@ -31,7 +31,7 @@
         
         /* 🔥 실시간 느낌을 주는 깜빡이는 배지 애니메이션 */
         .badge { 
-            background-color: #fee2e2; color: #dc2626; padding: 5px 15px; 
+            background-color: var(--pt-danger); color: #dc2626; padding: 5px 15px; 
             border-radius: 20px; font-size: 14px; font-weight: bold; display: inline-block;
             animation: pulse 2s infinite; margin-bottom: 10px;
         }
@@ -75,20 +75,20 @@
 
         /* 안내 및 SEO 텍스트 영역 */
         .info-box { 
-            background-color: #f0fdf4; padding: 25px; border-radius: 12px; font-size: 15px; 
+            background-color: var(--pt-green); padding: 25px; border-radius: 12px; font-size: 15px; 
             color: #166534; line-height: 1.7; margin-bottom: 30px; border: 1px solid #bbf7d0;
         }
         .info-box h3 { margin-top: 0; color: #14532d; font-size: 18px; }
-        .highlight { background-color: #dcfce7; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+        .highlight { background-color: var(--pt-green); padding: 2px 5px; border-radius: 4px; font-weight: bold; }
 
         /* 내부 링크 */
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
         .link-card {
-            flex: 1; background-color: #eff6ff; padding: 20px; border-radius: 12px;
+            flex: 1; background-color: var(--pt-accent); padding: 20px; border-radius: 12px;
             text-decoration: none; color: #1e3a8a; font-weight: bold; text-align: center;
             border: 1px solid #bfdbfe; transition: 0.2s;
         }
-        .link-card:hover { background-color: #dbeafe; transform: translateY(-3px); }
+        .link-card:hover { background-color: var(--pt-accent); transform: translateY(-3px); }
         .link-card span { display: block; font-size: 13px; color: #3b82f6; font-weight: normal; margin-top: 5px; }
 
         .back-btn { display: block; text-align: center; padding: 15px; background-color: #64748b; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; }
@@ -115,7 +115,7 @@
     <div class="page-header">
         <h1>📊 유튜브 콘텐츠 키워드 아이디어</h1>
         <div class="badge">🎲 새로고침할 때마다 다시 섞입니다</div>
-        <p style="color:#64748b;">영상 주제가 막힐 때 꺼내 보는 키워드 모음입니다. 60개 중 30개를 무작위로 보여드립니다.</p>
+        <p style="color:var(--pt-muted);">영상 주제가 막힐 때 꺼내 보는 키워드 모음입니다. 60개 중 30개를 무작위로 보여드립니다.</p>
     </div>
 
     <div class="trend-board">
@@ -217,16 +217,16 @@
     <p>정리하면 순서는 이렇습니다. <strong>아이디어를 넓게 꺼내고 → 검색 의도를 한 문장으로 좁히고 → 자동완성으로 실제 수요를 확인하고 → 제목을 짓는</strong> 순서입니다. 이 페이지는 그 첫 단계에 쓰는 도구입니다.</p>
 </div>
 
-<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:rgba(30,41,59,0.94);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:#cbd5e1;font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
+<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:var(--pt-panel);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:var(--pt-text-2);font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
     <nav>
-        <a href="index.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">홈</a>|
-        <a href="about.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">사이트 소개</a>|
-        <a href="privacy.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
-        <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
-        <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
+        <a href="index.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">홈</a>|
+        <a href="about.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">사이트 소개</a>|
+        <a href="privacy.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
+        <a href="terms.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">이용약관</a>|
+        <a href="contact.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
-    <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
+    <div style="margin-top:8px;font-size:13px;color:var(--pt-muted);">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
+    <div style="margin-top:6px;font-size:13px;color:var(--pt-muted);">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>
 </html>

@@ -42,7 +42,7 @@
             border-left: 5px solid #38bdf8; /* 스카이 블루 포인트 */
         }
         
-        .calc-title { color: #e0e7ff; font-size: 18px; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; }
+        .calc-title { color: var(--pt-accent); font-size: 18px; margin-top: 0; margin-bottom: 15px; display: flex; align-items: center; }
         
         .input-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; font-size: 16px; font-weight: bold; color: var(--pt-muted); }
         .input-row input {
@@ -54,7 +54,7 @@
 
         .result-box {
             background-color: rgba(56, 189, 248, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.3);
-            font-size: 18px; color: #e0f2fe; font-weight: bold; text-align: center;
+            font-size: 18px; color: var(--pt-accent); font-weight: bold; text-align: center;
         }
         .result-number { color: var(--pt-accent); font-size: 26px; text-shadow: 1px 1px 5px rgba(56, 189, 248, 0.4); }
 
@@ -62,7 +62,7 @@
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
         .link-card {
             flex: 1; background-color: var(--pt-card-2); padding: 20px; border-radius: 12px;
-            text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center;
+            text-decoration: none; color: var(--pt-accent); font-weight: bold; text-align: center;
             border: 1px solid var(--pt-border); transition: 0.2s;
         }
         .link-card:hover { background-color: var(--pt-card-2); transform: translateY(-3px); border-color: var(--pt-accent); }
@@ -216,16 +216,16 @@
         }
     </script>
 
-<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:rgba(30,41,59,0.94);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:#cbd5e1;font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
+<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:var(--pt-panel);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:var(--pt-text-2);font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
     <nav>
-        <a href="index.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">홈</a>|
-        <a href="about.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">사이트 소개</a>|
-        <a href="privacy.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
-        <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
-        <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
+        <a href="index.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">홈</a>|
+        <a href="about.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">사이트 소개</a>|
+        <a href="privacy.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
+        <a href="terms.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">이용약관</a>|
+        <a href="contact.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
-    <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
+    <div style="margin-top:8px;font-size:13px;color:var(--pt-muted);">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
+    <div style="margin-top:6px;font-size:13px;color:var(--pt-muted);">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>
 </html>

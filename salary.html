@@ -168,7 +168,7 @@
                     <div class="result-amount" id="netPay">0원</div>
                 </div>
                 
-                <div class="result-title" style="color:#cbd5e1; text-align:center;">월 공제액 상세 내역 (예상치)</div>
+                <div class="result-title" style="color:var(--pt-text-2); text-align:center;">월 공제액 상세 내역 (예상치)</div>
                 <div class="deduction-grid">
                     <div class="deduct-item"><span>국민연금 (4.75%)</span> <span id="nps">0원</span></div>
                     <div class="deduct-item"><span>건강보험 (3.595%)</span> <span id="health">0원</span></div>
@@ -184,7 +184,7 @@
                 </div>
             </div>
 
-            <h2 style="color: #fde047; font-size: 20px; margin-top: 40px; border-bottom: 2px solid #334155; padding-bottom: 10px;">📈 향후 10년 연봉 상승 시나리오</h2>
+            <h2 style="color: var(--pt-head); font-size: 20px; margin-top: 40px; border-bottom: 2px solid var(--pt-input-border); padding-bottom: 10px;">📈 향후 10년 연봉 상승 시나리오</h2>
             <div class="chart-container">
                 <canvas id="salaryChart"></canvas>
             </div>
@@ -236,7 +236,7 @@
         <h3>연봉 협상할 때는 실수령액으로 말하세요</h3>
         <p>연봉을 300만 원 올려도 실수령액은 월 20만 원이 아니라 그보다 적게 늘어납니다. 공제액이 함께 늘고, 구간에 따라 소득세율도 올라가기 때문입니다. 이직을 비교할 때 계약 연봉만 나란히 놓으면 실제 손에 쥐는 돈의 차이를 놓치기 쉽습니다. <strong>비과세 항목 구성과 실수령액</strong>까지 계산해서 비교하는 편이 정확합니다.</p>
 
-        <div style="background: rgba(245, 158, 11, 0.12); border-left: 4px solid #f59e0b; padding: 16px 20px; border-radius: 8px; margin-top: 26px; color: #fde68a; line-height: 1.7;">
+        <div style="background: rgba(245, 158, 11, 0.12); border-left: 4px solid #f59e0b; padding: 16px 20px; border-radius: 8px; margin-top: 26px; color: var(--pt-accent-2); line-height: 1.7;">
             <strong>계산 결과는 참고용입니다.</strong> 소득세는 국세청 근로소득 간이세액표를 단순화한 근사치로 계산하므로 실제 원천징수액과 차이가 있을 수 있습니다. 부양가족 수, 자녀 세액공제, 중도 입·퇴사, 상여금 지급 방식에 따라서도 달라집니다. 최종 세액은 <strong>연말정산</strong>에서 정산되며, 정확한 금액은 회사 급여 담당자나 국세청 홈택스에서 확인하시기 바랍니다.
         </div>
     </div>
@@ -325,10 +325,10 @@
                 tableHTML += `
                     <tr>
                         <td>${yearLabel}</td>
-                        <td style="color:#fde047;">${formatManwon(currentAnnual)}</td>
-                        <td style="color:#10b981; font-weight:bold;">${formatMoney(res.netPay)}</td>
+                        <td style="color:var(--pt-head);">${formatManwon(currentAnnual)}</td>
+                        <td style="color:var(--pt-accent); font-weight:bold;">${formatMoney(res.netPay)}</td>
                         <td>${formatManwon(annualNetTotal)}</td>
-                        <td style="color:#f87171;">${formatMoney(res.totalDeduction)}</td>
+                        <td style="color:var(--pt-danger);">${formatMoney(res.totalDeduction)}</td>
                     </tr>
                 `;
 
@@ -393,16 +393,16 @@
         }
     </script>
 
-<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:rgba(30,41,59,0.94);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:#cbd5e1;font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
+<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:var(--pt-panel);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:var(--pt-text-2);font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
     <nav>
-        <a href="index.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">홈</a>|
-        <a href="about.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">사이트 소개</a>|
-        <a href="privacy.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
-        <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
-        <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
+        <a href="index.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">홈</a>|
+        <a href="about.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">사이트 소개</a>|
+        <a href="privacy.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
+        <a href="terms.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">이용약관</a>|
+        <a href="contact.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
-    <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
+    <div style="margin-top:8px;font-size:13px;color:var(--pt-muted);">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
+    <div style="margin-top:6px;font-size:13px;color:var(--pt-muted);">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>
 </html>

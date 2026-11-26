@@ -57,11 +57,11 @@
         .info-date { font-size: 15px; font-weight: bold; color: var(--pt-text-2); }
         .info-desc { font-size: 14px; font-weight: bold; }
         
-        .strategy-box { margin-top: 10px; background: linear-gradient(90deg, #4c1d95, #701a75); padding: 20px; border-radius: 10px; border: 1px solid #86198f; text-align: center; font-size: 18px; font-weight: bold; color: #fdf2f8; box-shadow: var(--pt-shadow); }
+        .strategy-box { margin-top: 10px; background: linear-gradient(90deg, #4c1d95, #701a75); padding: 20px; border-radius: 10px; border: 1px solid #86198f; text-align: center; font-size: 18px; font-weight: bold; color: var(--pt-pink); box-shadow: var(--pt-shadow); }
         .strategy-box .highlight { color: var(--pt-head); font-size: 22px; }
 
         .seo-section { background-color: #1e1b3a; padding: 30px; border-radius: 16px; border: 1px solid #2d2a4a; margin-bottom: 30px; }
-        .seo-section h2 { color: #e0e7ff; font-size: 20px; border-bottom: 1px solid #333055; padding-bottom: 15px; margin-top: 0; }
+        .seo-section h2 { color: var(--pt-accent); font-size: 20px; border-bottom: 1px solid #333055; padding-bottom: 15px; margin-top: 0; }
         .seo-section p { color: var(--pt-muted); font-size: 15px; line-height: 1.7; }
 
         /* 💰 쿠팡 파트너스 전용 쇼핑 카드 스타일 */
@@ -127,7 +127,7 @@
         <ul>
             <li><strong>입사 1년 미만:</strong> 1개월 개근할 때마다 1일씩 발생합니다. 1년이 되기 전까지 최대 11일입니다.</li>
             <li><strong>1년 이상(출근율 80% 이상):</strong> 15일이 발생합니다.</li>
-            <li><strong>3년 이상 근속:</strong> 최초 1년을 초과하는 근속연수 매 2년마다 1일씩 가산됩니다. 근속 3년 시점에 16일, 5년 시점에 17일, 7년 시점에 18일로 늘어납니다. <a href="annual-leave.html" style="color:#93c5fd;">연차 개수 계산기</a>에 입사일을 넣으면 발생일과 소멸일까지 바로 나옵니다.</li>
+            <li><strong>3년 이상 근속:</strong> 최초 1년을 초과하는 근속연수 매 2년마다 1일씩 가산됩니다. 근속 3년 시점에 16일, 5년 시점에 17일, 7년 시점에 18일로 늘어납니다. <a href="annual-leave.html" style="color:var(--pt-link);">연차 개수 계산기</a>에 입사일을 넣으면 발생일과 소멸일까지 바로 나옵니다.</li>
             <li><strong>상한:</strong> 가산을 모두 포함해 <strong>최대 25일</strong>까지입니다.</li>
         </ul>
         <p>회사가 연차를 입사일 기준으로 관리하는지 회계연도 기준으로 관리하는지에 따라 발생 시점이 달라질 수 있습니다. 다만 어떤 방식이든 <strong>법정 일수보다 적게 줄 수는 없습니다.</strong></p>
@@ -148,7 +148,7 @@
             <li><strong>연말에 몰아 쓰지 마세요.</strong> 12월에 남은 연차가 몰리면 업무 인수인계가 어려워 승인이 나지 않을 수 있습니다. 분기별로 나눠 계획하는 편이 안전합니다.</li>
             <li><strong>반차·반반차 제도를 확인하세요.</strong> 회사에 따라 연차를 시간 단위로 쪼개 쓸 수 있습니다. 병원 방문이나 관공서 업무에 하루를 통째로 쓰지 않아도 됩니다.</li>
         </ul>
-        <p style="font-size:14px; color:#94a3b8; margin-top:20px;">※ 연차 발생 일수와 사용촉진 절차는 회사의 취업규칙과 근로계약에 따라 달라질 수 있습니다. 구체적인 사안은 회사 인사 담당자나 공인노무사, 고용노동부 상담(국번없이 1350)을 통해 확인하시기 바랍니다.</p>
+        <p style="font-size:14px; color:var(--pt-muted); margin-top:20px;">※ 연차 발생 일수와 사용촉진 절차는 회사의 취업규칙과 근로계약에 따라 달라질 수 있습니다. 구체적인 사안은 회사 인사 담당자나 공인노무사, 고용노동부 상담(국번없이 1350)을 통해 확인하시기 바랍니다.</p>
     </div>
 
     <div class="affiliate-section">
@@ -260,16 +260,16 @@
         window.onload = () => { loadYear(2026, document.querySelector('.tab-btn.active')); };
     </script>
 
-<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:rgba(30,41,59,0.94);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:#cbd5e1;font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
+<footer class="pt-global-footer" style="max-width:820px;margin:40px auto 0;padding:22px 16px;background:var(--pt-panel);border-radius:12px;text-align:center;font-size:14px;line-height:1.9;color:var(--pt-text-2);font-family:'맑은 고딕',sans-serif;box-sizing:border-box;">
     <nav>
-        <a href="index.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">홈</a>|
-        <a href="about.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">사이트 소개</a>|
-        <a href="privacy.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
-        <a href="terms.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">이용약관</a>|
-        <a href="contact.html" style="color:#93c5fd;text-decoration:none;margin:0 6px;">문의하기</a>
+        <a href="index.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">홈</a>|
+        <a href="about.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">사이트 소개</a>|
+        <a href="privacy.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">개인정보처리방침</a>|
+        <a href="terms.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">이용약관</a>|
+        <a href="contact.html" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">문의하기</a>
     </nav>
-    <div style="margin-top:8px;font-size:13px;color:#94a3b8;">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
-    <div style="margin-top:6px;font-size:13px;color:#94a3b8;">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:#93c5fd;text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
+    <div style="margin-top:8px;font-size:13px;color:var(--pt-muted);">계산 결과는 참고용입니다. 실제 금액은 개인별 조건에 따라 달라질 수 있으며, 중요한 결정은 반드시 해당 기관이나 전문가 확인을 거치시기 바랍니다.</div>
+    <div style="margin-top:6px;font-size:13px;color:var(--pt-muted);">&copy; 2026 PANDORA TOOLS. All Rights Reserved. 문의: <a href="mailto:starlinelabs.studio@gmail.com" style="color:var(--pt-link);text-decoration:none;margin:0 6px;">starlinelabs.studio@gmail.com</a></div>
 </footer>
 </body>
 </html>
