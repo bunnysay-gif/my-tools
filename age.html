@@ -29,9 +29,9 @@
         }
         
         /* 2. 헤더 및 뱃지 색상 */
-        .page-header h1 { color: #fde047 !important; }
-        .page-header p { color: #cbd5e1 !important; }
-        .badge { background-color: rgba(236, 72, 153, 0.2) !important; color: #fbcfe8 !important; border: 1px solid #ec4899 !important; }
+        .page-header h1 { color: var(--pt-accent-2) !important; }
+        .page-header p { color: var(--pt-text) !important; }
+        .badge { background-color: rgba(236, 72, 153, 0.2) !important; color: var(--pt-pink) !important; border: 1px solid #ec4899 !important; }
 
         /* 3. 메인 계산기 카드 (유리창 효과) */
         .calculator-card, .seo-section, #resultArea, .law-box, .link-card {
@@ -47,7 +47,7 @@
 
         /* 4. 입력창 레이아웃 유지 및 색상 변경 */
         .input-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .input-group label { font-weight: bold; width: 40%; color: #fde047 !important; font-size: 16px; }
+        .input-group label { font-weight: bold; width: 40%; color: var(--pt-accent-2) !important; font-size: 16px; }
         .input-wrapper { width: 60%; }
         
         input {
@@ -63,17 +63,17 @@
             font-size: 18px; font-weight: bold; border: none; border-radius: 8px;
             cursor: pointer; margin-top: 10px; transition: 0.2s;
         }
-        .calc-btn:hover { background-color: #9d174d !important; transform: translateY(-2px); }
+        .calc-btn:hover { background-color: var(--pt-card) !important; transform: translateY(-2px); }
 
         /* 6. 결과 영역 색상 보정 */
         #resultArea { background-color: rgba(190, 24, 93, 0.1) !important; border-color: #be185d !important; }
-        .result-title, .result-desc { color: #fbcfe8 !important; }
-        .result-amount { color: #f472b6 !important; font-size: 36px; font-weight: bold; }
-        .extra-info { background: rgba(139, 92, 246, 0.2) !important; color: #ddd6fe !important; border: 1px solid rgba(139, 92, 246, 0.3) !important; }
+        .result-title, .result-desc { color: var(--pt-pink) !important; }
+        .result-amount { color: var(--pt-pink) !important; font-size: 36px; font-weight: bold; }
+        .extra-info { background: rgba(139, 92, 246, 0.2) !important; color: var(--pt-violet) !important; border: 1px solid rgba(139, 92, 246, 0.3) !important; }
 
         /* 7. 하단 내부 링크 및 텍스트 */
-        .seo-section h2, .seo-section h3 { color: #fde047 !important; }
-        .seo-section p, .seo-section li { color: #cbd5e1 !important; }
+        .seo-section h2, .seo-section h3 { color: var(--pt-accent-2) !important; }
+        .seo-section p, .seo-section li { color: var(--pt-text) !important; }
         .link-card { text-decoration: none; display: block; }
         .link-card span { color: #3b82f6 !important; }
         .back-btn { display: block; text-align: center; padding: 15px; background-color: var(--pt-card-2); color: var(--pt-text) !important; text-decoration: none; border-radius: 8px; border: 1px solid var(--pt-border-strong); }
