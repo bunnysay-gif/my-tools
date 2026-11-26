@@ -20,27 +20,27 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3130941392990267" crossorigin="anonymous"></script>
 
     <style>
-        body { background: #131127; color: white; font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; line-height: 1.6; }
+        body { background: var(--pt-bg); color: white; font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; line-height: 1.6; }
         .page-header { text-align: center; margin-bottom: 40px; }
         .page-header h1 { font-size: 32px; margin-bottom: 10px; color: var(--pt-text); text-shadow: var(--pt-text-shadow); }
         .badge { background-color: rgba(236, 72, 153, 0.2); border: 1px solid #ec4899; color: var(--pt-pink); padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
         .year-tabs { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
-        .tab-btn { flex: 1; padding: 15px 20px; text-align: center; background-color: #1e1b3a; color: var(--pt-muted); font-weight: bold; border-radius: 12px; cursor: pointer; border: 1px solid #2d2a4a; transition: 0.3s; white-space: nowrap; font-size: 16px; }
+        .tab-btn { flex: 1; padding: 15px 20px; text-align: center; background-color: var(--pt-card); color: var(--pt-muted); font-weight: bold; border-radius: 12px; cursor: pointer; border: 1px solid #2d2a4a; transition: 0.3s; white-space: nowrap; font-size: 16px; }
         .tab-btn.active { background-color: #4c1d95; color: white; border-color: #6d28d9; box-shadow: 0 0 15px rgba(109, 40, 217, 0.4); }
-        .tab-btn:hover:not(.active) { background-color: #2d2a4a; color: white; }
+        .tab-btn:hover:not(.active) { background-color: var(--pt-card); color: white; }
 
         #calendar-container { animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .month-card { background-color: #22203c; border-radius: 16px; margin-bottom: 30px; border: 1px solid #333055; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; }
+        .month-card { background-color: var(--pt-card); border-radius: 16px; margin-bottom: 30px; border: 1px solid #333055; box-shadow: 0 10px 30px rgba(0,0,0,0.2); overflow: hidden; }
         .month-header { background: linear-gradient(90deg, #2a274c, #3f2f63); padding: 15px 25px; border-bottom: 1px solid #333055; display: flex; justify-content: space-between; align-items: center; }
         .month-header h2 { margin: 0; font-size: 24px; font-weight: 900; color: var(--pt-text); }
         .month-header .vacation-days { background-color: #ec4899; color: white; padding: 4px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; display: none; }
         .month-header .vacation-days.show { display: inline-block; }
 
         .month-body { display: flex; padding: 25px; gap: 30px; }
-        .calendar-box { background-color: #1a1831; border-radius: 12px; padding: 20px; min-width: 260px; border: 1px solid #2d2a4a; }
+        .calendar-box { background-color: var(--pt-card); border-radius: 12px; padding: 20px; min-width: 260px; border: 1px solid #2d2a4a; }
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; text-align: center; }
         .cal-header { font-size: 13px; color: var(--pt-muted); font-weight: bold; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #2d2a4a; }
         .cal-day { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; margin: 0 auto; border-radius: 8px; color: var(--pt-text-2); transition: 0.2s; }
@@ -53,25 +53,25 @@
 
         .info-panel { flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: center; }
         .no-event-msg { color: var(--pt-muted); font-size: 15px; text-align: center; font-style: italic; }
-        .info-row { background-color: #2a274c; padding: 15px 20px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333055; }
+        .info-row { background-color: var(--pt-card); padding: 15px 20px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333055; }
         .info-date { font-size: 15px; font-weight: bold; color: var(--pt-text-2); }
         .info-desc { font-size: 14px; font-weight: bold; }
         
         .strategy-box { margin-top: 10px; background: linear-gradient(90deg, #4c1d95, #701a75); padding: 20px; border-radius: 10px; border: 1px solid #86198f; text-align: center; font-size: 18px; font-weight: bold; color: var(--pt-pink); box-shadow: var(--pt-shadow); }
         .strategy-box .highlight { color: var(--pt-head); font-size: 22px; }
 
-        .seo-section { background-color: #1e1b3a; padding: 30px; border-radius: 16px; border: 1px solid #2d2a4a; margin-bottom: 30px; }
+        .seo-section { background-color: var(--pt-card); padding: 30px; border-radius: 16px; border: 1px solid #2d2a4a; margin-bottom: 30px; }
         .seo-section h2 { color: var(--pt-accent); font-size: 20px; border-bottom: 1px solid #333055; padding-bottom: 15px; margin-top: 0; }
         .seo-section p { color: var(--pt-muted); font-size: 15px; line-height: 1.7; }
 
         /* 💰 쿠팡 파트너스 전용 쇼핑 카드 스타일 */
-        .affiliate-section { background: #1a1831; padding: 30px; border-radius: 16px; border: 1px solid #333055; margin-bottom: 40px; text-align: center; }
+        .affiliate-section { background: var(--pt-card); padding: 30px; border-radius: 16px; border: 1px solid #333055; margin-bottom: 40px; text-align: center; }
         .affiliate-section h2 { color: var(--pt-text); font-size: 22px; margin-top: 0; margin-bottom: 10px; }
         .affiliate-section p { color: var(--pt-muted); font-size: 15px; margin-bottom: 25px; }
         
         .aff-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
         .aff-card {
-            display: flex; flex-direction: column; background-color: #22203c; border-radius: 12px; padding: 20px;
+            display: flex; flex-direction: column; background-color: var(--pt-card); border-radius: 12px; padding: 20px;
             text-decoration: none; border: 1px solid #2d2a4a; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
         .aff-card:hover { transform: translateY(-5px); border-color: #3b82f6; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.2); }
@@ -84,8 +84,8 @@
 
         .aff-disclosure { font-size: 12px; color: var(--pt-muted); text-align: center; margin-top: 25px; border-top: 1px solid #2d2a4a; padding-top: 15px; }
 
-        .back-btn { display: block; text-align: center; padding: 15px; background-color: #2d2a4a; color: white; text-decoration: none; border-radius: 12px; font-weight: bold; transition: 0.2s; border: 1px solid #333055; margin-bottom: 40px; }
-        .back-btn:hover { background-color: #3f2f63; }
+        .back-btn { display: block; text-align: center; padding: 15px; background-color: var(--pt-card); color: white; text-decoration: none; border-radius: 12px; font-weight: bold; transition: 0.2s; border: 1px solid #333055; margin-bottom: 40px; }
+        .back-btn:hover { background-color: var(--pt-card); }
 
         @media (max-width: 768px) {
             .month-body { flex-direction: column; padding: 15px; gap: 20px; }
