@@ -27,9 +27,9 @@
     <style>
         body { background: var(--pt-bg); color: var(--pt-text); font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; }
         .page-header { text-align: center; margin-bottom: 30px; }
-        .page-header h1 { color: #5eead4; margin-bottom: 10px; font-size: 28px; text-shadow: var(--pt-text-shadow); }
+        .page-header h1 { color: var(--pt-accent); margin-bottom: 10px; font-size: 28px; text-shadow: var(--pt-text-shadow); }
         .page-header p { color: var(--pt-text-2); font-size: 15px; margin-top: 0; }
-        .badge { background-color: rgba(20, 184, 166, 0.2); color: #2dd4bf; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #14b8a6; }
+        .badge { background-color: rgba(20, 184, 166, 0.2); color: var(--pt-accent); padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #14b8a6; }
 
         .calculator-card { background-color: var(--pt-card); padding: 30px; border-radius: 12px; box-shadow: var(--pt-shadow); margin-bottom: 30px; border: 1px solid var(--pt-border); backdrop-filter: blur(10px); border-left: 5px solid #14b8a6; }
 
@@ -38,7 +38,7 @@
         
         .input-wrapper { width: 60%; position: relative; }
         .input-wrapper input, .input-wrapper select { width: 100%; padding: 14px; font-size: 16px; background-color: var(--pt-input-bg); color: var(--pt-text); border: 1px solid var(--pt-input-border); border-radius: 8px; box-sizing: border-box; font-family: inherit; transition: 0.2s; outline: none; }
-        .input-wrapper input:focus, .input-wrapper select:focus { border-color: #14b8a6; box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.3); background-color: var(--pt-card-2); }
+        .input-wrapper input:focus, .input-wrapper select:focus { border-color: var(--pt-accent); box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.3); background-color: var(--pt-card-2); }
         
         .input-wrapper select option { background-color: var(--pt-input-bg); color: var(--pt-text); }
         .input-wrapper input[type="number"] { text-align: right; padding-right: 50px; }
@@ -59,8 +59,8 @@
         .total-cost-title { color: var(--pt-muted); font-size: 15px; font-weight: bold; margin-bottom: 5px; }
         .total-cost-amount { font-size: 26px; color: var(--pt-text-2); font-weight: bold; margin: 0 0 20px 0; text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.2); }
         
-        .dutch-pay-title { color: #5eead4; font-size: 18px; font-weight: bold; margin-bottom: 10px; border-top: 1px dashed rgba(20, 184, 166, 0.3); padding-top: 20px;}
-        .dutch-pay-amount { font-size: 42px; color: #2dd4bf; font-weight: 900; margin: 0; text-shadow: 1px 1px 10px rgba(45, 212, 191, 0.4); letter-spacing: -1px; }
+        .dutch-pay-title { color: var(--pt-accent); font-size: 18px; font-weight: bold; margin-bottom: 10px; border-top: 1px dashed rgba(20, 184, 166, 0.3); padding-top: 20px;}
+        .dutch-pay-amount { font-size: 42px; color: var(--pt-accent); font-weight: 900; margin: 0; text-shadow: 1px 1px 10px rgba(45, 212, 191, 0.4); letter-spacing: -1px; }
 
         .detail-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px; }
         .detail-item { display: flex; justify-content: space-between; font-size: 15px; color: var(--pt-text-2); background: var(--pt-sunken); padding: 12px 20px; border-radius: 6px; }
@@ -69,13 +69,13 @@
 
         .seo-section { background-color: var(--pt-card); padding: 30px; border-radius: 12px; box-shadow: var(--pt-shadow); margin-bottom: 30px; border: 1px solid var(--pt-border); border-top: 4px solid #14b8a6; backdrop-filter: blur(10px); }
         .seo-section h2 { color: var(--pt-head); font-size: 22px; border-bottom: 1px solid var(--pt-border); padding-bottom: 10px; margin-top: 0; }
-        .seo-section h3 { color: #5eead4; font-size: 18px; margin-top: 25px; }
+        .seo-section h3 { color: var(--pt-accent); font-size: 18px; margin-top: 25px; }
         .seo-section p, .seo-section ul { color: var(--pt-text-2); font-size: 15px; line-height: 1.7; }
         .seo-section li { margin-bottom: 8px; }
 
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
         .link-card { flex: 1; background-color: var(--pt-card-2); padding: 20px; border-radius: 12px; text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center; border: 1px solid var(--pt-border); transition: 0.2s; }
-        .link-card:hover { background-color: var(--pt-card-2); transform: translateY(-3px); border-color: #14b8a6; }
+        .link-card:hover { background-color: var(--pt-card-2); transform: translateY(-3px); border-color: var(--pt-accent); }
         .link-card span { display: block; font-size: 13px; color: var(--pt-muted); font-weight: normal; margin-top: 5px; }
 
         .back-btn { display: block; text-align: center; padding: 15px; background-color: var(--pt-card-2); color: var(--pt-text); text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid var(--pt-border-strong); transition: 0.2s;}

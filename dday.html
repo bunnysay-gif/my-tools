@@ -29,7 +29,7 @@
         .page-header { text-align: center; margin-bottom: 30px; }
         .page-header h1 { color: var(--pt-head); margin-bottom: 10px; font-size: 28px; text-shadow: var(--pt-text-shadow); }
         .page-header p { color: var(--pt-text-2); font-size: 15px; margin-top: 0; }
-        .badge { background-color: rgba(99, 102, 241, 0.2); color: #c7d2fe; border: 1px solid #818cf8; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+        .badge { background-color: rgba(99, 102, 241, 0.2); color: var(--pt-accent); border: 1px solid #818cf8; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
         /* 계산기 영역 (다크 유리창) */
         .calc-section {
@@ -47,7 +47,7 @@
             width: 100%; padding: 12px; font-size: 16px; border: 1px solid var(--pt-input-border); background-color: var(--pt-input-bg); color: var(--pt-text);
             border-radius: 8px; box-sizing: border-box; outline: none; transition: 0.2s; font-family: inherit;
         }
-        input:focus { border-color: #818cf8; box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3); background-color: var(--pt-card-2); }
+        input:focus { border-color: var(--pt-accent); box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.3); background-color: var(--pt-card-2); }
         
         /* 다크 모드에서 달력 아이콘 하얗게 반전 */
         input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); cursor: pointer; }
@@ -64,8 +64,8 @@
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
         
-        .result-title { font-size: 15px; color: #c7d2fe; font-weight: bold; margin-bottom: 5px; }
-        .result-value { font-size: 32px; color: #818cf8; font-weight: 900; letter-spacing: 1px; text-shadow: 1px 1px 5px rgba(129, 140, 248, 0.4); }
+        .result-title { font-size: 15px; color: var(--pt-accent); font-weight: bold; margin-bottom: 5px; }
+        .result-value { font-size: 32px; color: var(--pt-accent); font-weight: 900; letter-spacing: 1px; text-shadow: 1px 1px 5px rgba(129, 140, 248, 0.4); }
 
         /* 내부 링크 */
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; }
@@ -74,7 +74,7 @@
             text-decoration: none; color: #e0e7ff; font-weight: bold; text-align: center;
             border: 1px solid var(--pt-border); transition: 0.2s;
         }
-        .link-card:hover { background-color: var(--pt-card-2); transform: translateY(-3px); border-color: #818cf8; }
+        .link-card:hover { background-color: var(--pt-card-2); transform: translateY(-3px); border-color: var(--pt-accent); }
         .link-card span { display: block; font-size: 13px; color: var(--pt-muted); font-weight: normal; margin-top: 5px; }
 
         /* SEO 최적화 설명 섹션 */
@@ -83,14 +83,14 @@
             box-shadow: var(--pt-shadow); margin-bottom: 30px; border: 1px solid var(--pt-border); border-top: 4px solid #818cf8; backdrop-filter: blur(10px);
         }
         .seo-section h2 { color: var(--pt-head); font-size: 22px; border-bottom: 1px solid var(--pt-border); padding-bottom: 10px; margin-top: 0; }
-        .seo-section h3 { color: #a5b4fc; font-size: 18px; margin-top: 25px; }
+        .seo-section h3 { color: var(--pt-accent); font-size: 18px; margin-top: 25px; }
         .seo-section p { color: var(--pt-text-2); font-size: 15px; }
         
         .law-box { background-color: rgba(99, 102, 241, 0.1); border-left: 4px solid #818cf8; padding: 20px; border-radius: 8px; margin-top: 30px; border-right: 1px solid rgba(99, 102, 241, 0.2); }
         .law-box h4 { margin: 0 0 10px 0; color: #e0e7ff; font-size: 16px; }
-        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: #c7d2fe; }
-        .law-link { display: inline-block; color: #818cf8; font-weight: bold; text-decoration: none; font-size: 15px; margin-bottom: 5px;}
-        .law-link:hover { text-decoration: underline; color: #a5b4fc; }
+        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: var(--pt-accent); }
+        .law-link { display: inline-block; color: var(--pt-accent); font-weight: bold; text-decoration: none; font-size: 15px; margin-bottom: 5px;}
+        .law-link:hover { text-decoration: underline; color: var(--pt-accent); }
 
         .back-btn { display: block; text-align: center; padding: 15px; background-color: var(--pt-card-2); color: var(--pt-text); text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 30px; border: 1px solid var(--pt-border-strong); transition: 0.2s;}
         .back-btn:hover { background-color: rgba(255,255,255,0.2); }

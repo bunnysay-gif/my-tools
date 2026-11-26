@@ -35,6 +35,10 @@
     --pt-accent-2: #b45309;
     --pt-accent-3: #075985;
     --pt-danger: #b91c1c;
+    --pt-violet: #6d28d9;
+    --pt-green: #047857;
+    --pt-orange: #c2410c;
+    --pt-pink: #be185d;
 }
 
 /* 기기 설정이 어두움이고, 사용자가 밝게를 고르지 않았을 때 */
@@ -72,6 +76,10 @@
     --pt-accent-2: #fcd34d;
     --pt-accent-3: #bae6fd;
     --pt-danger: #fca5a5;
+    --pt-violet: #c4b5fd;
+    --pt-green: #6ee7b7;
+    --pt-orange: #fdba74;
+    --pt-pink: #f9a8d4;
         --pt-header-band: linear-gradient(160deg, rgba(124,58,237,0.22), rgba(30,27,75,0) 72%);
         --pt-accent-border: rgba(167,139,250,0.34);
         --pt-accent-soft-2: rgba(124,58,237,0.14);
@@ -85,6 +93,10 @@
         --pt-accent-2: #fcd34d;
         --pt-accent-3: #bae6fd;
         --pt-danger: #fca5a5;
+        --pt-violet: #c4b5fd;
+        --pt-green: #6ee7b7;
+        --pt-orange: #fdba74;
+        --pt-pink: #f9a8d4;
     }
 }
 

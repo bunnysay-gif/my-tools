@@ -41,7 +41,7 @@
         }
 
         .header-section { text-align: center; margin-bottom: 30px; }
-        .header-section h1 { font-size: 1.8rem; color: #10b981; margin-bottom: 10px; }
+        .header-section h1 { font-size: 1.8rem; color: var(--pt-accent); margin-bottom: 10px; }
         .header-section p { color: var(--pt-muted); font-size: 1rem; word-break: keep-all; line-height: 1.5; }
 
         /* 입력 폼 영역 */
@@ -52,7 +52,7 @@
         }
         .input-group h3 {
             margin-top: 0; margin-bottom: 15px; font-size: 1.1rem; 
-            color: #6ee7b7; border-bottom: 1px solid var(--pt-border); padding-bottom: 10px;
+            color: var(--pt-green); border-bottom: 1px solid var(--pt-border); padding-bottom: 10px;
         }
 
         .input-row { display: flex; gap: 15px; margin-bottom: 15px; }
@@ -69,7 +69,7 @@
             font-size: 1.1rem; text-align: right; transition: 0.3s;
         }
         input[type="text"]:focus {
-            outline: none; border-color: #10b981; background-color: rgba(16, 185, 129, 0.1);
+            outline: none; border-color: var(--pt-accent); background-color: rgba(16, 185, 129, 0.1);
         }
         
         .unit { position: absolute; right: 15px; top: 15px; color: var(--pt-muted); font-size: 1rem; pointer-events: none; }
@@ -96,8 +96,8 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .result-title { font-size: 1.1rem; color: var(--pt-text-2); margin-bottom: 10px; }
-        .result-value { font-size: 2rem; font-weight: bold; color: #34d399; text-shadow: 0 0 15px rgba(52, 211, 153, 0.4); margin-bottom: 5px; }
-        .result-desc { font-size: 0.9rem; color: #a7f3d0; opacity: 0.9; }
+        .result-value { font-size: 2rem; font-weight: bold; color: var(--pt-green); text-shadow: 0 0 15px rgba(52, 211, 153, 0.4); margin-bottom: 5px; }
+        .result-desc { font-size: 0.9rem; color: var(--pt-green); opacity: 0.9; }
         
         .comparison-box {
             margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--pt-border-strong);

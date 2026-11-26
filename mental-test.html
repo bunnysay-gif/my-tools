@@ -37,7 +37,7 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.5);
         }
 
-        h1 { font-size: 1.8rem; color: #14b8a6; margin-bottom: 10px; }
+        h1 { font-size: 1.8rem; color: var(--pt-accent); margin-bottom: 10px; }
         .subtitle { color: var(--pt-muted); font-size: 1rem; margin-bottom: 30px; word-break: keep-all; }
 
         /* 진행률 바 */
@@ -46,7 +46,7 @@
             border-radius: 5px; margin-bottom: 30px; overflow: hidden;
         }
         .progress {
-            height: 100%; background-color: #14b8a6; width: 0%;
+            height: 100%; background-color: var(--pt-accent); width: 0%;
             transition: width 0.3s ease;
         }
 
@@ -63,7 +63,7 @@
         }
         .btn-answer:hover {
             background-color: rgba(20, 184, 166, 0.2);
-            border-color: #14b8a6; transform: translateY(-2px);
+            border-color: var(--pt-accent); transform: translateY(-2px);
         }
 
         /* 결과 영역 */
@@ -72,9 +72,9 @@
         
         .grade { font-size: 5rem; font-weight: bold; margin: 20px 0; text-shadow: 0 0 20px rgba(20, 184, 166, 0.8); }
         .grade-S { color: var(--pt-muted); } /* 티타늄(은색) */
-        .grade-A { color: #38bdf8; } /* 강철(파란색) */
-        .grade-C { color: #fcd34d; } /* 쿠쿠다스(노란색) */
-        .grade-F { color: #f87171; } /* 순두부(빨간색/경고) */
+        .grade-A { color: var(--pt-accent); } /* 강철(파란색) */
+        .grade-C { color: var(--pt-accent-2); } /* 쿠쿠다스(노란색) */
+        .grade-F { color: var(--pt-danger); } /* 순두부(빨간색/경고) */
 
         .result-title { font-size: 1.5rem; margin-bottom: 15px; font-weight: bold; }
         .result-desc { color: var(--pt-text-2); line-height: 1.6; margin-bottom: 30px; background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; }

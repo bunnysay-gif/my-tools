@@ -37,7 +37,7 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.5);
         }
 
-        h1 { font-size: 1.8rem; color: #fcd34d; margin-bottom: 10px; }
+        h1 { font-size: 1.8rem; color: var(--pt-accent-2); margin-bottom: 10px; }
         .subtitle { color: #d4d4d8; font-size: 1rem; margin-bottom: 30px; word-break: keep-all; }
 
         /* 진행률 바 */
@@ -46,7 +46,7 @@
             border-radius: 5px; margin-bottom: 30px; overflow: hidden;
         }
         .progress {
-            height: 100%; background-color: #fcd34d; width: 0%;
+            height: 100%; background-color: var(--pt-accent-2); width: 0%;
             transition: width 0.3s ease;
         }
 
@@ -63,15 +63,15 @@
         }
         .btn-answer:hover {
             background-color: rgba(252, 211, 77, 0.2);
-            border-color: #fcd34d; transform: translateY(-2px);
+            border-color: var(--pt-accent-2); transform: translateY(-2px);
         }
 
         /* 결과 영역 */
         #result-section { display: none; animation: fadeIn 0.8s; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         
-        .grade { font-size: 3rem; font-weight: bold; margin: 20px 0; text-shadow: 0 0 20px rgba(252, 211, 77, 0.8); color: #fde68a; word-break: keep-all; }
-        .result-title { font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; color: #fbbf24; }
+        .grade { font-size: 3rem; font-weight: bold; margin: 20px 0; text-shadow: 0 0 20px rgba(252, 211, 77, 0.8); color: var(--pt-accent-2); word-break: keep-all; }
+        .result-title { font-size: 1.2rem; margin-bottom: 15px; font-weight: bold; color: var(--pt-orange); }
         .result-desc { color: var(--pt-text-2); line-height: 1.6; margin-bottom: 30px; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 10px; text-align: left; }
 
         /* 하단 버튼 */

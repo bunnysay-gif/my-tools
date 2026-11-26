@@ -23,7 +23,7 @@
         body { background: #131127; color: white; font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 1000px; margin: 0 auto; line-height: 1.6; }
         .page-header { text-align: center; margin-bottom: 40px; }
         .page-header h1 { font-size: 32px; margin-bottom: 10px; color: var(--pt-text); text-shadow: var(--pt-text-shadow); }
-        .badge { background-color: rgba(236, 72, 153, 0.2); border: 1px solid #ec4899; color: #fbcfe8; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+        .badge { background-color: rgba(236, 72, 153, 0.2); border: 1px solid #ec4899; color: var(--pt-pink); padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
         .year-tabs { display: flex; gap: 10px; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
         .tab-btn { flex: 1; padding: 15px 20px; text-align: center; background-color: #1e1b3a; color: var(--pt-muted); font-weight: bold; border-radius: 12px; cursor: pointer; border: 1px solid #2d2a4a; transition: 0.3s; white-space: nowrap; font-size: 16px; }
@@ -46,10 +46,10 @@
         .cal-day { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 14px; margin: 0 auto; border-radius: 8px; color: var(--pt-text-2); transition: 0.2s; }
         .cal-day.empty { background: transparent; }
         
-        .day-sun { color: #f87171; }
+        .day-sun { color: var(--pt-danger); }
         .day-sat { color: var(--pt-link); }
         .day-holiday { background-color: #ec4899; color: white; font-weight: bold; box-shadow: 0 0 10px rgba(236,72,153,0.5); }
-        .day-vacation { background-color: #10b981; color: white; font-weight: bold; box-shadow: 0 0 10px rgba(16,185,129,0.5); }
+        .day-vacation { background-color: var(--pt-accent); color: white; font-weight: bold; box-shadow: 0 0 10px rgba(16,185,129,0.5); }
 
         .info-panel { flex: 1; display: flex; flex-direction: column; gap: 12px; justify-content: center; }
         .no-event-msg { color: var(--pt-muted); font-size: 15px; text-align: center; font-style: italic; }

@@ -28,8 +28,8 @@
         }
         
         .page-header { text-align: center; margin-bottom: 30px; }
-        .page-header h1 { font-size: 32px; margin-bottom: 10px; color: #fdba74; text-shadow: var(--pt-text-shadow); }
-        .badge { background-color: rgba(249, 115, 22, 0.2); border: 1px solid #f97316; color: #fdba74; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+        .page-header h1 { font-size: 32px; margin-bottom: 10px; color: var(--pt-orange); text-shadow: var(--pt-text-shadow); }
+        .badge { background-color: rgba(249, 115, 22, 0.2); border: 1px solid #f97316; color: var(--pt-orange); padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
         /* 메인 계산기 박스 */
         .calc-container {
@@ -42,7 +42,7 @@
         .input-group { margin-bottom: 25px; }
         .input-group label { display: block; font-size: 15px; color: var(--pt-text-2); font-weight: bold; margin-bottom: 8px; }
         .input-wrapper { display: flex; align-items: center; background-color: var(--pt-input-bg); border: 1px solid var(--pt-input-border); border-radius: 8px; padding: 0 15px; transition: 0.3s; }
-        .input-wrapper:focus-within { border-color: #f97316; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3); }
+        .input-wrapper:focus-within { border-color: var(--pt-orange); box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3); }
         .input-wrapper input { flex: 1; background: transparent; border: none; color: var(--pt-text); font-size: 18px; padding: 15px 0; outline: none; text-align: right; font-weight: bold; }
         .input-wrapper span { color: var(--pt-muted); font-weight: bold; margin-left: 10px; }
         .input-wrapper.discount:focus-within { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); }
@@ -55,7 +55,7 @@
         }
         .radio-group input[type="radio"] { display: none; }
         .radio-group input[type="radio"]:checked + .radio-label {
-            background-color: rgba(249, 115, 22, 0.2); color: #fdba74; border-color: #f97316;
+            background-color: rgba(249, 115, 22, 0.2); color: var(--pt-orange); border-color: var(--pt-orange);
         }
 
         /* 사람 리스트 영역 */
@@ -66,7 +66,7 @@
         /* flex 자식이 축소되도록 (좁은 화면 가로 스크롤 방지) */
         .person-name, .person-price { min-width: 0; }
         .btn-remove { flex-shrink: 0; }
-        .btn-remove { background-color: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid #ef4444; width: 45px; height: 45px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .btn-remove { background-color: rgba(239, 68, 68, 0.2); color: var(--pt-danger); border: 1px solid #ef4444; width: 45px; height: 45px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .btn-remove:hover { background-color: rgba(239, 68, 68, 0.4); }
         
         .btn-add {
@@ -90,23 +90,23 @@
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         
-        .result-header { color: #fdba74; font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid var(--pt-border); padding-bottom: 10px; }
+        .result-header { color: var(--pt-orange); font-size: 18px; font-weight: bold; margin-bottom: 15px; border-bottom: 1px solid var(--pt-border); padding-bottom: 10px; }
         .result-item { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 16px; color: var(--pt-text-2); }
         .result-item span:last-child { font-weight: bold; color: var(--pt-text); }
         .total-check { margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--pt-border-strong); display: flex; justify-content: space-between; color: var(--pt-muted); font-size: 14px; }
         
         /* 카톡 복사 버튼 */
         .copy-btn {
-            width: 100%; padding: 15px; background-color: #fef01b; color: #371d1e; border: none;
+            width: 100%; padding: 15px; background-color: var(--pt-accent-2); color: #371d1e; border: none;
             border-radius: 8px; font-size: 16px; font-weight: 900; cursor: pointer; margin-top: 20px;
             display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s;
         }
-        .copy-btn:hover { background-color: #fada0a; }
+        .copy-btn:hover { background-color: var(--pt-accent-2); }
 
         /* SEO 최적화 설명 섹션 */
         .seo-section { background-color: rgba(30, 41, 59, 0.7); padding: 30px; border-radius: 16px; border: 1px solid var(--pt-border); margin-bottom: 40px; }
         .seo-section h2 { color: #e0e7ff; font-size: 20px; border-bottom: 1px solid var(--pt-border); padding-bottom: 15px; margin-top: 0; }
-        .seo-section h3 { color: #fdba74; font-size: 17px; margin-top: 25px; margin-bottom: 10px; }
+        .seo-section h3 { color: var(--pt-orange); font-size: 17px; margin-top: 25px; margin-bottom: 10px; }
         .seo-section p { color: var(--pt-text-2); font-size: 15px; line-height: 1.7; margin-bottom: 15px; }
 
         .back-btn { display: block; text-align: center; padding: 15px; background-color: var(--pt-card-2); color: var(--pt-text); text-decoration: none; border-radius: 12px; font-weight: bold; transition: 0.2s; border: 1px solid var(--pt-border-strong); margin-bottom: 40px; }

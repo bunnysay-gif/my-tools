@@ -29,7 +29,7 @@
         .page-header { text-align: center; margin-bottom: 30px; }
         .page-header h1 { font-size: 32px; margin-bottom: 10px; color: var(--pt-head); text-shadow: var(--pt-text-shadow); }
         .page-header p { color: var(--pt-text-2); font-size: 15px; margin-top: 0; }
-        .badge { background-color: rgba(250, 204, 21, 0.2); border: 1px solid #facc15; color: #fef08a; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+        .badge { background-color: rgba(250, 204, 21, 0.2); border: 1px solid #facc15; color: var(--pt-accent-2); padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
         /* 계산기 메인 영역 */
         .calc-section {
@@ -42,7 +42,7 @@
             background-color: var(--pt-input-bg); border: 1px solid var(--pt-input-border); border-radius: 12px;
             padding: 25px; margin-bottom: 20px; position: relative; transition: 0.3s;
         }
-        .product-card.winner { border-color: #f59e0b; background-color: rgba(245, 158, 11, 0.15); box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); } 
+        .product-card.winner { border-color: var(--pt-orange); background-color: rgba(245, 158, 11, 0.15); box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); } 
         
         .product-title { margin-top: 0; font-size: 18px; color: #f8fafc; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; }
         .winner-badge { display: none; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; padding: 4px 12px; border-radius: 12px; font-size: 13px; font-weight: bold; }
@@ -57,10 +57,10 @@
             padding: 15px; font-size: 16px; background-color: var(--pt-card-2); border: 1px solid var(--pt-input-border);
             border-radius: 8px; text-align: right; color: var(--pt-text); box-sizing: border-box; outline: none; transition: 0.2s;
         }
-        .input-box input:focus { border-color: #f59e0b; box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3); background-color: var(--pt-card-2); }
+        .input-box input:focus { border-color: var(--pt-orange); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3); background-color: var(--pt-card-2); }
 
         .unit-price-display { margin-top: 15px; font-size: 16px; color: var(--pt-muted); text-align: right; }
-        .unit-price-display strong { font-size: 22px; color: #fef08a; }
+        .unit-price-display strong { font-size: 22px; color: var(--pt-accent-2); }
 
         /* 결과 요약창 */
         .result-banner {
@@ -68,7 +68,7 @@
             text-align: center; font-size: 18px; font-weight: bold; line-height: 1.5;
             display: none; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); margin-top: 10px;
         }
-        .result-banner .highlight { color: #fef08a; font-size: 24px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+        .result-banner .highlight { color: var(--pt-accent-2); font-size: 24px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
 
         /* 내부 링크 */
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; margin-top: 30px; }
@@ -86,7 +86,7 @@
             border: 1px solid var(--pt-border); margin-bottom: 40px;
         }
         .seo-section h2 { color: var(--pt-head); font-size: 20px; border-bottom: 1px solid var(--pt-border); padding-bottom: 15px; margin-top: 0; }
-        .seo-section h3 { color: #fcd34d; font-size: 17px; margin-top: 25px; margin-bottom: 10px; }
+        .seo-section h3 { color: var(--pt-accent-2); font-size: 17px; margin-top: 25px; margin-bottom: 10px; }
         .seo-section p { color: var(--pt-text-2); font-size: 15px; line-height: 1.7; margin-bottom: 15px; }
         
         /* 🏛️ 공식 기관 출처 박스 */
@@ -95,9 +95,9 @@
             padding: 20px; border-radius: 8px; margin-top: 30px; border-right: 1px solid rgba(245,158,11,0.2);
         }
         .law-box h4 { margin: 0 0 10px 0; color: var(--pt-head); font-size: 16px; }
-        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: #fef08a; opacity: 0.9; }
-        .law-link { display: inline-block; color: #f59e0b; font-weight: bold; text-decoration: none; font-size: 15px; }
-        .law-link:hover { text-decoration: underline; color: #fcd34d; }
+        .law-box p { margin: 0 0 12px 0; font-size: 14px; color: var(--pt-accent-2); opacity: 0.9; }
+        .law-link { display: inline-block; color: var(--pt-orange); font-weight: bold; text-decoration: none; font-size: 15px; }
+        .law-link:hover { text-decoration: underline; color: var(--pt-accent-2); }
 
         .back-btn { display: block; text-align: center; padding: 15px; background-color: var(--pt-card-2); color: var(--pt-text); text-decoration: none; border-radius: 12px; font-weight: bold; margin-bottom: 40px; transition: 0.2s; border: 1px solid var(--pt-border-strong); }
         .back-btn:hover { background-color: rgba(255,255,255,0.2); }

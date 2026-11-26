@@ -27,9 +27,9 @@
     <style>
         body { background: var(--pt-bg); color: var(--pt-text); font-family: '맑은 고딕', sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; }
         .page-header { text-align: center; margin-bottom: 30px; }
-        .page-header h1 { color: #fda4af; margin-bottom: 10px; font-size: 28px; text-shadow: var(--pt-text-shadow); }
+        .page-header h1 { color: var(--pt-danger); margin-bottom: 10px; font-size: 28px; text-shadow: var(--pt-text-shadow); }
         .page-header p { color: var(--pt-text-2); font-size: 15px; margin-top: 0; }
-        .badge { background-color: rgba(244, 63, 94, 0.2); color: #fb7185; padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #f43f5e; }
+        .badge { background-color: rgba(244, 63, 94, 0.2); color: var(--pt-danger); padding: 4px 12px; border-radius: 20px; font-size: 14px; font-weight: bold; border: 1px solid #f43f5e; }
 
         .calculator-card { background-color: var(--pt-card); padding: 30px; border-radius: 12px; box-shadow: var(--pt-shadow); margin-bottom: 30px; border: 1px solid var(--pt-border); backdrop-filter: blur(10px); border-left: 5px solid #f43f5e; }
 
@@ -63,25 +63,25 @@
         .result-box { background-color: rgba(244, 63, 94, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(244, 63, 94, 0.2); text-align: center; }
         .result-box.full { grid-column: span 2; background-color: rgba(16, 185, 129, 0.05); border-color: rgba(16, 185, 129, 0.3); }
         
-        .result-title { color: #fda4af; font-size: 14px; font-weight: bold; margin-bottom: 8px; }
-        .result-box.full .result-title { color: #6ee7b7; }
+        .result-title { color: var(--pt-danger); font-size: 14px; font-weight: bold; margin-bottom: 8px; }
+        .result-box.full .result-title { color: var(--pt-green); }
         
         .result-amount { font-size: 32px; color: var(--pt-text); font-weight: 900; margin: 0; letter-spacing: -0.5px; }
         .result-desc { font-size: 15px; font-weight: bold; margin-top: 5px; padding: 4px 10px; border-radius: 15px; display: inline-block; }
         
         /* 비만도 상태별 색상 */
-        .status-under { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border: 1px solid #38bdf8; }
-        .status-normal { background: rgba(52, 211, 153, 0.2); color: #34d399; border: 1px solid #34d399; }
-        .status-over { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid #fbbf24; }
-        .status-obese { background: rgba(248, 113, 113, 0.2); color: #f87171; border: 1px solid #f87171; }
-        .status-extreme { background: rgba(185, 28, 28, 0.3); color: #fca5a5; border: 1px solid #ef4444; }
+        .status-under { background: rgba(56, 189, 248, 0.2); color: var(--pt-accent); border: 1px solid #38bdf8; }
+        .status-normal { background: rgba(52, 211, 153, 0.2); color: var(--pt-green); border: 1px solid #34d399; }
+        .status-over { background: rgba(251, 191, 36, 0.2); color: var(--pt-orange); border: 1px solid #fbbf24; }
+        .status-obese { background: rgba(248, 113, 113, 0.2); color: var(--pt-danger); border: 1px solid #f87171; }
+        .status-extreme { background: rgba(185, 28, 28, 0.3); color: var(--pt-danger); border: 1px solid #ef4444; }
 
         .diet-tip { background: var(--pt-sunken); padding: 15px; border-radius: 8px; font-size: 14px; color: var(--pt-text-2); text-align: center; margin-top: 20px; border: 1px dashed var(--pt-border-strong); }
         .diet-tip strong { color: var(--pt-head); }
 
         .seo-section { background-color: var(--pt-card); padding: 30px; border-radius: 12px; box-shadow: var(--pt-shadow); margin-bottom: 30px; border: 1px solid var(--pt-border); border-top: 4px solid #f43f5e; backdrop-filter: blur(10px); }
         .seo-section h2 { color: var(--pt-head); font-size: 22px; border-bottom: 1px solid var(--pt-border); padding-bottom: 10px; margin-top: 0; }
-        .seo-section h3 { color: #fda4af; font-size: 18px; margin-top: 25px; }
+        .seo-section h3 { color: var(--pt-danger); font-size: 18px; margin-top: 25px; }
         .seo-section p, .seo-section ul { color: var(--pt-text-2); font-size: 15px; line-height: 1.7; }
         .seo-section li { margin-bottom: 8px; }
 

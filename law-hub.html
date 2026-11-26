@@ -42,7 +42,7 @@
             flex: 1; padding: 18px 20px; font-size: 18px; background-color: rgba(15, 23, 42, 0.8); color: white;
             border: 2px solid var(--pt-input-border); border-radius: 8px; font-family: inherit; transition: 0.2s; outline: none;
         }
-        .search-box input:focus { border-color: #eab308; box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2); }
+        .search-box input:focus { border-color: var(--pt-accent-2); box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.2); }
         .search-icon { font-size: 28px; }
 
         /* 100개 무한 나열 그리드 */
@@ -52,20 +52,20 @@
             background-color: var(--pt-card-2); border: 1px solid var(--pt-border);
             padding: 22px 20px; border-radius: 12px; transition: 0.3s; text-decoration: none; display: flex; flex-direction: column;
         }
-        .law-card:hover { background-color: rgba(234, 179, 8, 0.15); border-color: #eab308; transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .law-card:hover { background-color: rgba(234, 179, 8, 0.15); border-color: var(--pt-accent-2); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
         .law-card h3 { color: var(--pt-text); margin: 0 0 10px 0; font-size: 17px; font-weight: bold; letter-spacing: -0.5px; }
         .law-card p { color: var(--pt-muted); margin: 0; font-size: 13.5px; line-height: 1.5; }
         .law-card .tag { display: inline-block; background: rgba(0,0,0,0.3); color: var(--pt-text-2); font-size: 11px; padding: 4px 10px; border-radius: 6px; margin-bottom: 12px; width: fit-content; border: 1px solid rgba(255,255,255,0.05); }
 
-        #noResultMessage { display: none; text-align: center; color: #f87171; font-size: 18px; padding: 60px 20px; background: var(--pt-sunken); border-radius: 12px; margin-bottom: 50px; border: 1px dashed #ef4444; }
+        #noResultMessage { display: none; text-align: center; color: var(--pt-danger); font-size: 18px; padding: 60px 20px; background: var(--pt-sunken); border-radius: 12px; margin-bottom: 50px; border: 1px dashed #ef4444; }
 
         .seo-section { background-color: var(--pt-card); padding: 35px; border-radius: 12px; box-shadow: var(--pt-shadow); margin-bottom: 40px; border: 1px solid var(--pt-border); border-top: 4px solid #eab308; }
         .seo-section h2 { color: var(--pt-head); font-size: 22px; border-bottom: 1px solid var(--pt-border); padding-bottom: 12px; margin-top: 0; }
-        .seo-section h3 { color: #fcd34d; font-size: 18px; margin-top: 25px; }
+        .seo-section h3 { color: var(--pt-accent-2); font-size: 18px; margin-top: 25px; }
         .seo-section p, .seo-section ul { color: var(--pt-text-2); font-size: 15px; line-height: 1.7; }
 
         .back-btn { display: block; text-align: center; padding: 18px; background-color: var(--pt-card-2); color: var(--pt-text); text-decoration: none; border-radius: 8px; font-weight: bold; margin-bottom: 40px; border: 1px solid var(--pt-border-strong); transition: 0.2s;}
-        .back-btn:hover { background-color: rgba(255,255,255,0.15); border-color: #fde047; color: var(--pt-head); }
+        .back-btn:hover { background-color: rgba(255,255,255,0.15); border-color: var(--pt-accent-2); color: var(--pt-head); }
 
         @media (max-width: 600px) {
             .law-grid { grid-template-columns: 1fr; gap: 12px; }

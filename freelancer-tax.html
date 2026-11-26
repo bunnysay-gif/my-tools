@@ -64,7 +64,7 @@
         }
         .radio-label:has(input:checked) {
             background-color: rgba(250, 204, 21, 0.2);
-            border-color: #facc15; color: var(--pt-head);
+            border-color: var(--pt-accent-2); color: var(--pt-head);
         }
         .radio-label input { display: none; }
 
@@ -80,7 +80,7 @@
             font-size: 1.2rem; text-align: right; transition: 0.3s;
         }
         input[type="text"]:focus {
-            outline: none; border-color: #facc15; background-color: rgba(250, 204, 21, 0.1);
+            outline: none; border-color: var(--pt-accent-2); background-color: rgba(250, 204, 21, 0.1);
         }
         
         .unit { position: absolute; right: 15px; top: 15px; color: var(--pt-muted); font-size: 1.1rem; pointer-events: none; }
@@ -113,7 +113,7 @@
         
         .label { font-size: 1rem; color: var(--pt-text-2); }
         .value { font-size: 1.1rem; font-weight: bold; color: var(--pt-text); }
-        .value.minus { color: #f87171; }
+        .value.minus { color: var(--pt-danger); }
         
         .total .label { font-size: 1.2rem; color: var(--pt-head); font-weight: bold; }
         .total .value { font-size: 1.8rem; color: var(--pt-head); text-shadow: 0 0 10px rgba(250, 204, 21, 0.5); }

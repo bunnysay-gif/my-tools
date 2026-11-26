@@ -29,7 +29,7 @@
         
         .page-header { text-align: center; margin-bottom: 40px; }
         .page-header h1 { font-size: 32px; margin-bottom: 10px; color: #e0e7ff; text-shadow: var(--pt-text-shadow); }
-        .badge { background-color: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #a7f3d0; padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
+        .badge { background-color: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: var(--pt-green); padding: 5px 15px; border-radius: 20px; font-size: 14px; font-weight: bold; }
 
         /* 계산기 메인 영역 */
         .calc-container {
@@ -59,7 +59,7 @@
             padding: 8px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; transition: 0.2s;
         }
         .quick-btn:hover { background-color: rgba(59, 130, 246, 0.2); color: var(--pt-link); border-color: #3b82f6; }
-        .quick-btn.clear { background-color: rgba(239, 68, 68, 0.1); color: #fca5a5; border-color: #ef4444; }
+        .quick-btn.clear { background-color: rgba(239, 68, 68, 0.1); color: var(--pt-danger); border-color: #ef4444; }
 
         /* 상환 방식 선택 (Radio) */
         .radio-group { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
@@ -93,7 +93,7 @@
         .result-value.highlight { color: var(--pt-head); font-size: 28px; }
         
         /* 알림 메시지 (원금균등용) */
-        .notice-msg { font-size: 13px; color: #fca5a5; margin-top: 10px; text-align: right; display: none; }
+        .notice-msg { font-size: 13px; color: var(--pt-danger); margin-top: 10px; text-align: right; display: none; }
 
         /* SEO 최적화 설명 섹션 */
         .seo-section {
@@ -106,7 +106,7 @@
 
         /* 내부 링크 */
         .internal-links { display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap; }
-        .link-card { flex: 1; min-width: 250px; background-color: rgba(59, 130, 246, 0.1); padding: 20px; border-radius: 12px; text-decoration: none; color: #bfdbfe; font-weight: bold; text-align: center; border: 1px solid rgba(59, 130, 246, 0.2); transition: 0.2s; }
+        .link-card { flex: 1; min-width: 250px; background-color: rgba(59, 130, 246, 0.1); padding: 20px; border-radius: 12px; text-decoration: none; color: var(--pt-accent); font-weight: bold; text-align: center; border: 1px solid rgba(59, 130, 246, 0.2); transition: 0.2s; }
         .link-card:hover { background-color: rgba(59, 130, 246, 0.2); transform: translateY(-3px); }
         .link-card span { display: block; font-size: 13px; color: var(--pt-link); font-weight: normal; margin-top: 5px; }
 
